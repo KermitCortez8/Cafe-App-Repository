@@ -1,9 +1,12 @@
+// App.js
+
 import React, { useState } from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createDrawerNavigator } from '@react-navigation/drawer';
+import { Ionicons } from '@expo/vector-icons';
+
 import CategoriesStack from './screens/CategoriesStack';
 import FavoritesScreen from './screens/FavoritesScreen';
-import { Ionicons } from '@expo/vector-icons';
 
 const Drawer = createDrawerNavigator();
 
@@ -19,14 +22,13 @@ export default function App() {
     <NavigationContainer>
       <Drawer.Navigator
         screenOptions={{
-          headerStyle: { backgroundColor: '#006400' },
-          headerTintColor: 'white',
           drawerContentStyle: { backgroundColor: '#006400' },
           drawerInactiveTintColor: 'white',
           drawerActiveTintColor: '#006400',
           drawerActiveBackgroundColor: 'white',
         }}
       >
+        {/* All Categories → Stack */}
         <Drawer.Screen
           name="AllCategories"
           options={{
@@ -34,11 +36,12 @@ export default function App() {
             drawerIcon: ({ color, size }) => (
               <Ionicons name="list" color={color} size={size} />
             ),
+            headerShown: false, // oculta el header del Drawer
           }}
         >
           {props => (
             <CategoriesStack
-              {...props}
+              {...props}                    // lease navigation & route
               favoriteMealIds={favoriteMealIds}
               addFavorite={addFavorite}
               removeFavorite={removeFavorite}
@@ -46,6 +49,7 @@ export default function App() {
           )}
         </Drawer.Screen>
 
+        {/* Favorites → pantalla directa */}
         <Drawer.Screen
           name="MyFavourites"
           options={{
@@ -53,6 +57,7 @@ export default function App() {
             drawerIcon: ({ color, size }) => (
               <Ionicons name="star" color={color} size={size} />
             ),
+            headerShown: false,
           }}
         >
           {props => (

@@ -1,5 +1,7 @@
+// src/screens/CategoriesScreen.js
+
 import React from 'react';
-import { View, FlatList, TouchableOpacity, StyleSheet } from 'react-native';
+import { View, FlatList, StyleSheet } from 'react-native';
 import { CATEGORIES } from '../data/categories';
 import CategoryGridItem from '../components/CategoryGridItem';
 import Subtitle from '../components/Subtitle';
@@ -10,24 +12,28 @@ export default function CategoriesScreen({ navigation }) {
       <Subtitle text="Choose a Coffee Category" />
       <FlatList
         data={CATEGORIES}
+        keyExtractor={(item) => item.id}
+        numColumns={2}
         renderItem={({ item }) => (
-          <TouchableOpacity
-            style={styles.gridItem}
+          <CategoryGridItem
+            title={item.title}
+            color={item.color}
             onPress={() =>
               navigation.navigate('CoffeeOverview', { categoryId: item.id })
             }
-          >
-            <CategoryGridItem title={item.title} color={item.color} />
-          </TouchableOpacity>
+          />
         )}
-        keyExtractor={item => item.id}
-        numColumns={2}
       />
     </View>
   );
 }
 
 const styles = StyleSheet.create({
-  container: { flex: 1, backgroundColor: '#f3f3f3', padding: 16 },
-  gridItem: { flex: 1, margin: 8 },
+  container: {
+    flex: 1,
+    backgroundColor: '#f3f3f3',
+    padding: 16,
+  },
 });
+
+ 

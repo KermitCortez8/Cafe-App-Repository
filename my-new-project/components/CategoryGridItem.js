@@ -1,12 +1,16 @@
-import React from 'react';
-import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
+// src/components/CategoryGridItem.js
 
-const CategoryGridItem = ({ title, color }) => {
+import React from 'react';
+import { TouchableOpacity, Text, StyleSheet } from 'react-native';
+
+const CategoryGridItem = ({ title, color, onPress }) => {
   return (
-    <TouchableOpacity style={[styles.container, { backgroundColor: color }]}>
-      <View style={styles.inner}>
-        <Text style={styles.title}>{title}</Text>
-      </View>
+    <TouchableOpacity
+      style={[styles.container, { backgroundColor: color }]}
+      onPress={onPress}                      // <-- aquí
+      activeOpacity={0.7}
+    >
+      <Text style={styles.title}>{title}</Text>
     </TouchableOpacity>
   );
 };
@@ -16,17 +20,13 @@ const styles = StyleSheet.create({
     flex: 1,
     borderRadius: 8,
     padding: 16,
-    marginBottom: 16,
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  inner: {
+    margin: 8,
     justifyContent: 'center',
     alignItems: 'center',
   },
   title: {
     color: 'white',
-    fontSize: 20,
+    fontSize: 18,
     fontWeight: 'bold',
   },
 });
