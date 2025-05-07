@@ -7,10 +7,17 @@ const Subtitle = ({ text }) => {
 
 const styles = StyleSheet.create({
   subtitle: {
-    fontSize: 22,
-    fontWeight: 'bold',
-    color: '#4CAF50',
-    marginVertical: 20,
+    fontSize: 24,
+    fontWeight: '700',
+    color: '#4B2E2B',
+    marginVertical: 24,
+    marginTop: 0,
+    textAlign: 'center',
+    fontStyle: 'italic',
+    letterSpacing: 1,
+    textShadowColor: '#d7ccc8',
+    textShadowOffset: { width: 1, height: 1 },
+    textShadowRadius: 2,
   },
 });
 

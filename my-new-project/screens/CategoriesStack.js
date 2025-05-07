@@ -25,7 +25,7 @@ export default function CategoriesStack({
     <Stack.Navigator
       initialRouteName="Categories"
       screenOptions={{
-        headerStyle: { backgroundColor: '#006400' },
+        headerStyle: { backgroundColor: '#74512D' },
         headerTintColor: 'white',
         headerRight: () => (
           <TouchableOpacity
@@ -40,12 +40,12 @@ export default function CategoriesStack({
       <Stack.Screen
         name="Categories"
         component={CategoriesScreen}
-        options={{ title: 'All Categories' }}
+        options={{ title: 'Categorias' }}
       />
       <Stack.Screen
         name="CoffeeOverview"
         component={CoffeeOverviewScreen}
-        options={{ title: 'Coffees' }}
+        options={{ title: 'Cafés' }}
       />
       <Stack.Screen
         name="CoffeeDetails"
@@ -58,12 +58,12 @@ export default function CategoriesStack({
             addToCart={addToCart} // Pasar addToCart aquí
           />
         )}
-        options={{ title: 'Details' }}
+        options={{ title: 'Detalles' }}
       />
       <Stack.Screen
         name="Order"
         component={OrderScreen}
-        options={{ title: 'Your Order' }}
+        options={{ title: 'Tu Orden' }}
       />
       <Stack.Screen
         name="MyFavourites"
@@ -74,7 +74,7 @@ export default function CategoriesStack({
             cartItems={cartItems} // Pasar cartItems a FavoritesScreen
           />
         )}
-        options={{ title: 'My Favorites' }}
+        options={{ title: 'Mis Favoritos' }}
       />
     </Stack.Navigator>
   );

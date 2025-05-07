@@ -1,19 +1,23 @@
 // MealList.js
 
 import React from 'react';
-import { View, TouchableOpacity, Text, StyleSheet } from 'react-native';
+import { View, TouchableOpacity, StyleSheet } from 'react-native';
+import MealItem from '../components/MealItem'; // Asegúrate de que la ruta sea correcta
 
 export default function MealList({ data, onPressMeal }) {
   return (
-    <View>
+    <View style={styles.listContainer}>
       {data.map((item) => (
         <TouchableOpacity
           key={item.id}
-          style={styles.mealItem}
-          onPress={() => onPressMeal(item.id)}  // Trigger navigation when clicked
+          onPress={() => onPressMeal(item.id)}
+          activeOpacity={0.7}
         >
-          <Text style={styles.title}>{item.name}</Text>
-          <Text style={styles.price}>{`$${item.price}`}</Text>
+          <MealItem
+            name={item.name}
+            price={`$${item.price}`}
+            imageUrl={item.imageUrl}
+          />
         </TouchableOpacity>
       ))}
     </View>
@@ -21,23 +25,8 @@ export default function MealList({ data, onPressMeal }) {
 }
 
 const styles = StyleSheet.create({
-  mealItem: {
-    padding: 16,
-    marginBottom: 10,
-    backgroundColor: '#fff',
-    borderRadius: 8,
-    shadowColor: '#000',
-    shadowOpacity: 0.2,
-    shadowOffset: { width: 0, height: 2 },
-    shadowRadius: 8,
-    elevation: 5,
-  },
-  title: {
-    fontSize: 18,
-    fontWeight: 'bold',
-  },
-  price: {
-    fontSize: 16,
-    color: '#4CAF50',
+  listContainer: {
+    paddingHorizontal: 16,
+    paddingTop: 8,
   },
 });

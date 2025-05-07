@@ -12,7 +12,7 @@ export default function CoffeeOverviewScreen({ route, navigation }) {
 
   return (
     <View style={styles.container}>
-      <Subtitle text="Coffees in this Category" />
+      <Subtitle text="Cafés disponibles" />
       <MealList
         data={meals}
         onPressMeal={(coffeeId) => {
@@ -24,5 +24,5 @@ export default function CoffeeOverviewScreen({ route, navigation }) {
 }
 
 const styles = StyleSheet.create({
-  container: { flex: 1, backgroundColor: '#f3f3f3', padding: 16 },
+  container: { flex: 1, backgroundColor: '#F8F4E1', padding: 16 },
 });
