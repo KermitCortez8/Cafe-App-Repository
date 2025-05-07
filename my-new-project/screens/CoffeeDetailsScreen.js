@@ -9,10 +9,10 @@ import IconButton from '../components/IconButton';
 export default function CoffeeDetailsScreen({
   route,
   navigation,
-  addToCart, // Recibe la función addToCart
   favoriteMealIds,
   addFavorite,
   removeFavorite,
+  addToCart,  // Para agregar al carrito
 }) {
   const { coffeeId } = route.params;
   const coffee = MEALS.find(m => m.id === coffeeId);
