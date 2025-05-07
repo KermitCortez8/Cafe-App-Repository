@@ -4,7 +4,8 @@
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
-    "start": "expo start",
+    "start": "expo start --tunnel",
+    "tunnel": "expo start --tunnel",
     "android": "expo start --android",
     "ios": "expo start --ios",
     "web": "expo start --web"
@@ -15,7 +16,7 @@
     "@react-navigation/drawer": "^7.3.11",
     "@react-navigation/native": "^7.1.8",
     "@react-navigation/native-stack": "^7.3.12",
-    "expo": "~53.0.8",
+    "expo": "^53.0.8",
     "expo-status-bar": "~2.2.3",
     "react": "19.0.0",
     "react-dom": "19.0.0",

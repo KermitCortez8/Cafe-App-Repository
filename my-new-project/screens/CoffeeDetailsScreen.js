@@ -12,53 +12,109 @@ export default function CoffeeDetailsScreen({
   favoriteMealIds,
   addFavorite,
   removeFavorite,
-  addToCart,  // Para agregar al carrito
+  addToCart,
 }) {
+
+
   const { coffeeId } = route.params;
   const coffee = MEALS.find(m => m.id === coffeeId);
   const isFav = favoriteMealIds.includes(coffeeId);
 
+  const numericPrice = typeof coffee.price === 'string'
+    ? parseFloat(coffee.price.replace('$', ''))
+    : coffee.price;
+
   return (
     <ScrollView style={styles.container}>
       <Image source={{ uri: coffee.imageUrl }} style={styles.image} />
-      <Text style={styles.title}>{coffee.name}</Text>
-      <Text style={styles.details}>
-        Difficulty: {coffee.difficulty} | Time: {coffee.preparationTime} min
-      </Text>
+      <View style={styles.content}>
+        <Text style={styles.title}>{coffee.name}</Text>
+        <Text style={styles.details}>
+          {coffee.preparationTime} min
+        </Text>
 
-      <Subtitle text="Ingredients" />
-      {coffee.ingredients.map((ing, index) => (
-        <Text key={index} style={styles.listItem}>• {ing}</Text>
-      ))}
+        <Text style={styles.price}>${numericPrice.toFixed(2)}</Text>
 
-      <Subtitle text="Instructions" />
-      {coffee.instructions.map((step, index) => (
-        <Text key={index} style={styles.listItem}>{index + 1}. {step}</Text>
-      ))}
+        <View style={styles.section}>
+          <Subtitle text="Ingredientes" />
+          {coffee.ingredients.map((ing, index) => (
+            <Text key={index} style={styles.listItem}>• {ing}</Text>
+          ))}
+        </View>
 
-      <View style={styles.buttonContainer}>
-        <IconButton
-          icon={isFav ? 'star' : 'star-outline'}
-          title={isFav ? 'Remove Favorite' : 'Add Favorite'}
-          onPress={() =>
-            isFav ? removeFavorite(coffeeId) : addFavorite(coffeeId)
-          }
-        />
-        <IconButton
-          icon="cart-outline"
-          title="Add to Cart"
-          onPress={() => addToCart(coffee)} // Añadir al carrito
-        />
+        <View style={styles.section}>
+          <Subtitle text="Descripcion" />
+          {coffee.descripcion.map((step, index) => (
+            <Text key={index} style={styles.listItem}>{step}</Text>
+
+          ))}
+        </View>
+
+        <View style={styles.buttonContainer}>
+          <IconButton
+            icon={isFav ? 'star' : 'star-outline'}
+            title={isFav ? 'Quitar Favorito' : 'Agregar a Favoritos'}
+            onPress={() =>
+              isFav ? removeFavorite(coffeeId) : addFavorite(coffeeId)
+            }
+            color="#006241"
+          />
+          <IconButton
+            icon="cart-outline"
+            title="Añadir al Carrito"
+            onPress={() => addToCart(coffee)}
+            color="#8B4513"
+          />
+        </View>
       </View>
     </ScrollView>
   );
 }
 
 const styles = StyleSheet.create({
-  container: { backgroundColor: '#f3f3f3', padding: 16 },
-  image: { width: '100%', height: 200, borderRadius: 8, marginBottom: 16 },
-  title: { fontSize: 28, fontWeight: 'bold', color: '#4CAF50', marginBottom: 8 },
-  details: { fontSize: 16, color: '#666', marginBottom: 16 },
-  listItem: { fontSize: 16, color: '#333', marginVertical: 4 },
-  buttonContainer: { alignItems: 'center', marginTop: 20 },
+  container: {
+    backgroundColor: '#f6f5f3',
+  },
+  image: {
+    width: '100%',
+    height: 200,
+    borderBottomLeftRadius: 30,
+    borderBottomRightRadius: 30,
+  },
+  content: {
+    padding: 20,
+  },
+  title: {
+    fontSize: 30,
+    fontWeight: 'bold',
+    color: '#74512D', // título marrón cálido
+    marginBottom: 6,
+  },
+  details: {
+    fontSize: 18,
+    color: '#d3d3d3', // texto claro
+    marginBottom: 14,
+  },
+  price: {
+    fontSize: 26,
+    fontWeight: 'bold',
+    color: '#74512D', // color del precio
+    marginBottom: 24,
+  },
+  section: {
+    marginBottom: 24,
+  },
+  listItem: {
+    fontSize: 16,
+    color: '#f6f5f3',
+    marginVertical: 6,
+    paddingLeft: 6,
+  },
+  buttonContainer: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    marginTop: 40,
+    marginHorizontal: 40,
+  },
 });
