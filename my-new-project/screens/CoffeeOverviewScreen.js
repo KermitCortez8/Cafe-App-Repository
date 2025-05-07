@@ -1,17 +1,24 @@
+// CoffeeOverviewScreen.js
+
 import React from 'react';
-import { View, StyleSheet } from 'react-native';
+import { View, StyleSheet, TouchableOpacity } from 'react-native';
 import { MEALS } from '../data/coffees';
 import MealList from '../components/MealList';
 import Subtitle from '../components/Subtitle';
 
-export default function CoffeeOverviewScreen({ route }) {
-  const { categoryId } = route.params;
+export default function CoffeeOverviewScreen({ route, navigation }) {
+  const { categoryId } = route.params; // Get categoryId passed from previous screen
   const meals = MEALS.filter(m => m.categoryIds.includes(categoryId));
 
   return (
     <View style={styles.container}>
       <Subtitle text="Coffees in this Category" />
-      <MealList data={meals} />
+      <MealList
+        data={meals}
+        onPressMeal={(coffeeId) => {
+          navigation.navigate('CoffeeDetails', { coffeeId: coffeeId }); // Navigate to details screen
+        }}
+      />
     </View>
   );
 }

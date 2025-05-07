@@ -12,11 +12,14 @@ const Drawer = createDrawerNavigator();
 
 export default function App() {
   const [favoriteMealIds, setFavoriteMealIds] = useState([]);
+  const [cartItems, setCartItems] = useState([]);
 
-  const addFavorite = (id) =>
-    setFavoriteMealIds((favs) => [...favs, id]);
-  const removeFavorite = (id) =>
-    setFavoriteMealIds((favs) => favs.filter((m) => m !== id));
+  const addFavorite = (id) => setFavoriteMealIds((favs) => [...favs, id]);
+  const removeFavorite = (id) => setFavoriteMealIds((favs) => favs.filter((m) => m !== id));
+
+  const addToCart = (item) => {
+    setCartItems((currentCart) => [...currentCart, item]);
+  };
 
   return (
     <NavigationContainer>
@@ -28,7 +31,6 @@ export default function App() {
           drawerActiveBackgroundColor: 'white',
         }}
       >
-        {/* All Categories → Stack */}
         <Drawer.Screen
           name="AllCategories"
           options={{
@@ -36,20 +38,20 @@ export default function App() {
             drawerIcon: ({ color, size }) => (
               <Ionicons name="list" color={color} size={size} />
             ),
-            headerShown: false, // oculta el header del Drawer
           }}
         >
           {props => (
             <CategoriesStack
-              {...props}                    // lease navigation & route
+              {...props}
               favoriteMealIds={favoriteMealIds}
               addFavorite={addFavorite}
               removeFavorite={removeFavorite}
+              addToCart={addToCart} // Pasando la función para agregar al carrito
+              cartItems={cartItems} // Pasando el estado del carrito
             />
           )}
         </Drawer.Screen>
 
-        {/* Favorites → pantalla directa */}
         <Drawer.Screen
           name="MyFavourites"
           options={{
@@ -57,13 +59,13 @@ export default function App() {
             drawerIcon: ({ color, size }) => (
               <Ionicons name="star" color={color} size={size} />
             ),
-            headerShown: false,
           }}
         >
           {props => (
             <FavoritesScreen
               {...props}
               favoriteMealIds={favoriteMealIds}
+              cartItems={cartItems} // Mostrando los ítems del carrito
             />
           )}
         </Drawer.Screen>

@@ -1,3 +1,5 @@
+// OrderScreen.js
+
 import React from 'react';
 import { View, Text, FlatList, Button, StyleSheet } from 'react-native';
 import Subtitle from '../components/Subtitle';
@@ -14,7 +16,9 @@ export default function OrderScreen() {
       <FlatList
         data={orderItems}
         renderItem={({ item }) => (
-          <Text style={styles.item}>{item.name} — {item.price}</Text>
+          <Text style={styles.item}>
+            {item.name} — {item.price}
+          </Text>
         )}
         keyExtractor={item => item.id}
       />

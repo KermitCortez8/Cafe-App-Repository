@@ -1,3 +1,5 @@
+// CategoriesStack.js
+
 import React from 'react';
 import { TouchableOpacity } from 'react-native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
@@ -6,6 +8,8 @@ import { Ionicons } from '@expo/vector-icons';
 import CategoriesScreen from './CategoriesScreen';
 import CoffeeOverviewScreen from './CoffeeOverviewScreen';
 import CoffeeDetailsScreen from './CoffeeDetailsScreen';
+import OrderScreen from './OrderScreen';
+import FavoritesScreen from './FavoritesScreen';
 
 const Stack = createNativeStackNavigator();
 
@@ -14,6 +18,8 @@ export default function CategoriesStack({
   favoriteMealIds,
   addFavorite,
   removeFavorite,
+  addToCart,
+  cartItems, // Recibir cartItems
 }) {
   return (
     <Stack.Navigator
@@ -49,9 +55,26 @@ export default function CategoriesStack({
             favoriteMealIds={favoriteMealIds}
             addFavorite={addFavorite}
             removeFavorite={removeFavorite}
+            addToCart={addToCart} // Pasar addToCart aquí
           />
         )}
         options={{ title: 'Details' }}
+      />
+      <Stack.Screen
+        name="Order"
+        component={OrderScreen}
+        options={{ title: 'Your Order' }}
+      />
+      <Stack.Screen
+        name="MyFavourites"
+        children={props => (
+          <FavoritesScreen
+            {...props}
+            favoriteMealIds={favoriteMealIds}
+            cartItems={cartItems} // Pasar cartItems a FavoritesScreen
+          />
+        )}
+        options={{ title: 'My Favorites' }}
       />
     </Stack.Navigator>
   );

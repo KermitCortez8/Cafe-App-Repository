@@ -1,30 +1,43 @@
-import React from 'react';
-import { View, FlatList, StyleSheet } from 'react-native';
-import MealItem from './MealItem'; // Importa MealItem
+// MealList.js
 
-const MealList = ({ data }) => {
+import React from 'react';
+import { View, TouchableOpacity, Text, StyleSheet } from 'react-native';
+
+export default function MealList({ data, onPressMeal }) {
   return (
-    <View style={styles.container}>
-      <FlatList
-        data={data}
-        renderItem={({ item }) => (
-          <MealItem
-            name={item.name}
-            price={item.price}
-            imageUrl={item.imageUrl}
-          />
-        )}
-        keyExtractor={item => item.id}
-      />
+    <View>
+      {data.map((item) => (
+        <TouchableOpacity
+          key={item.id}
+          style={styles.mealItem}
+          onPress={() => onPressMeal(item.id)}  // Trigger navigation when clicked
+        >
+          <Text style={styles.title}>{item.name}</Text>
+          <Text style={styles.price}>{`$${item.price}`}</Text>
+        </TouchableOpacity>
+      ))}
     </View>
   );
-};
+}
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    paddingHorizontal: 16,
+  mealItem: {
+    padding: 16,
+    marginBottom: 10,
+    backgroundColor: '#fff',
+    borderRadius: 8,
+    shadowColor: '#000',
+    shadowOpacity: 0.2,
+    shadowOffset: { width: 0, height: 2 },
+    shadowRadius: 8,
+    elevation: 5,
+  },
+  title: {
+    fontSize: 18,
+    fontWeight: 'bold',
+  },
+  price: {
+    fontSize: 16,
+    color: '#4CAF50',
   },
 });
-
-export default MealList;

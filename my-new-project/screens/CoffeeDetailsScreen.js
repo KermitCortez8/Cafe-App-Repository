@@ -1,3 +1,5 @@
+// CoffeeDetailsScreen.js
+
 import React from 'react';
 import { ScrollView, View, Text, Image, StyleSheet } from 'react-native';
 import { MEALS } from '../data/coffees';
@@ -7,30 +9,31 @@ import IconButton from '../components/IconButton';
 export default function CoffeeDetailsScreen({
   route,
   navigation,
+  addToCart, // Recibe la función addToCart
   favoriteMealIds,
   addFavorite,
   removeFavorite,
 }) {
   const { coffeeId } = route.params;
-  const meal = MEALS.find(m => m.id === coffeeId);
+  const coffee = MEALS.find(m => m.id === coffeeId);
   const isFav = favoriteMealIds.includes(coffeeId);
 
   return (
     <ScrollView style={styles.container}>
-      <Image source={{ uri: meal.imageUrl }} style={styles.image} />
-      <Text style={styles.title}>{meal.name}</Text>
+      <Image source={{ uri: coffee.imageUrl }} style={styles.image} />
+      <Text style={styles.title}>{coffee.name}</Text>
       <Text style={styles.details}>
-        Difficulty: {meal.difficulty} | Time: {meal.preparationTime} min
+        Difficulty: {coffee.difficulty} | Time: {coffee.preparationTime} min
       </Text>
 
       <Subtitle text="Ingredients" />
-      {meal.ingredients.map(ing => (
-        <Text key={ing} style={styles.listItem}>• {ing}</Text>
+      {coffee.ingredients.map((ing, index) => (
+        <Text key={index} style={styles.listItem}>• {ing}</Text>
       ))}
 
       <Subtitle text="Instructions" />
-      {meal.instructions.map((step, i) => (
-        <Text key={i} style={styles.listItem}>{i+1}. {step}</Text>
+      {coffee.instructions.map((step, index) => (
+        <Text key={index} style={styles.listItem}>{index + 1}. {step}</Text>
       ))}
 
       <View style={styles.buttonContainer}>
@@ -44,7 +47,7 @@ export default function CoffeeDetailsScreen({
         <IconButton
           icon="cart-outline"
           title="Add to Cart"
-          onPress={() => navigation.navigate('Order')}
+          onPress={() => addToCart(coffee)} // Añadir al carrito
         />
       </View>
     </ScrollView>

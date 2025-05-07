@@ -1,4 +1,4 @@
-// src/screens/CategoriesScreen.js
+// CategoriesScreen.js
 
 import React from 'react';
 import { View, FlatList, StyleSheet } from 'react-native';
@@ -35,5 +35,3 @@ const styles = StyleSheet.create({
     padding: 16,
   },
 });
-
- 
