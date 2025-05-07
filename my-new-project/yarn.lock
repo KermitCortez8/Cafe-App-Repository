@@ -2382,7 +2382,7 @@ expo-status-bar@~2.2.3:
     react-native-edge-to-edge "1.6.0"
     react-native-is-edge-to-edge "^1.1.6"
 
-expo@~53.0.8:
+expo@^53.0.8:
   version "53.0.8"
   resolved "https://registry.yarnpkg.com/expo/-/expo-53.0.8.tgz#281915262e4694103bfdd04816ade84d945af808"
   integrity sha512-5CQWayZFDKif++HwfI6ysRNfePYH3MOEZw5edQStQyoL2MehzlasZoICSYHzqptMdMFSt2RTM5Tqgn8L4wYmVg==
