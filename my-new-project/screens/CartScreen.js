@@ -1,5 +1,6 @@
 import React from 'react';
-import { View, Text, FlatList, Button, StyleSheet } from 'react-native';
+import { View, Text, FlatList, StyleSheet, TouchableOpacity } from 'react-native';
+import Feather from 'react-native-vector-icons/Feather';
 
 export default function CartScreen({ cartItems, removeFromCart, navigation }) {
   const totalAmount = cartItems.reduce((sum, item) => sum + item.price, 0);
@@ -12,29 +13,79 @@ export default function CartScreen({ cartItems, removeFromCart, navigation }) {
         renderItem={({ item }) => (
           <View style={styles.item}>
             <Text style={styles.itemText}>{item.name} - ${item.price}</Text>
-            <Button
-              title="Remove"
-              onPress={() => removeFromCart(item.id)} // Elimina el café del carrito
-            />
+            <TouchableOpacity
+              onPress={() => removeFromCart(item.id)}
+              style={styles.removeButton}
+            >
+              <Feather name="x-circle" size={24} color="#d9534f" />
+            </TouchableOpacity>
           </View>
         )}
         keyExtractor={item => item.id}
       />
       <View style={styles.footer}>
         <Text style={styles.total}>Total: ${totalAmount}</Text>
-        <Button
-          title="Proceed to Checkout"
-          onPress={() => navigation.navigate('Orders', { cartItems })} // Navega a la pantalla de pedidos y pasa los ítems
-        />
+        <TouchableOpacity
+          style={styles.checkoutButton}
+          onPress={() => navigation.navigate('Orders', { cartItems })}
+        >
+          <Text style={styles.checkoutText}>Proceed to Checkout</Text>
+        </TouchableOpacity>
       </View>
     </View>
   );
 }
 
 const styles = StyleSheet.create({
-  container: { padding: 20 },
-  header: { fontSize: 24, marginBottom: 20 },
-  item: { flexDirection: 'row', justifyContent: 'space-between', marginBottom: 10 },
-  footer: { marginTop: 20, alignItems: 'center' },
-  total: { fontSize: 20, marginBottom: 10 },
+  container: { 
+    padding: 20,
+    backgroundColor: '#F8F4E1',  // Fondo con el color deseado
+    flex: 1,  // Asegura que el contenedor ocupe toda la pantalla
+  },
+
+  header: { 
+    fontSize: 24, 
+    marginBottom: 20 
+  },
+
+  item: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    marginBottom: 10,
+    paddingVertical: 8,
+    borderBottomWidth: 1,
+    borderBottomColor: '#ddd',
+  },
+
+  itemText: { 
+    fontSize: 16 
+  },
+
+  removeButton: {
+    padding: 6,
+    borderRadius: 12,
+  },
+
+  footer: { 
+    marginTop: 20, 
+    alignItems: 'center' 
+  },
+
+  total: { 
+    fontSize: 20, 
+    marginBottom: 10 
+  },
+
+  checkoutButton: {
+    backgroundColor: '#2e7d32',
+    paddingVertical: 10,
+    paddingHorizontal: 20,
+    borderRadius: 10,
+  },
+
+  checkoutText: {
+    color: '#fff',
+    fontSize: 16,
+  },
 });

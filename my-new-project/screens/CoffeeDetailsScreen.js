@@ -44,43 +44,50 @@ export default function CoffeeDetailsScreen({
 
         <View style={styles.section}>
           <Subtitle text="Descripcion" />
-          {coffee.descripcion.map((step, index) => (
-            <Text key={index} style={styles.listItem}>{step}</Text>
-
-          ))}
+          <Text style={styles.listItem}>{coffee.descripcion}</Text>
         </View>
 
         <View style={styles.buttonContainer}>
-          <IconButton
-            icon={isFav ? 'star' : 'star-outline'}
-            title={isFav ? 'Quitar Favorito' : 'Agregar a Favoritos'}
-            onPress={() =>
-              isFav ? removeFavorite(coffeeId) : addFavorite(coffeeId)
-            }
-            color="#006241"
-          />
-          <IconButton
-            icon="cart-outline"
-            title="Añadir al Carrito"
-            onPress={() => addToCart(coffee)}
-            color="#8B4513"
-          />
+          <View style={styles.buttonWrapper}>
+            <IconButton
+              icon={isFav ? 'star' : 'star-outline'}
+              title={isFav ? 'Quitar Favorito' : 'Agregar a Favoritos'}
+              onPress={() =>
+                isFav ? removeFavorite(coffeeId) : addFavorite(coffeeId)
+              }
+              color="#006241"
+              textColor="white"
+            />
+          </View>
+          <View style={styles.buttonWrapper}>
+            <IconButton
+              icon="cart-outline"
+              title="Añadir al Carrito"
+              onPress={() => addToCart(coffee)}
+              color="#8B4513"
+              textColor="white"
+            />
+          </View>
         </View>
-      </View>
+        </View>
     </ScrollView>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: '#f6f5f3',
+    backgroundColor: '#F8F4E1',
   },
+
   image: {
-    width: '100%',
-    height: 200,
-    borderBottomLeftRadius: 30,
-    borderBottomRightRadius: 30,
+    width: '80%',                   // No ocupa todo el ancho
+    height: 140,                    // Más pequeño verticalmente
+    alignSelf: 'center',            // Centrado horizontalmente
+    borderRadius: 20,               // Esquinas redondeadas suaves
+    marginTop: 16,                  // Separado del borde superior
+    resizeMode: 'cover',            // Ajuste visual de la imagen  
   },
+
   content: {
     padding: 20,
   },
@@ -92,7 +99,7 @@ const styles = StyleSheet.create({
   },
   details: {
     fontSize: 18,
-    color: '#d3d3d3', // texto claro
+    color: '#74512D', // texto claro
     marginBottom: 14,
   },
   price: {
@@ -106,15 +113,17 @@ const styles = StyleSheet.create({
   },
   listItem: {
     fontSize: 16,
-    color: '#f6f5f3',
+    color: '#74512D',
     marginVertical: 6,
     paddingLeft: 6,
   },
   buttonContainer: {
     flexDirection: 'row',
-    justifyContent: 'space-between',
+    justifyContent: 'center',
     alignItems: 'center',
     marginTop: 40,
-    marginHorizontal: 40,
+  },
+  buttonWrapper: {
+    marginHorizontal: 8,
   },
 });

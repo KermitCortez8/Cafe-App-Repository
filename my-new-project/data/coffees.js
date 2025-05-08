@@ -7,7 +7,7 @@ export const MEALS = [
     'm1',
     ['c1'],
     'Expresso',
-    '$2.99',
+    '2.99',
 
     'https://s3.ppllstatics.com/diariovasco/www/multimedia/2024/11/13/espresso-RrCckvN0LEAFk54KAQQPcXM-1200x840@Diario%20Vasco.jpg ',
     8,
@@ -19,12 +19,12 @@ export const MEALS = [
   ),
 
   new Meal(
-    'm2',
+    'm2',           
     ['c1'],
     'Doble Expresso',
-    '$3.49',
+    '3.49',
 
-    'https://images.unsplash.com/photo-1600982605277-0c94cb8ab8f7',
+    'https://lemongrassdeli.com/cdn/shop/products/Espresso_SQ_0dbe9837-380c-4504-9d5a-741440803119.jpg?v=1586498076',
     9
     ['Doble dosis de café molido 100% arábica',
      'Agua caliente (a 90–96 °C)'],
@@ -41,9 +41,9 @@ export const MEALS = [
     'm3',
     ['c2'],
     'Latte Clasico',
-    '$3.50',
+    '3.50',
 
-    'https://images.ctfassets.net/0e6jqcgsrcye/53teNK4AvvmFIkFLtEJSEx/4d3751dcad227c87b3cf6bda955b1649/Cafe_au_lait.jpg',
+    'https://staresso.com/cdn/shop/articles/What_is_a_latte.jpg?v=1716606481',
     12,
 
     [
@@ -62,9 +62,9 @@ export const MEALS = [
     'm4',
     ['c2'],
     'Vanilla Latte',
-    '$3.75',
+    '3.75',
 
-    'https://images.unsplash.com/photo-1534447744739-b1e708e1c347',
+    'https://images.ctfassets.net/v601h1fyjgba/7wGcWZgV7yaSLXrodALIuw/2496353e1ec8c39dd44adfb45e8335d3/Vanilla_Latte.jpg',
     12,
     [
       '1 o 2 shots de espresso 100% arábica',
@@ -85,8 +85,8 @@ export const MEALS = [
     'm5',
     ['c3'],
     'Cappuccino',
-    '$3.99',
-    'https://perfectdailygrind.com/wp-content/uploads/2019/11/Cappuccino-1.png',
+    '3.99',
+    'https://cdn.apartmenttherapy.info/image/upload/f_jpg,q_auto:eco,c_fill,g_auto,w_1500,ar_16:9/k%2FPhoto%2FRecipe%20Ramp%20Up%2F2022-07-Cappuccino%2FCappuccino',
     8,
     ['1 o 2 shots de espresso 100% arábica',
      'Leche vaporizada',
@@ -102,9 +102,9 @@ export const MEALS = [
     'm6',
     ['c3'],
     'Iced Cappuccino',
-    '$4.25',
+    '4.25',
 
-    'https://images.unsplash.com/photo-1556741403-7630bba58c74',
+    'https://images.ctfassets.net/v601h1fyjgba/1eje3eJjFrd8FkYxT2jniv/1bd8c902f5e48d95fdd3183c9993ed04/Lite_Iced_Cappuccino_Hi__1_.jpg',
     7,
     ['1 o 2 shots de espresso 100% arábica',
      'Leche fría',
@@ -124,7 +124,7 @@ export const MEALS = [
     'm7',
     ['c4'],
     'Iced Coffee',
-    '$3.49',
+    '3.49',
 
     'https://frostingandfettuccine.com/wp-content/uploads/2022/12/Instant-Iced-Coffee-5-1.jpg ',
     9,
@@ -145,7 +145,7 @@ export const MEALS = [
     'm8',
     ['c4'],
     'Iced Mocha',
-    '$3.99',
+    '3.99',
     'https://images.unsplash.com/photo-1593642532873-e3e1d8bb4fa5',
     9,
     [ '1 taza de café espresso o café fuerte',
@@ -165,7 +165,7 @@ export const MEALS = [
     'm9',
     ['c5'],
     'Caramel Macchiato',
-    '$4.00',
+    '4.00',
 
     'https://www.recetasderechupete.com/wp-content/uploads/2022/01/Expresso-macchiato-1200x828.jpg ',
     8,
@@ -188,7 +188,7 @@ export const MEALS = [
     'm10',
     ['c6'],
     'Mocha',
-    '$4.50',
+    '4.50',
     'https://www.folgerscoffee.com/folgers/recipes/_Hero%20Images/Detail%20Pages/6330/image-thumb__6330__schema_image/CafeMocha-hero.61028a28.jpg',
     10,
     ['1 taza de café espresso',

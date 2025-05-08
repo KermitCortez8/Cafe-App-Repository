@@ -25,7 +25,7 @@ export default function CategoriesStack({
     <Stack.Navigator
       initialRouteName="Categories"
       screenOptions={{
-        headerStyle: { backgroundColor: '#006400' },
+        headerStyle: { backgroundColor: '#74512D' },
         headerTintColor: 'white',
         headerRight: () => (
           <TouchableOpacity
