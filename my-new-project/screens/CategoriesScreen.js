@@ -9,7 +9,7 @@ import Subtitle from '../components/Subtitle';
 export default function CategoriesScreen({ navigation }) {
   return (
     <View style={styles.container}>
-      <Subtitle text="Choose a Coffee Category" />
+      <Subtitle text="Elija su categoria favorita" />
       <FlatList
         data={CATEGORIES}
         keyExtractor={(item) => item.id}
@@ -18,6 +18,7 @@ export default function CategoriesScreen({ navigation }) {
           <CategoryGridItem
             title={item.title}
             color={item.color}
+            imageUrl={item.imageUrl}
             onPress={() =>
               navigation.navigate('CoffeeOverview', { categoryId: item.id })
             }
@@ -31,7 +32,7 @@ export default function CategoriesScreen({ navigation }) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#f3f3f3',
+    backgroundColor: '#F8F4E1',
     padding: 16,
   },
 });
