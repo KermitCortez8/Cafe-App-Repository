@@ -32,10 +32,10 @@ export default function App() {
       <Drawer.Navigator
         screenOptions={{
           headerStyle: {
-            backgroundColor: '#4E1F00', 
+            backgroundColor: '#4E1F00',
           },
           headerTintColor: '#F8F4E1',
-          drawerContentStyle: { backgroundColor: '#4E1F00' }, 
+          drawerContentStyle: { backgroundColor: '#4E1F00' },
           drawerInactiveTintColor: 'white',
           drawerActiveTintColor: '#74512D',
           drawerActiveBackgroundColor: '#F8F4E1',
