@@ -4,7 +4,7 @@ import { View, Text, StyleSheet } from 'react-native';
 export default function NotificationScreen() {
   return (
     <View style={styles.container}>
-      <Text style={styles.text}>¡Hola Mundo!</Text>
+      <Text style={styles.text}>¡Hola Mundo! Notificacion</Text>
     </View>
   );
 }
@@ -12,8 +12,8 @@ export default function NotificationScreen() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: 'center',  // Centra verticalmente
-    alignItems: 'center',      // Centra horizontalmente
+    justifyContent: 'center', 
+    alignItems: 'center',     
     backgroundColor: '#fff',
   },
   text: {
