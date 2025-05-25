@@ -1,20 +1,28 @@
 import React from 'react';
 import { View, Text, Image, StyleSheet, TouchableOpacity } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
+import { useNavigation } from '@react-navigation/native';
 
-interface Props {
-  image: string | number; // number para require(...), string para URL
+export interface Product {
+  image: string | number;
   name: string;
   type: string;
   price: string;
   rating: number;
 }
 
-export default function ProductCard({ image, name, type, price, rating }: Props) {
+export default function ProductCard({ image, name, type, price, rating }: Product) {
+  const navigation = useNavigation<any>();
   const imageSource = typeof image === 'string' ? { uri: image } : image;
 
+  const handlePress = () => {
+    navigation.navigate('ProductDetail', {
+      product: { image, name, type, price, rating },
+    });
+  };
+
   return (
-    <View style={styles.card}>
+    <TouchableOpacity style={styles.card} onPress={handlePress}>
       <View style={styles.rating}>
         <Ionicons name="star" size={14} color="#FFD700" />
         <Text style={styles.ratingText}>{rating.toFixed(1)}</Text>
@@ -28,7 +36,7 @@ export default function ProductCard({ image, name, type, price, rating }: Props)
           <Ionicons name="add" size={20} color="white" />
         </TouchableOpacity>
       </View>
-    </View>
+    </TouchableOpacity>
   );
 }
 

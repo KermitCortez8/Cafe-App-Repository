@@ -9,10 +9,7 @@ export default function DrawerNavigator() {
   return (
     <Drawer.Navigator
       screenOptions={{
-        headerStyle: {
-          backgroundColor: '#4E1F00',
-        },
-        headerTintColor: '#F8F4E1',
+        headerShown: false, // ✅ ocultar encabezado automático
         drawerContentStyle: { backgroundColor: '#4E1F00' },
         drawerInactiveTintColor: 'white',
         drawerActiveTintColor: '#74512D',
