@@ -1,37 +1,73 @@
-import React from 'react';
-import { View, ScrollView, StyleSheet } from 'react-native';
-import Header from '../../components/Header';
-import SearchBar from '../../components/SearchBar';
-import PromoCarousel from '../../components/PromoCarrusel';
-import CategorySlider from '../../components/CategoriesSliders';
-import ProductCard from '../../components/ProductoCard';
+ // /src/screens/Inicio/PrincipalViewScreen.js
+import React, { useState } from 'react';
+import { View, FlatList, ScrollView, StyleSheet } from 'react-native';
 
-export default function HomeScreen() {
+import Header               from '../../components/Header';
+import { DeliveryBanner }   from '../../components/DeliveryBanner';
+import SearchBar            from '../../components/SearchBar';
+import PromoCarousel        from '../../components/PromoCarrusel';
+import { CategoryChip }     from '../../components/CategoryChip';
+import { CoffeeCard }       from '../../components/CoffeeCard';
+import { categories, coffees } from '../../data/coffeeData';
+
+export default function PrincipalViewScreen({ navigation }) {
+  const [search, setSearch]       = useState('');
+  const [selectedCat, setCat]     = useState(null);
+
+  // Filtrar cafés según categoría seleccionada y texto de búsqueda
+  const filtered = coffees.filter(c =>
+    (selectedCat ? c.category === selectedCat : true) &&
+    c.name.toLowerCase().includes(search.toLowerCase())
+  );
+
   return (
-    <View style={styles.container}>
+    <ScrollView style={styles.container}>
+      {/* Encabezado personalizado */}
       <Header />
-      <ScrollView>
-        <SearchBar />
-        <PromoCarousel />
-        <CategorySlider />
-        <View style={styles.productsContainer}>
-          <ProductCard
-            image="https://upload.wikimedia.org/wikipedia/commons/7/70/Cappuccino_in_original.jpg"
-            name="Cappuccino"
-            type="Classic"
-            price="45.13"
-            rating={4.8}
+
+      {/* Banner de delivery */}
+      <DeliveryBanner onPress={() => { /* acción al pulsar banner */ }} />
+
+      {/* Barra de búsqueda */}
+      <SearchBar value={search} onChange={setSearch} />
+
+      {/* Carrusel de promociones */}
+      <PromoCarousel />
+
+      {/* Filtro por categorías */}
+      <FlatList
+        horizontal
+        data={categories}
+        keyExtractor={item => item.id}
+        showsHorizontalScrollIndicator={false}
+        renderItem={({ item }) => (
+          <CategoryChip
+            label={item.name}
+            selected={selectedCat === item.id}
+            onPress={() => setCat(item.id)}
           />
-          <ProductCard
-            image="https://www.cuisinart.com/dw/image/v2/ABAF_PRD/on/demandware.static/-/Sites-us-cuisinart-sfra-Library/default/dw30047d66/images/recipe-Images/cappuccino1-recipe.jpg?sw=1200&sh=1200&sm=fit"
-            name="Cappuccino"
-            type="Classic"
-            price="45.13"
-            rating={4.8}
-          />
-        </View>
-      </ScrollView>
-    </View>
+        )}
+        style={styles.chipList}
+      />
+
+      {/* Lista de cafés filtrados en dos columnas */}
+      <View style={styles.coffeeListContainer}>
+        <FlatList
+          data={filtered}
+          keyExtractor={item => item.id}
+          numColumns={2}
+          scrollEnabled={false} // Desactivar scroll interno para que ScrollView principal maneje el scroll
+          renderItem={({ item }) => (
+            <CoffeeCard
+              coffee={item}
+              onPress={() =>
+                navigation.navigate('DetallesCafe', { coffee: item })
+              }
+            />
+          )}
+        />
+      </View>
+    </ScrollView>
   );
 }
 
@@ -40,10 +76,13 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: '#F8F4E1',
   },
-  productsContainer: {
-    flexDirection: 'row',
-    flexWrap: 'wrap',
-    justifyContent: 'center',
+  chipList: {
+    marginHorizontal: 16,
+    marginVertical: 8,
+  },
+  coffeeListContainer: {
+    paddingHorizontal: 8,
     paddingBottom: 16,
   },
 });
+

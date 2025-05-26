@@ -2,9 +2,12 @@ import React from 'react';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { Ionicons } from '@expo/vector-icons';
 
+// Stacks y pantallas
 import InicioStack from './InicioStack';
 import PedidoStack from './PedidoStack';
-import FavouritesScreen from '../screens/FavouritesScreens';
+import SearchScreen from '../screens/SearchScreen';
+import AccountScreen from '../screens/AccountScreen';
+import FavouritesScreen from '../screens/FavouritesScreen';
 import NotificationScreen from '../screens/NotificationsScreen';
 
 const Tab = createBottomTabNavigator();
@@ -12,33 +15,39 @@ const Tab = createBottomTabNavigator();
 export default function BottomTabs() {
   return (
     <Tab.Navigator
+      // Opciones generales del tab bar
       screenOptions={({ route }) => ({
-        headerShown: false,
-        tabBarActiveTintColor: '#74512D',
-        tabBarInactiveTintColor: 'gray',
-        tabBarStyle: { backgroundColor: '#F8F4E1' },
-        tabBarIcon: ({ color, size }) => {
-          let iconName = 'ellipse-outline';
-
-          if (route.name === 'InicioBT') {
-            iconName = 'home-outline';
-          } else if (route.name === 'PedidoBT') {
-            iconName = 'cart-outline';
-          } else if (route.name === 'FavoritosBT') {
-            iconName = 'heart-outline';
-          } else if (route.name === 'NotificacionesBT') {
-            iconName = 'notifications-outline';
+        headerShown: false,                             // Oculta el header en todas las pantallas
+        tabBarActiveTintColor: '#74512D',               // Color del icono activo
+        tabBarInactiveTintColor: 'gray',                // Color de los iconos inactivos
+        tabBarStyle: { backgroundColor: '#F8F4E1' },     // Fondo de la barra de pestañas
+        tabBarIcon: ({ color, size }) => {              // Definición de iconos según ruta
+          switch (route.name) {
+            case 'Inicio':
+              return <Ionicons name="home-outline" size={size} color={color} />;
+            case 'Pedido':
+              return <Ionicons name="cart-outline" size={size} color={color} />;
+            case 'Search':
+              return <Ionicons name="search-outline" size={size} color={color} />;
+            case 'Account':
+              return <Ionicons name="person-outline" size={size} color={color} />;
+            case 'Favourites':
+              return <Ionicons name="heart-outline" size={size} color={color} />;
+            case 'Notifications':
+              return <Ionicons name="notifications-outline" size={size} color={color} />;
+            default:
+              return null;
           }
-
-          return <Ionicons name={iconName} size={size} color={color} />;
         },
       })}
     >
-      <Tab.Screen name="InicioBT" component={InicioStack} />
-      <Tab.Screen name="PedidoBT" component={PedidoStack} />
-      <Tab.Screen name="FavoritosBT" component={FavouritesScreen} />
-      <Tab.Screen name="NotificacionesBT" component={NotificationScreen} />
+      {/* Definición de cada pestaña con su componente */}
+      <Tab.Screen name="Inicio" component={InicioStack} />
+      <Tab.Screen name="Pedido" component={PedidoStack} />
+      <Tab.Screen name="Search" component={SearchScreen} />
+      <Tab.Screen name="Account" component={AccountScreen} />
+      <Tab.Screen name="Favourites" component={FavouritesScreen} />
+      <Tab.Screen name="Notifications" component={NotificationScreen} />
     </Tab.Navigator>
   );
 }
-
