@@ -1,33 +1,30 @@
 import React from 'react';
-import { View, Text, StyleSheet, Button } from 'react-native';
-import { useNavigation } from '@react-navigation/native';
-
-export default function DetailsScreen() {
-  const navigation = useNavigation();
-
+import { View, Text, Image, ScrollView, StyleSheet } from 'react-native';
+import Ionicons from 'react-native-vector-icons/Ionicons';
+import { Button } from '../../components/Button';
+export default function DetailsScreen({ route }) {
+  const { coffee } = route.params;
   return (
-    <View style={styles.container}>
-      <Text style={styles.text}>¡Hola Mundo! Detalles de café</Text>
-      <Button
-        title="Volver al Menú Principal"
-        onPress={() => navigation.navigate('MenuPrincipal')}
-        color="#4E1F00"
-      />
-    </View>
+    <ScrollView style={styles.container}>
+      <Image source={{ uri: coffee.imageUrl }} style={styles.image} />
+      <View style={styles.content}>
+        <Text style={styles.title}>{coffee.name}</Text>
+        <View style={styles.ratingRow}>
+          <Ionicons name="star" size={20} color="#FFD700" />
+          <Text style={styles.rating}>5.0 (120)</Text>
+        </View>
+        <Text style={styles.desc}>Enjoy a premium coffee experience with rich crema and aroma.</Text>
+        <Button title="Buy Now" onPress={() => {}} />
+      </View>
+    </ScrollView>
   );
 }
-
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: '#fff',
-  },
-  text: {
-    fontSize: 24,
-    fontWeight: 'bold',
-    color: '#4E1F00',
-    marginBottom: 20,
-  },
+  container: { flex: 1 },
+  image: { width: '100%', height: 250 },
+  content: { padding: 16 },
+  title: { fontSize: 24, fontWeight: 'bold' },
+  ratingRow: { flexDirection: 'row', alignItems: 'center', marginVertical: 8 },
+  rating: { marginLeft: 6, fontSize: 14 },
+ 	desc: { fontSize: 14, color: '#666', marginBottom: 16 }
 });

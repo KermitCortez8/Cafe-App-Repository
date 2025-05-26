@@ -1,33 +1,57 @@
-import React from 'react';
-import { View, Text, StyleSheet, Button } from 'react-native';
-import { useNavigation } from '@react-navigation/native';
+// /src/screens/Inicio/PrincipalViewScreen.js
+import React, { useState } from 'react'
+import { View, FlatList, StyleSheet } from 'react-native'
 
-export default function PrincipalViewScreen() {
-  const navigation = useNavigation();
+import { DeliveryBanner }      from '../../components/DeliveryBanner'
+import { SearchBar }           from '../../components/SearchBar'
+import { CategoryChip }        from '../../components/CategoryChip'
+import { CoffeeCard }          from '../../components/CoffeeCard'
+import { categories, coffees } from '../../data/coffeeData'
+
+export default function PrincipalViewScreen({ navigation }) {
+  const [search, setSearch]       = useState('')
+  const [selectedCat, setCat]     = useState(null)
+
+  const filtered = coffees.filter(c =>
+    (selectedCat ? c.category === selectedCat : true) &&
+    c.name.toLowerCase().includes(search.toLowerCase())
+  )
 
   return (
     <View style={styles.container}>
-      <Text style={styles.text}>¡Hola Mundo! Principal</Text>
-      <Button
-        title="Ir a Detalles del Café"
-        onPress={() => navigation.navigate('DetallesCafe')}
-        color="#4E1F00"
+      <DeliveryBanner onPress={() => { /* ... */ }} />
+      <SearchBar    value={search} onChange={setSearch} />
+
+      <FlatList
+        horizontal
+        data={categories}
+        keyExtractor={item => item.id}
+        renderItem={({ item }) => (
+          <CategoryChip
+            label={item.name}
+            selected={selectedCat === item.id}
+            onPress={() => setCat(item.id)}
+          />
+        )}
+        style={styles.chipList}
+      />
+
+      <FlatList
+        data={filtered}
+        keyExtractor={item => item.id}
+        numColumns={2}
+        renderItem={({ item }) => (
+          <CoffeeCard
+            coffee={item}
+            onPress={() => navigation.navigate('Detail', { coffee: item })}
+          />
+        )}
       />
     </View>
-  );
+  )
 }
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: 'center',  
-    alignItems: 'center',      
-    backgroundColor: '#fff',
-  },
-  text: {
-    fontSize: 24,
-    fontWeight: 'bold',
-    color: '#4E1F00',
-    marginBottom: 20,
-  },
-});
+  container: { flex: 1, backgroundColor: '#eef2f5' },
+  chipList:  { marginHorizontal: 16 }
+})
