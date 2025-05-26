@@ -1,15 +1,43 @@
 import React from 'react';
-import { createStackNavigator } from '@react-navigation/stack';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
+
+// Screens de la sección Pedido
 import DeliverScreen from '../screens/Pedido/DeliverScreen';
-import PickupScreen from '../screens/Pedido/PickupScreen';
-import MapScreen from '../screens/Pedido/MapScreen';
-const Stack2 = createStackNavigator();
+import PickupScreen  from '../screens/Pedido/PickupScreen';
+import MapScreen     from '../screens/Pedido/MapScreen';
+
+const Stack = createNativeStackNavigator();
+
 export default function PedidoStack() {
   return (
-    <Stack2.Navigator screenOptions={{ headerShown: false }}>
-      <Stack2.Screen name="Deliver" component={DeliverScreen} />
-      <Stack2.Screen name="Pickup" component={PickupScreen} />
-      <Stack2.Screen name="Map" component={MapScreen} />
-    </Stack2.Navigator>
+    <Stack.Navigator
+      screenOptions={{
+        headerShown: false,                       // 🔒 Oculta el header por defecto
+        // 🎨 Estilos listos por si activas el header en el futuro
+        headerStyle: { backgroundColor: '#4E1F00' },
+        headerTintColor: '#F8F4E1',
+      }}
+    >
+      {/* Dirección de entrega y emisión de boleta */}
+      <Stack.Screen
+        name="DireccionBoleta"
+        component={DeliverScreen}
+        options={{ title: 'Dirección y Boleta' }}
+      />
+
+      {/* Punto de recogida (Pick Up) */}
+      <Stack.Screen
+        name="PickUp"
+        component={PickupScreen}
+        options={{ title: 'Pick Up' }}
+      />
+
+      {/* Mapa de entrega */}
+      <Stack.Screen
+        name="MapaEntrega"
+        component={MapScreen}
+        options={{ title: 'Mapa de Entrega' }}
+      />
+    </Stack.Navigator>
   );
 }

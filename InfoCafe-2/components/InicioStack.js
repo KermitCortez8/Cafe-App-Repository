@@ -1,13 +1,35 @@
 import React from 'react';
-import { createStackNavigator } from '@react-navigation/stack';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
+
+// Screens de la sección Inicio
 import PrincipalViewScreen from '../screens/Inicio/PrincipalViewScreen';
-import DetailsScreen from '../screens/Inicio/DetailsScreen';
-const Stack = createStackNavigator();
+import DetailsScreen       from '../screens/Inicio/DetailsScreen';
+
+const Stack = createNativeStackNavigator();
+
 export default function InicioStack() {
   return (
-    <Stack.Navigator screenOptions={{ headerShown: false }}>
-      <Stack.Screen name="Principal" component={PrincipalViewScreen} />
-      <Stack.Screen name="Detail" component={DetailsScreen} />
+    <Stack.Navigator
+      screenOptions={{
+        headerShown: false,                        
+         
+        headerStyle: { backgroundColor: '#4E1F00' },
+        headerTintColor: '#F8F4E1',
+      }}
+    >
+      {/* Pantalla principal de la sección Inicio */}
+      <Stack.Screen
+        name="MenuPrincipal"
+        component={PrincipalViewScreen}
+        options={{ title: 'Menú Principal' }}
+      />
+
+      {/* Pantalla de detalles del café */}
+      <Stack.Screen
+        name="DetallesCafe"
+        component={DetailsScreen}
+        options={{ title: 'Detalles del Café' }}
+      />
     </Stack.Navigator>
   );
 }
