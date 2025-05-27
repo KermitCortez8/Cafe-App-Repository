@@ -2,7 +2,8 @@ import * as React from 'react';
 import { View, Text, StyleSheet, Button } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import MapView,{Marker,Polyline} from 'react-native-maps';
-//import MapViewDirections from 'react-native-maps-directions';
+import MapViewDirections from 'react-native-maps-directions';
+import {GOOGLE_MAPS_KEY} from '@env';
 
 
 
@@ -46,11 +47,7 @@ export default function MapScreen() {
         <MapViewDirections
           origin={origin}
           destination={destination}
-          apikey=''
-        />
-
-        <Polyline
-          coordinates={[origin,destination]}
+          apikey={GOOGLE_MAPS_KEY}
           strokeColor="brown"
           strokeWidth={6}
         />
