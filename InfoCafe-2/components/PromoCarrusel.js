@@ -5,8 +5,6 @@ import {
   StyleSheet,
   View,
   Dimensions,
-  NativeSyntheticEvent,
-  NativeScrollEvent,
 } from 'react-native';
 
 const { width } = Dimensions.get('window');
@@ -26,7 +24,7 @@ const middleIndex = images.length;
 
 export default function PromoCarousel() {
   const [index, setIndex] = useState(middleIndex);
-  const flatListRef = useRef<FlatList>(null);
+  const flatListRef = useRef(null);
 
   useEffect(() => {
     flatListRef.current?.scrollToIndex({ index, animated: false });
@@ -38,12 +36,14 @@ export default function PromoCarousel() {
     return () => clearInterval(interval);
   }, [index]);
 
-  const scrollTo = (nextIndex: number) => {
-    flatListRef.current?.scrollToIndex({ index: nextIndex, animated: true });
-    setIndex(nextIndex);
+  const scrollTo = (nextIndex) => {
+    const maxIndex = infiniteImages.length - 1;
+    const safeIndex = nextIndex > maxIndex ? middleIndex : nextIndex;
+    flatListRef.current?.scrollToIndex({ index: safeIndex, animated: true });
+    setIndex(safeIndex);
   };
 
-  const onScrollEnd = (e: NativeSyntheticEvent<NativeScrollEvent>) => {
+  const onScrollEnd = (e) => {
     const contentOffsetX = e.nativeEvent.contentOffset.x;
     const currentIndex = Math.round(contentOffsetX / (width - 32));
     let newIndex = currentIndex;

@@ -1,4 +1,4 @@
- import React from 'react';
+import React from 'react';
 import { View, Text, Image, ScrollView, StyleSheet } from 'react-native';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import { Button } from '../../components/Button';
@@ -31,35 +31,35 @@ export default function DetailsScreen({ route }) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',       // Fondo blanco para toda la pantalla
+    backgroundColor: '#fff',
   },
   image: {
     width: '100%',
-    height: 250,                   // Altura fija para la imagen principal
+    height: 250,
   },
   content: {
-    padding: 16,                   // Espaciado interior para texto y botones
+    padding: 16,
   },
   title: {
     fontSize: 24,
     fontWeight: 'bold',
-    color: '#4E1F00',              // Color marrón para el título
-    marginBottom: 8,               // Espacio debajo del título
+    color: '#4E1F00',
+    marginBottom: 8,
   },
   ratingRow: {
     flexDirection: 'row',
     alignItems: 'center',
-    marginVertical: 8,             // Margen arriba y abajo del rating
+    marginVertical: 8,
   },
   rating: {
     marginLeft: 6,
     fontSize: 14,
-    color: '#333',                 // Color de texto del rating
+    color: '#333',
   },
   desc: {
     fontSize: 14,
     color: '#666',
-    marginBottom: 16,              // Espacio antes del botón
-    lineHeight: 20,                // Mejor lectura en párrafos
+    marginBottom: 16,
+    lineHeight: 20,
   },
 });

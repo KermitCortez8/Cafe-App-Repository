@@ -3,11 +3,11 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { Ionicons } from '@expo/vector-icons';
 
 // Stacks y pantallas
-import InicioStack from './InicioStack';
-import PedidoStack from './PedidoStack';
+import InicioStack from '/workspaces/Cafe-App-Repository/InfoCafe-2/components/InicioStack.js';
+import PedidoStack from '/workspaces/Cafe-App-Repository/InfoCafe-2/components/PedidoStack';
 import SearchScreen from '../screens/SearchScreen';
 import AccountScreen from '../screens/AccountScreen';
-import FavouritesScreen from '../screens/FavouritesScreen';
+import FavouritesScreen from '/workspaces/Cafe-App-Repository/InfoCafe-2/screens/FavouritesScreens.js';
 import NotificationScreen from '../screens/NotificationsScreen';
 
 const Tab = createBottomTabNavigator();

@@ -1,44 +1,45 @@
- // /src/screens/Inicio/PrincipalViewScreen.js
 import React, { useState } from 'react';
 import { View, FlatList, ScrollView, StyleSheet } from 'react-native';
 
-import Header               from '../../components/Header';
-import { DeliveryBanner }   from '../../components/DeliveryBanner';
-import SearchBar            from '../../components/SearchBar';
-import PromoCarousel        from '../../components/PromoCarrusel';
-import { CategoryChip }     from '../../components/CategoryChip';
-import { CoffeeCard }       from '../../components/CoffeeCard';
+import Header from '../../components/Header';
+import { DeliveryBanner } from '../../components/DeliveryBanner';
+import { SearchBar } from '../../components/SearchBar';
+import PromoCarousel from '../../components/PromoCarrusel';
+import { CategoryChip } from '../../components/CategoryChip';
+import { CoffeeCard } from '../../components/CoffeeCard';
+
 import { categories, coffees } from '../../data/coffeeData';
 
 export default function PrincipalViewScreen({ navigation }) {
-  const [search, setSearch]       = useState('');
-  const [selectedCat, setCat]     = useState(null);
+  const [search, setSearch] = useState('');
+  const [selectedCat, setCat] = useState(null);
 
-  // Filtrar cafés según categoría seleccionada y texto de búsqueda
-  const filtered = coffees.filter(c =>
-    (selectedCat ? c.category === selectedCat : true) &&
-    c.name.toLowerCase().includes(search.toLowerCase())
+  const filtered = coffees.filter(coffee =>
+    (selectedCat ? coffee.category === selectedCat : true) &&
+    coffee.name.toLowerCase().includes(search.toLowerCase())
   );
 
   return (
-    <ScrollView style={styles.container}>
-      {/* Encabezado personalizado */}
+    <ScrollView
+      style={styles.container}
+      keyboardShouldPersistTaps="handled"
+    >
       <Header />
 
-      {/* Banner de delivery */}
-      <DeliveryBanner onPress={() => { /* acción al pulsar banner */ }} />
+      <DeliveryBanner onPress={() => { /* acción cuando presionan el banner */ }} />
 
-      {/* Barra de búsqueda */}
-      <SearchBar value={search} onChange={setSearch} />
+      <SearchBar
+        value={search}
+        onChange={setSearch}
+        placeholder="Buscar café..."
+      />
 
-      {/* Carrusel de promociones */}
       <PromoCarousel />
 
-      {/* Filtro por categorías */}
       <FlatList
         horizontal
         data={categories}
-        keyExtractor={item => item.id}
+        keyExtractor={item => item.id.toString()}
         showsHorizontalScrollIndicator={false}
         renderItem={({ item }) => (
           <CategoryChip
@@ -50,19 +51,16 @@ export default function PrincipalViewScreen({ navigation }) {
         style={styles.chipList}
       />
 
-      {/* Lista de cafés filtrados en dos columnas */}
       <View style={styles.coffeeListContainer}>
         <FlatList
           data={filtered}
-          keyExtractor={item => item.id}
+          keyExtractor={item => item.id.toString()}
           numColumns={2}
-          scrollEnabled={false} // Desactivar scroll interno para que ScrollView principal maneje el scroll
+          scrollEnabled={false}
           renderItem={({ item }) => (
             <CoffeeCard
               coffee={item}
-              onPress={() =>
-                navigation.navigate('DetallesCafe', { coffee: item })
-              }
+              onPress={() => navigation.navigate('DetallesCafe', { coffee: item })}
             />
           )}
         />
@@ -85,4 +83,3 @@ const styles = StyleSheet.create({
     paddingBottom: 16,
   },
 });
-
