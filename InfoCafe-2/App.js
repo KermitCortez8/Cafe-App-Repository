@@ -1,11 +1,12 @@
 import React from 'react';
 import { NavigationContainer } from '@react-navigation/native';
-import DrawerNavigator from './navigation/DrawerNavigator';
+import RootNavigator from '../InfoCafe-2/navigation/RootNavigation';
+import BottomTabs from './navigation/BottomTabs';
 
 export default function App() {
   return (
     <NavigationContainer>
-      <DrawerNavigator />
+      <RootNavigator /> 
     </NavigationContainer>
   );
 }

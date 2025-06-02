@@ -1,33 +1,26 @@
 import React from 'react';
-import { View, Text, StyleSheet, Button } from 'react-native';
-import { useNavigation } from '@react-navigation/native';
+import { ScrollView, StyleSheet } from 'react-native';
+import DecorativeBackground from '../../componentes/PantallaLayout';
+import SearchBar from '../../componentes/SearchBar';
+import PromoBanner from '../../componentes/PromoBanner';
+import CategoryList from '../../componentes/CategoryList';
+import ProductList from '../../componentes/ProductList';
 
 export default function PrincipalViewScreen() {
-  const navigation = useNavigation();
-
   return (
-    <View style={styles.container}>
-      <Text style={styles.text}>¡Hola Mundo! Principal</Text>
-      <Button
-        title="Ir a Detalles del Café"
-        onPress={() => navigation.navigate('DetallesCafe')}
-        color="#4E1F00"
-      />
-    </View>
+    <DecorativeBackground>
+      <ScrollView contentContainerStyle={styles.container} showsVerticalScrollIndicator={false}>
+        <SearchBar />
+        <PromoBanner />
+        <CategoryList />
+        <ProductList />
+      </ScrollView>
+    </DecorativeBackground>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
-    justifyContent: 'center',  
-    alignItems: 'center',      
-    backgroundColor: '#fff',
-  },
-  text: {
-    fontSize: 24,
-    fontWeight: 'bold',
-    color: '#4E1F00',
-    marginBottom: 20,
+    padding: 16,
   },
 });

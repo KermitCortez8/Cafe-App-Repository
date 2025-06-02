@@ -19,11 +19,13 @@ export default function InicioStack() {
         component={PrincipalViewScreen} 
         options={{ title: 'Menú Principal' }}
       />
-      <Stack.Screen 
+      
+      {/*<Stack.Screen 
         name="DetallesCafe" 
         component={DetailsScreen} 
-        options={{ title: 'Detalles del Café' }}
-      />
-    </Stack.Navigator>
+        options={{ headerShown: false }} 
+      />  */}
+      
+    </Stack.Navigator> 
   );
 }
