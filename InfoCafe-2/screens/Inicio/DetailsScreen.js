@@ -1,11 +1,11 @@
 // screens/Inicio/DetailsScreen.js
 import React, { useState } from 'react';
 import { ScrollView, StyleSheet, View } from 'react-native';
-import Header from '../../components/Header';
-import ProductImage from '../InfoCafe-2/components/ProductImage';
-import ProductInfo from '../InfoCafe-2/components/ProductInfo';
-import Description from '../InfoCafe-2/components/Description';
-import SizeSelector from '../InfoCafe-2/components/SizeSelector';
+import Header from '../../../InfoCafe-2/componentes/Header';
+import ProductImage from '../../../InfoCafe-2/componentes/ProductImage';
+import ProductInfo from '../../../InfoCafe-2/componentes/ProductInfo';
+import Description from '../../../InfoCafe-2/componentes/Description';
+import SizeSelector from '../../../InfoCafe-2/componentes/SizeSelector';
 
 export default function DetailsScreen({ route, navigation }) {
   const { product } = route.params;
