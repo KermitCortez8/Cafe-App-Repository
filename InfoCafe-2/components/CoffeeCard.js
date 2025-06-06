@@ -1,8 +1,8 @@
+// CoffeeCard.js
 import React from 'react';
 import { View, Text, Image, StyleSheet, TouchableOpacity } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native';
-
 
 export function CoffeeCard({ coffee, onPress }) {
   const navigation = useNavigation();
@@ -29,6 +29,7 @@ export function CoffeeCard({ coffee, onPress }) {
         </View>
       )}
 
+      {/* Cargar la imagen desde la URL proporcionada */}
       <Image source={imageSource} style={styles.image} />
       <Text style={styles.name}>{coffee.name}</Text>
       
@@ -94,3 +95,5 @@ const styles = StyleSheet.create({
     padding: 4,
   },
 });
+
+export default CoffeeCard;
