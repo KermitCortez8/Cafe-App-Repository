@@ -5,27 +5,21 @@ import DetailsScreen from '../screens/Inicio/DetailsScreen';
 
 const Stack = createNativeStackNavigator();
 
-export default function InicioStack() {
+export default function StackHome() {
   return (
-    <Stack.Navigator
-      screenOptions={{
-        headerShown: false, 
-        headerStyle: { backgroundColor: '#4E1F00' },
-        headerTintColor: '#F8F4E1',
-      }}
-    >
-      <Stack.Screen 
-        name="MenuPrincipal" 
-        component={PrincipalViewScreen} 
-        options={{ title: 'Menú Principal' }}
-      />
+    <Stack.Navigator screenOptions={{ headerShown: false }}>
+      <Stack.Screen name="PrincipalView" component={PrincipalViewScreen} />
+      <Stack.Screen name="Details" component={DetailsScreen} 
+      options={({ navigation }) => ({
+        headerShown: false,
+        // Esto deshabilita el gesto de abrir drawer deslizando
+        gestureEnabled: false,
+        // Esto bloquea el drawer cuando estés en Details
+        swipeEnabled: false,
+        // Y no muestra el icono de menú hamburguesa (si lo tienes)
+        headerLeft: null,
+      })}/>
       
-      {/*<Stack.Screen 
-        name="DetallesCafe" 
-        component={DetailsScreen} 
-        options={{ headerShown: false }} 
-      />  */}
-      
-    </Stack.Navigator> 
+    </Stack.Navigator>
   );
 }

@@ -3,11 +3,12 @@ import { View, Text, Image, StyleSheet, TouchableOpacity } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native';
 
+
 export default function ProductCard({ product }) {
   const navigation = useNavigation();
 
   const goToDetails = () => {
-    navigation.navigate('DetallesCafe', { product });
+    navigation.navigate('Details', { product });
   };
 
   return (
