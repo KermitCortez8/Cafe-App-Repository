@@ -24,7 +24,7 @@ export default function IntroScreen({ navigation }) {
           <Text style={styles.subtitle}>Where coffee meets comfort.</Text>
           <TouchableOpacity
             style={styles.button}
-            onPress={() => navigation.replace('PrincipalView')}
+            onPress={() => navigation.replace('Login')}
           >
             <Text style={styles.buttonText}>Get Started</Text>
           </TouchableOpacity>
