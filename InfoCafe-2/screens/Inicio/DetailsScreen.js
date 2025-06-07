@@ -1,27 +1,33 @@
+// DetailsScreen.js
 import React from 'react';
 import { View, Text, Image, ScrollView, StyleSheet } from 'react-native';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import { Button } from '../../components/Button';
 
 export default function DetailsScreen({ route }) {
-  const { coffee } = route.params;
+  const { coffee } = route.params;  // Aquí recibimos el parámetro "coffee" que pasamos desde PrincipalViewScreen
 
   return (
     <ScrollView style={styles.container}>
+      {/* Mostrar la imagen del café */}
       <Image source={{ uri: coffee.imageUrl }} style={styles.image} />
 
       <View style={styles.content}>
+        {/* Nombre del café */}
         <Text style={styles.title}>{coffee.name}</Text>
 
+        {/* Mostrar el rating */}
         <View style={styles.ratingRow}>
           <Ionicons name="star" size={20} color="#FFD700" />
-          <Text style={styles.rating}>5.0 (120)</Text>
+          <Text style={styles.rating}>5.0 (120)</Text>  {/* Puedes ajustar esta parte con el rating real si lo tienes */}
         </View>
 
+        {/* Descripción del café */}
         <Text style={styles.desc}>
-          Enjoy a premium coffee experience with rich crema and aroma.
+          Enjoy a premium coffee experience with rich crema and aroma. {/* Puedes modificar esta descripción */}
         </Text>
 
+        {/* Botón de compra */}
         <Button title="Buy Now" onPress={() => { /* Acción de compra */ }} />
       </View>
     </ScrollView>
