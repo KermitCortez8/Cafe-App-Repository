@@ -1,9 +1,9 @@
 // SearchScreen.js
 import React, { useState, useEffect } from 'react';
 import { View, FlatList, StyleSheet } from 'react-native';
-import { getCoffees } from '../utils/firebase'; // Importar la función de Firebase
+import { getCoffees } from '../utils/cafe-context';  // Importamos desde cafe-context
 import { SearchBar } from '../components/SearchBar';
-import { CoffeeCard } from '../components/CoffeeCard'; // Asegúrate de que esta importación sea correcta
+import { CoffeeCard } from '../components/CoffeeCard';
 
 export default function SearchScreen({ navigation }) {
   const [search, setSearch] = useState('');
@@ -15,7 +15,7 @@ export default function SearchScreen({ navigation }) {
       const coffeesFromDB = await getCoffees();
       const updatedCoffees = coffeesFromDB.map(coffee => ({
         ...coffee,
-        imageUrl: "https://firebasestorage.googleapis.com/v0/b/info-cafe-1e08a.firebasestorage.app/o/descarga.jpg?alt=media&token=fb3580d2-6d73-43eb-b944-e142fa5b1cfa"
+        imageUrl: coffee.imageUrl  // Usamos la URL de la imagen de Firebase Storage
       }));
       setCoffees(updatedCoffees);
     };
@@ -29,15 +29,15 @@ export default function SearchScreen({ navigation }) {
 
   return (
     <View style={styles.container}>
-      <SearchBar value={search} onChange={setSearch} />
+      <SearchBar value={search} onChange={setSearch} />  {/* Manejamos el valor del SearchBar */}
       <FlatList
         data={filtered}
-        keyExtractor={item => item.id}
+        keyExtractor={item => item.id ? item.id.toString() : Math.random().toString()}  // Aseguramos que cada item tenga un id válido
         contentContainerStyle={styles.list}
         renderItem={({ item }) => (
           <CoffeeCard
             coffee={item}
-            onPress={() => navigation.navigate('ProductDetail', { product: item })}
+            onPress={() => navigation.navigate('DetallesCafe', { coffee: item })}  // Navegar a DetallesCafe
             imageUrl={item.imageUrl} // Usamos la URL de la imagen
           />
         )}

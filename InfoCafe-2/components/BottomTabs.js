@@ -1,9 +1,10 @@
+// BottomTabs.js
 import React from 'react';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { Ionicons } from '@expo/vector-icons';
 
 // Stacks y pantallas
-import InicioStack from '../components/InicioStack.js';
+import InicioStack from '../components/InicioStack.js'; // Asegúrate de que InicioStack esté registrado correctamente
 import PedidoStack from '../components/PedidoStack';
 import SearchScreen from '../screens/SearchScreen';
 import AccountScreen from '../screens/AccountScreen';
@@ -15,13 +16,12 @@ const Tab = createBottomTabNavigator();
 export default function BottomTabs() {
   return (
     <Tab.Navigator
-      // Opciones generales del tab bar
       screenOptions={({ route }) => ({
-        headerShown: false,                             // Oculta el header en todas las pantallas
-        tabBarActiveTintColor: '#74512D',               // Color del icono activo
-        tabBarInactiveTintColor: 'gray',                // Color de los iconos inactivos
-        tabBarStyle: { backgroundColor: '#F8F4E1' },     // Fondo de la barra de pestañas
-        tabBarIcon: ({ color, size }) => {              // Definición de iconos según ruta
+        headerShown: false,
+        tabBarActiveTintColor: '#74512D',
+        tabBarInactiveTintColor: 'gray',
+        tabBarStyle: { backgroundColor: '#F8F4E1' },
+        tabBarIcon: ({ color, size }) => {
           switch (route.name) {
             case 'Inicio':
               return <Ionicons name="home-outline" size={size} color={color} />;
@@ -41,7 +41,6 @@ export default function BottomTabs() {
         },
       })}
     >
-      {/* Definición de cada pestaña con su componente */}
       <Tab.Screen name="Inicio" component={InicioStack} />
       <Tab.Screen name="Pedido" component={PedidoStack} />
       <Tab.Screen name="Search" component={SearchScreen} />

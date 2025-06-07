@@ -1,14 +1,13 @@
 // PrincipalViewScreen.js
 import React, { useState, useEffect } from 'react';
 import { View, FlatList, ScrollView, StyleSheet } from 'react-native';
-
-import { getCategories, getCoffees } from '../../utils/firebase'; // Importa las funciones de firebase
+import { getCategories, getCoffees } from '../../utils/cafe-context'; // Importar desde cafe-context
 import Header from '../../components/Header';
 import { DeliveryBanner } from '../../components/DeliveryBanner';
 import { SearchBar } from '../../components/SearchBar';
 import PromoCarousel from '../../components/PromoCarrusel';
 import { CategoryChip } from '../../components/CategoryChip';
-import { CoffeeCard } from '../../components/CoffeeCard'; // Verifica que esta importación sea correcta
+import { CoffeeCard } from '../../components/CoffeeCard';
 
 export default function PrincipalViewScreen({ navigation }) {
   const [search, setSearch] = useState('');
@@ -25,7 +24,7 @@ export default function PrincipalViewScreen({ navigation }) {
       // Actualizamos los cafés con la URL de la imagen de Firebase Storage
       const updatedCoffees = coffeesFromDB.map(coffee => ({
         ...coffee,
-        imageUrl: "https://firebasestorage.googleapis.com/v0/b/info-cafe-1e08a.firebasestorage.app/o/descarga.jpg?alt=media&token=fb3580d2-6d73-43eb-b944-e142fa5b1cfa" // URL de la imagen
+        imageUrl: coffee.imageUrl  // Usamos la URL de la imagen de Firebase Storage
       }));
 
       setCategoriesData(categoriesFromDB);
@@ -49,7 +48,7 @@ export default function PrincipalViewScreen({ navigation }) {
       <FlatList
         horizontal
         data={categories}
-        keyExtractor={item => item.id.toString()}
+        keyExtractor={item => item.id ? item.id.toString() : Math.random().toString()}  // Aseguramos que cada item tenga un id válido
         showsHorizontalScrollIndicator={false}
         renderItem={({ item }) => (
           <CategoryChip
@@ -63,13 +62,13 @@ export default function PrincipalViewScreen({ navigation }) {
       <View style={styles.coffeeListContainer}>
         <FlatList
           data={filtered}
-          keyExtractor={item => item.id.toString()}
+          keyExtractor={item => item.id ? item.id.toString() : Math.random().toString()}  // Aseguramos que cada item tenga un id válido
           numColumns={2}
           scrollEnabled={false}
           renderItem={({ item }) => (
             <CoffeeCard
               coffee={item}
-              onPress={() => navigation.navigate('ProductDetail', { product: item })}
+              onPress={() => navigation.navigate('DetallesCafe', { coffee: item })}  // Navegar correctamente
               imageUrl={item.imageUrl} // Pasamos la URL de la imagen
             />
           )}
