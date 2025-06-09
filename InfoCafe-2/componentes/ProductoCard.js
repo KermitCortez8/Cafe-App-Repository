@@ -16,10 +16,10 @@ export default function ProductCard({ product }) {
       <Image source={product.image} style={styles.image} />
       <View style={styles.rating}>
         <Ionicons name="star" size={14} color="gold" />
-        <Text style={styles.ratingText}>{product.rating}</Text>
+        <Text style={styles.ratingText}>{product.average_rating}</Text>
       </View>
       <Text style={styles.name}>{product.name}</Text>
-      <Text style={styles.variant}>{product.variant}</Text>
+      <Text style={styles.roasted}>{product.roasted}</Text>
       <View style={styles.bottom}>
         <Text style={styles.price}>{product.price}</Text>
         <TouchableOpacity style={styles.addBtn}>

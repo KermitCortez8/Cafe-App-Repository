@@ -1,40 +1,51 @@
+// componentes/ProductInfo.js (VERSIÓN FINAL CON roasted, SIN ICONOS Y SIN ratings_count)
 import React from 'react';
 import { View, Text, StyleSheet } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 
-export default function ProductInfo({ name, variant, rating }) {
+export default function ProductInfo({ name, roasted, average_rating }) { // ¡Props actualizadas!
   return (
-    <View>
+    <View style={styles.container}>
       <Text style={styles.name}>{name}</Text>
-      <Text style={styles.variant}>{variant}</Text>
-      <View style={styles.row}>
-        <View style={styles.rating}>
-          <Ionicons name="star" size={16} color="gold" />
-          <Text style={styles.ratingText}>{rating} (230)</Text>
-        </View>
+      {/* Mostrar 'roasted' como el subtítulo */}
+      {roasted && <Text style={styles.variant}>{roasted}</Text>}
+
+      <View style={styles.ratingRow}>
+        {/* Sección de Rating (solo estrella y número, sin conteo) */}
+        {average_rating != null && (
+          <View style={styles.ratingContainer}>
+            <Ionicons name="star" size={16} color="gold" />
+            <Text style={styles.ratingText}>
+              {average_rating} {/* ¡Ya no mostramos ratings_count aquí! */}
+            </Text>
+          </View>
+        )}
       </View>
-      <View style={styles.separator} />
     </View>
   );
 }
 
 const styles = StyleSheet.create({
+  container: {
+    paddingVertical: 10,
+  },
   name: {
     fontSize: 24,
     fontWeight: 'bold',
     color: '#333',
   },
-  variant: {
+  variant: { // Este estilo es para el texto 'roasted' (ej. "Medium Roasted" o "Chiaro")
     fontSize: 16,
     color: '#888',
-    marginBottom: 12,
+    marginBottom: 8,
   },
-  row: {
+  ratingRow: {
     flexDirection: 'row',
-    justifyContent: 'space-between',
+    justifyContent: 'flex-start',
     alignItems: 'center',
+    marginBottom: 16,
   },
-  rating: {
+  ratingContainer: {
     flexDirection: 'row',
     alignItems: 'center',
   },
@@ -42,10 +53,5 @@ const styles = StyleSheet.create({
     marginLeft: 6,
     color: '#444',
     fontSize: 16,
-  },
-  separator: {
-    height: 1,
-    backgroundColor: '#ddd',
-    marginVertical: 16,
   },
 });

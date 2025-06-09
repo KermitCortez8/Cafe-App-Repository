@@ -1,32 +1,25 @@
+// componentes/ProductList.js (VERSIÓN CON SOLUCIÓN DEFINITIVA)
 import React from 'react';
 import { View, StyleSheet } from 'react-native';
-import ProductCard from '../componentes/ProductoCard';
+import ProductCard from '../../InfoCafe-2/componentes/ProductoCard'; // Asegúrate de que esta ruta sea correcta
 
-const products = [
-  {
-    id: '1',
-    name: 'Cappuccino',
-    variant: 'Classic',
-    price: 'S/. 11.00',
-    rating: 4.8,
-    image: { uri: 'https://recetafamiliar.com/wp-content/uploads/2024/05/Receta-del-Clasico-Capuccino-Italiano-1024x576.jpg' },
-  },
-  {
-    id: '2',
-    name: 'Cappuccino',
-    variant: 'Chiaro',
-    price: 'S/. 14.50',
-    rating: 5.0,
-    image: { uri: 'https://www.nespresso.com/ncp/res/uploads/recipes/nespresso-recipes-Cappuccino-OL.jpg' },
-  },
-  // agrega más si quieres
-];
+export default function ProductList({ coffeeData, selectedCategory }) {
+  const filteredData = selectedCategory === 'All'
+    ? coffeeData
+    : coffeeData.filter(product => product.category === selectedCategory);
 
-export default function ProductList() {
   return (
     <View style={styles.grid}>
-      {products.map((product) => (
-        <ProductCard key={product.id} product={product} />
+      {filteredData.map((product) => (
+        <ProductCard
+          key={product.id}
+          // === ¡CAMBIO CLAVE AQUÍ! Pasamos el objeto 'product' completo ===
+          product={product} // <-- ¡Así de simple!
+          // Ya no es necesario reconstruir el objeto product con propiedades específicas.
+          // Esto asegura que todas las propiedades de CoffeeData (id, name, prices, description, etc.)
+          // se pasen intactas a ProductCard y, posteriormente, a DetailsScreen.
+          // ===============================================
+        />
       ))}
     </View>
   );
