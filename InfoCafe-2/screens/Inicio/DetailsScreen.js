@@ -48,7 +48,7 @@ export default function DetailsScreen({ route, navigation }) {
     <ScrollView style={styles.container}>
       <Header title="Detail" onBack={() => navigation.navigate('PrincipalView')} />
 
-      <ProductImage image={product?.image} />
+      <ProductImage source={product?.image} />
 
       <View style={styles.infoContainer}>
         <ProductInfo
