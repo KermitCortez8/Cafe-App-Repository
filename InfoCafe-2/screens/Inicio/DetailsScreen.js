@@ -1,6 +1,6 @@
-// screens/DetailsScreen.js (¡Versión FINAL sin console.log!)
+// screens/DetailsScreen.js
 import React, { useState, useEffect } from 'react';
-import { ScrollView, StyleSheet, View, Text, TouchableOpacity } from 'react-native';
+import { ScrollView, StyleSheet, View, Text, TouchableOpacity, Alert } from 'react-native';
 import Header from '../../../InfoCafe-2/componentes/Header';
 import ProductImage from '../../../InfoCafe-2/componentes/ProductImage';
 import ProductInfo from '../../../InfoCafe-2/componentes/ProductInfo';
@@ -8,10 +8,11 @@ import Description from '../../../InfoCafe-2/componentes/Description';
 import SizeSelector from '../../../InfoCafe-2/componentes/SizeSelector';
 
 export default function DetailsScreen({ route, navigation }) {
-  const { product } = route.params;
+  const { product, onAddToCart } = route.params;
 
-  const [selectedSize, setSelectedSize] = useState('M'); // Tamaño 'M' por defecto
-  const [currentPrice, setCurrentPrice] = useState('0.00'); // Estado para el precio
+  const [selectedSize, setSelectedSize] = useState('M');
+  const [currentPrice, setCurrentPrice] = useState('0.00');
+  const [quantity, setQuantity] = useState(1);
   const [showFullDescription, setShowFullDescription] = useState(false);
 
   const fullDescriptionText = product?.description || '';
@@ -23,25 +24,49 @@ export default function DetailsScreen({ route, navigation }) {
 
   // Efecto para actualizar el precio
   useEffect(() => {
-    // Los console.log de depuración han sido eliminados aquí
     if (product && product.prices && product.prices.length > 0) {
+      const defaultSizeFromData = product.prices[0]?.size || 'M';
+      if (!product.prices.some(p => p.size === selectedSize)) {
+         setSelectedSize(defaultSizeFromData);
+      }
+
       const priceObject = product.prices.find(p => p.size === selectedSize);
+      let unitPrice = 0; // Precio por unidad
+      let currency = '';
 
       if (priceObject) {
-        setCurrentPrice(`${priceObject.currency}${priceObject.price}`);
+        unitPrice = parseFloat(priceObject.price);
+        currency = priceObject.currency;
       } else {
-        // Fallback: Si por alguna razón no encuentra el tamaño, usa el precio del primer tamaño
-        setCurrentPrice(`${product.prices[0].currency}${product.prices[0].price}`);
+        unitPrice = parseFloat(product.prices[0].price);
+        currency = product.prices[0].currency;
       }
-    } else {
-      setCurrentPrice('N/A'); // O un valor por defecto si no hay precios
-    }
-  }, [selectedSize, product]);
 
-  const handleAddToCart = () => {
-    // Aquí puedes implementar la lógica para añadir al carrito
-    console.log(`Agregado al carrito: ${product?.name} - Talla: ${selectedSize} - Precio: ${currentPrice}`);
-    // Por ejemplo, podrías añadir un toast, navegar a la pantalla del carrito, etc.
+      // --- CALCULA EL PRECIO TOTAL MULTIPLICANDO POR LA CANTIDAD ---
+      const totalPrice = unitPrice * quantity;
+      setCurrentPrice(`${currency}${totalPrice.toFixed(2)}`);
+    } else {
+      setCurrentPrice('N/A');
+    }
+  }, [selectedSize, product, quantity]); // <--- ¡Añadido 'quantity' como dependencia!
+
+  const handleAddToCartAndNavigate = () => {
+    if (onAddToCart) {
+      onAddToCart(product.id, selectedSize, quantity);
+
+      Alert.alert(
+        "Producto Agregado",
+        `¡${product.name} (${selectedSize}, ${quantity} unidad${quantity > 1 ? 'es' : ''}) agregado al carrito!`,
+        [
+          { text: "OK", onPress: () => {
+            navigation.navigate('PickupScreen');
+          }}
+        ]
+      );
+    } else {
+      console.warn("onAddToCart function not provided to DetailsScreen. Cannot add to cart.");
+      Alert.alert("Error", "No se pudo añadir el producto al carrito. Inténtalo de nuevo.");
+    }
   };
 
   return (
@@ -68,7 +93,26 @@ export default function DetailsScreen({ route, navigation }) {
           />
         )}
 
-        <SizeSelector selectedSize={selectedSize} onSelect={setSelectedSize} />
+        <SizeSelector
+            selectedSize={selectedSize}
+            onSelect={setSelectedSize}
+            sizes={product?.prices || []}
+        />
+
+        <Text style={styles.sectionTitle}>Quantity</Text>
+        <View style={styles.quantityControl}>
+            <TouchableOpacity
+                onPress={() => setQuantity(prev => Math.max(1, prev - 1))}
+                style={styles.quantityButton}>
+                <Text style={styles.quantityButtonText}>-</Text>
+            </TouchableOpacity>
+            <Text style={styles.quantityText}>{quantity}</Text>
+            <TouchableOpacity
+                onPress={() => setQuantity(prev => prev + 1)}
+                style={styles.quantityButton}>
+                <Text style={styles.quantityButtonText}>+</Text>
+            </TouchableOpacity>
+        </View>
 
         <View style={styles.priceCartContainer}>
           <View>
@@ -77,7 +121,7 @@ export default function DetailsScreen({ route, navigation }) {
           </View>
           <TouchableOpacity
             style={styles.addToCartButton}
-            onPress={handleAddToCart}
+            onPress={handleAddToCartAndNavigate}
           >
             <Text style={styles.addToCartButtonText}>Add to Cart</Text>
           </TouchableOpacity>
@@ -94,6 +138,37 @@ const styles = StyleSheet.create({
     height: 1,
     backgroundColor: '#ddd',
     marginVertical: 16,
+  },
+  sectionTitle: {
+    fontSize: 18,
+    fontWeight: 'bold',
+    color: '#333',
+    marginTop: 20,
+    marginBottom: 10,
+  },
+  quantityControl: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
+    backgroundColor: '#f0f0f0',
+    borderRadius: 25,
+    width: 120,
+    padding: 5,
+    marginBottom: 20,
+  },
+  quantityButton: {
+    padding: 10,
+  },
+  quantityButtonText: {
+    fontSize: 20,
+    fontWeight: 'bold',
+    color: '#333',
+  },
+  quantityText: {
+    fontSize: 18,
+    fontWeight: 'bold',
+    marginHorizontal: 15,
+    color: '#333',
   },
   priceCartContainer: {
     flexDirection: 'row',
