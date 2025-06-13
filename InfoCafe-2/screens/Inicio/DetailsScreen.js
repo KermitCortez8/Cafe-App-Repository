@@ -1,14 +1,26 @@
 // screens/DetailsScreen.js
 import React, { useState, useEffect } from 'react';
-import { ScrollView, StyleSheet, View, Text, TouchableOpacity, Alert } from 'react-native';
+import {
+  ScrollView,
+  StyleSheet,
+  View,
+  Text,
+  TouchableOpacity,
+  Alert
+} from 'react-native';
 import Header from '../../../InfoCafe-2/componentes/Header';
 import ProductImage from '../../../InfoCafe-2/componentes/ProductImage';
 import ProductInfo from '../../../InfoCafe-2/componentes/ProductInfo';
 import Description from '../../../InfoCafe-2/componentes/Description';
 import SizeSelector from '../../../InfoCafe-2/componentes/SizeSelector';
+// Importa tu hook del contexto o store que has configurado
+import { useStoreContext } from '../../../InfoCafe-2/store/store';
 
 export default function DetailsScreen({ route, navigation }) {
-  const { product, onAddToCart } = route.params;
+  // Recibes el producto desde los parámetros de la ruta
+  const { product } = route.params;
+  // Extraes la función addToCart de tu Store Context
+  const { addToCart } = useStoreContext();
 
   const [selectedSize, setSelectedSize] = useState('M');
   const [currentPrice, setCurrentPrice] = useState('0.00');
@@ -17,64 +29,72 @@ export default function DetailsScreen({ route, navigation }) {
 
   const fullDescriptionText = product?.description || '';
   const MAX_DESCRIPTION_LENGTH = 150;
+  const shortDescriptionText =
+    fullDescriptionText.length > MAX_DESCRIPTION_LENGTH
+      ? fullDescriptionText.substring(0, MAX_DESCRIPTION_LENGTH) + '...'
+      : fullDescriptionText;
 
-  const shortDescriptionText = fullDescriptionText.length > MAX_DESCRIPTION_LENGTH
-    ? fullDescriptionText.substring(0, MAX_DESCRIPTION_LENGTH) + '...'
-    : fullDescriptionText;
-
-  // Efecto para actualizar el precio
+  // Actualiza el precio cada vez que cambie el tamaño, el producto o la cantidad
   useEffect(() => {
     if (product && product.prices && product.prices.length > 0) {
+      // Si el tamaño seleccionado no existe en los precios, se usa el primer elemento
       const defaultSizeFromData = product.prices[0]?.size || 'M';
       if (!product.prices.some(p => p.size === selectedSize)) {
-         setSelectedSize(defaultSizeFromData);
+        setSelectedSize(defaultSizeFromData);
       }
-
-      const priceObject = product.prices.find(p => p.size === selectedSize);
-      let unitPrice = 0; // Precio por unidad
-      let currency = '';
-
-      if (priceObject) {
-        unitPrice = parseFloat(priceObject.price);
-        currency = priceObject.currency;
-      } else {
-        unitPrice = parseFloat(product.prices[0].price);
-        currency = product.prices[0].currency;
-      }
-
-      // --- CALCULA EL PRECIO TOTAL MULTIPLICANDO POR LA CANTIDAD ---
+      const priceObject =
+        product.prices.find(p => p.size === selectedSize) || product.prices[0];
+      const unitPrice = parseFloat(priceObject.price);
       const totalPrice = unitPrice * quantity;
-      setCurrentPrice(`${currency}${totalPrice.toFixed(2)}`);
+      setCurrentPrice(`${priceObject.currency}${totalPrice.toFixed(2)}`);
     } else {
       setCurrentPrice('N/A');
     }
-  }, [selectedSize, product, quantity]); // <--- ¡Añadido 'quantity' como dependencia!
+  }, [selectedSize, product, quantity]);
 
+  // Función que se ejecuta al presionar "Add to Cart"
   const handleAddToCartAndNavigate = () => {
-    if (onAddToCart) {
-      onAddToCart(product.id, selectedSize, quantity);
+    // Construye el objeto cartItem sobrescribiendo la propiedad "prices" para asignar
+    // el tamaño y cantidad seleccionados
+    const priceObject =
+      product.prices.find(p => p.size === selectedSize) || product.prices[0];
+    const cartItem = {
+      ...product,
+      prices: [
+        {
+          ...priceObject,
+          quantity: quantity,
+        },
+      ],
+    };
 
-      Alert.alert(
-        "Producto Agregado",
-        `¡${product.name} (${selectedSize}, ${quantity} unidad${quantity > 1 ? 'es' : ''}) agregado al carrito!`,
-        [
-          { text: "OK", onPress: () => {
-            navigation.navigate('PickupScreen');
-          }}
-        ]
-      );
-    } else {
-      console.warn("onAddToCart function not provided to DetailsScreen. Cannot add to cart.");
-      Alert.alert("Error", "No se pudo añadir el producto al carrito. Inténtalo de nuevo.");
-    }
+    // Agrega el producto al carrito a través del contexto
+    addToCart(cartItem);
+
+    // Muestra un alerta y redirige a la pantalla "PickupScreen"
+    Alert.alert(
+      "Producto Agregado",
+      `¡${product.name} (${selectedSize}, ${quantity} unidad${quantity > 1 ? 'es' : ''}) agregado al carrito!`,
+      [
+        {
+          text: "OK",
+          onPress: () => {
+            // Redirige directamente sin pasar por la navegación de bottom tab
+            navigation.navigate('PedidoBT', { screen: 'Deliver' }); // ✅ correcto
+
+          }
+        }
+      ]
+    );
   };
 
   return (
     <ScrollView style={styles.container}>
-      <Header title="Detail" onBack={() => navigation.navigate('PrincipalView')} />
-
+      <Header
+        title="Detail"
+        onBack={() => navigation.navigate('PrincipalView')}
+      />
       <ProductImage source={product?.image} />
-
       <View style={styles.infoContainer}>
         <ProductInfo
           name={product?.name}
@@ -94,24 +114,26 @@ export default function DetailsScreen({ route, navigation }) {
         )}
 
         <SizeSelector
-            selectedSize={selectedSize}
-            onSelect={setSelectedSize}
-            sizes={product?.prices || []}
+          selectedSize={selectedSize}
+          onSelect={setSelectedSize}
+          sizes={product?.prices || []}
         />
 
         <Text style={styles.sectionTitle}>Quantity</Text>
         <View style={styles.quantityControl}>
-            <TouchableOpacity
-                onPress={() => setQuantity(prev => Math.max(1, prev - 1))}
-                style={styles.quantityButton}>
-                <Text style={styles.quantityButtonText}>-</Text>
-            </TouchableOpacity>
-            <Text style={styles.quantityText}>{quantity}</Text>
-            <TouchableOpacity
-                onPress={() => setQuantity(prev => prev + 1)}
-                style={styles.quantityButton}>
-                <Text style={styles.quantityButtonText}>+</Text>
-            </TouchableOpacity>
+          <TouchableOpacity
+            onPress={() => setQuantity(prev => Math.max(1, prev - 1))}
+            style={styles.quantityButton}
+          >
+            <Text style={styles.quantityButtonText}>-</Text>
+          </TouchableOpacity>
+          <Text style={styles.quantityText}>{quantity}</Text>
+          <TouchableOpacity
+            onPress={() => setQuantity(prev => prev + 1)}
+            style={styles.quantityButton}
+          >
+            <Text style={styles.quantityButtonText}>+</Text>
+          </TouchableOpacity>
         </View>
 
         <View style={styles.priceCartContainer}>
@@ -156,9 +178,7 @@ const styles = StyleSheet.create({
     padding: 5,
     marginBottom: 20,
   },
-  quantityButton: {
-    padding: 10,
-  },
+  quantityButton: { padding: 10 },
   quantityButtonText: {
     fontSize: 20,
     fontWeight: 'bold',
@@ -188,7 +208,7 @@ const styles = StyleSheet.create({
     color: '#333',
   },
   addToCartButton: {
-    backgroundColor: '#4E1F00',
+    backgroundColor: '#4E1F00', // Puedes ajustar o eliminar este color para el diseño deseado
     borderRadius: 16,
     paddingVertical: 16,
     paddingHorizontal: 40,
