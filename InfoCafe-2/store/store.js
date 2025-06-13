@@ -10,7 +10,7 @@ const initialState = {
   CoffeeList: CoffeeData,
   CartPrice: "0",
   FavoritesList: [],
-  CartList: [],
+  CartList: [], // Siempre inicia vacío
   OrderHistoryList: [],
 };
 
@@ -44,10 +44,29 @@ function reducer(state, action) {
       }
 
       case 'LOAD_PERSISTED_STATE':
-        return { ...action.payload };
+        // Carga el estado persistido pero forzamos que CartList quede vacío
+        return { ...action.payload, CartList: [] };
 
       default:
         break;
+
+      case 'REMOVE_FROM_CART': {
+        const { id, size } = action.payload;
+        const productIndex = draft.CartList.findIndex(item => item.id === id);
+        if (productIndex !== -1) {
+          // Encuentra la variante según el tamaño
+          const priceIndex = draft.CartList[productIndex].prices.findIndex(priceObj => priceObj.size === size);
+          if (priceIndex !== -1) {
+            // Remueve esa variante
+            draft.CartList[productIndex].prices.splice(priceIndex, 1);
+            // Si ya no quedan variantes, remueve el producto completo
+            if (draft.CartList[productIndex].prices.length === 0) {
+              draft.CartList.splice(productIndex, 1);
+            }
+          }
+        }
+        break;
+      } 
     }
   });
 }
@@ -69,7 +88,7 @@ export function StoreProvider({ children }) {
     })();
   }, []);
 
-  // Guarda el estado cada vez que cambia
+  // Guarda el estado cada vez que cambia (omitimos CartList para que no se persista)
   useEffect(() => {
     const persist = async () => {
       try {
@@ -77,7 +96,7 @@ export function StoreProvider({ children }) {
           CoffeeList: state.CoffeeList,
           CartPrice: state.CartPrice,
           FavoritesList: state.FavoritesList,
-          CartList: state.CartList,
+          // CartList no se guarda para iniciar siempre con un carrito vacío
           OrderHistoryList: state.OrderHistoryList,
         };
         await AsyncStorage.setItem("coffee-app", JSON.stringify(toSave));
@@ -90,8 +109,10 @@ export function StoreProvider({ children }) {
 
   const addToCart = (cartItem) => dispatch({ type: 'ADD_TO_CART', payload: cartItem });
 
+  const removeFromCart = (payload) => dispatch({ type: 'REMOVE_FROM_CART', payload });
+
   return (
-    <StoreContext.Provider value={{ state, addToCart }}>
+    <StoreContext.Provider value={{ state, addToCart ,removeFromCart}}>
       {children}
     </StoreContext.Provider>
   );

@@ -80,7 +80,7 @@ export default function DetailsScreen({ route, navigation }) {
           text: "OK",
           onPress: () => {
             // Redirige directamente sin pasar por la navegación de bottom tab
-            navigation.navigate('PedidoBT', { screen: 'Deliver' }); // ✅ correcto
+            navigation.navigate('PedidoBT', { screen: 'Deliver' });
 
           }
         }
