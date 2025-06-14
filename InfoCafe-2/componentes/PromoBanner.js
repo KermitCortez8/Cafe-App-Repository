@@ -6,10 +6,10 @@ export default function PromoBanner() {
     <View style={styles.container}>
       <Image
         source={{
-          uri: 'https://static.vecteezy.com/system/resources/previews/007/731/432/non_2x/coffee-shop-offer-menu-design-save-50-coffee-free-vector.jpg',
+          uri: 'https://www.nespresso.com/coffee-blog/sites/default/files/2023-04/3-03_img_1_1142x644_cabecera.jpg',
         }}
         style={styles.image}
-        resizeMode="cover"
+        //resizeMode="contain" // Muestra la imagen completa sin recortes
       />
     </View>
   );
@@ -17,10 +17,12 @@ export default function PromoBanner() {
 
 const styles = StyleSheet.create({
   container: {
-    height: 180, // más alto para mostrar mejor la imagen
+    height: 180,
+    width: '100%',
     borderRadius: 16,
-    overflow: 'hidden',
+    overflow: 'hidden',  // Recorta cualquier parte que se salga, útil para los bordes redondeados
     marginBottom: 16,
+    //backgroundColor: '#fff' // Fondo en caso de franjas
   },
   image: {
     width: '100%',
