@@ -13,7 +13,8 @@ export default function DeliveryScreen() {
 
   return (
     <DecorativeBackground>
-      <ShoppingCart />
+      <DeliveryToggle />
+      <ShoppingCart orderType="Pickup" />
     </DecorativeBackground>
   );
 }

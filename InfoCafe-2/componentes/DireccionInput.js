@@ -22,14 +22,14 @@ export default function DireccionInput() {
   };
 
   // Muestra "Add Address" si aún no hay dirección, o "Edit Address" si ya la hay
-  const buttonText = state.deliveryAddress ? 'Edit Address' : 'Add Address';
+  const buttonText = state.deliveryAddress ? 'Editar Direccion' : 'Agregar Direccion';
 
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>Delivery Address</Text>
+      <Text style={styles.title}>Dirección de entrega</Text>
       <TextInput
         style={styles.input}
-        placeholder="Enter delivery address"
+        placeholder="Ingresar direccion de entrega"
         placeholderTextColor="#aaa"
         value={direccion}
         onChangeText={handleAddressChange}

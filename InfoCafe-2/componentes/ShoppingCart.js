@@ -1,4 +1,3 @@
-// ShoppingCart.js
 import React from 'react';
 import { 
   View, 
@@ -10,30 +9,34 @@ import {
 } from 'react-native';
 import { useStoreContext } from '../../InfoCafe-2/store/store';
 
-export default function ShoppingCart() {
+export default function ShoppingCart({ orderType = 'Deliver' }) {  
   const { state, removeFromCart } = useStoreContext();
   const cartItems = state.CartList || [];
   const defaultDeliveryFee = 5; // Tarifa de delivery cuando hay productos
   
-  // Si no hay productos, el delivery fee será 0.
-  const calculatedDeliveryFee = cartItems.length > 0 ? defaultDeliveryFee : 0;
-
+  // Se calcula el fee: si el pedido es "Deliver" se asigna 5; para "Pickup" se asigna 0.
+  const calculatedDeliveryFee =
+    orderType && orderType.toLowerCase() === 'deliver'
+      ? defaultDeliveryFee 
+      : 0;
+  
   // Calcula el subtotal sumando el precio (por unidad * cantidad) para cada variante del producto.
   const subtotal = cartItems.reduce((sum, item) => {
-    const itemTotal = item.prices.reduce((s, priceObj) => {
-      return s + (parseFloat(priceObj.price) * priceObj.quantity);
-    }, 0);
+    const itemTotal = item.prices.reduce(
+      (s, priceObj) => s + (parseFloat(priceObj.price) * priceObj.quantity),
+      0
+    );
     return sum + itemTotal;
   }, 0);
 
+  // Total a pagar: suma del subtotal + tarifa (según el tipo de pedido)
   const totalPayment = (subtotal + calculatedDeliveryFee).toFixed(2);
 
   // Validación de dirección: se considera válida si existe y no es cadena vacía.
   const isAddressValid = state.deliveryAddress && state.deliveryAddress.trim().length > 0;
-  // El pedido solo se habilita si hay al menos un producto y se tiene una dirección válida.
+  // El pedido se habilita solo si hay al menos un producto y se tiene una dirección válida.
   const isOrderEnabled = cartItems.length > 0 && isAddressValid;
 
-  // Renderiza el listado de productos (cada producto/variante) con botón "Eliminar".
   const renderProducts = () => {
     if (cartItems.length === 0) {
       return (
@@ -50,10 +53,9 @@ export default function ShoppingCart() {
               {priceObj.size} × {priceObj.quantity}
             </Text>
             <Text style={styles.itemPrice}>
-              ${(parseFloat(priceObj.price) * priceObj.quantity).toFixed(2)}
+              S/.{(parseFloat(priceObj.price) * priceObj.quantity).toFixed(2)}
             </Text>
           </View>
-          {/* Botón para eliminar la variante/producto */}
           <TouchableOpacity 
             style={styles.removeBtn}
             onPress={() => removeFromCart({ id: item.id, size: priceObj.size })}
@@ -80,21 +82,22 @@ export default function ShoppingCart() {
         <View style={styles.priceDetails}>
           <View style={styles.row}>
             <Text style={styles.detailLabel}>Subtotal</Text>
-            <Text style={styles.detailValue}>${subtotal.toFixed(2)}</Text>
+            <Text style={styles.detailValue}>S/.{subtotal.toFixed(2)}</Text>
           </View>
-          <View style={styles.row}>
-            <Text style={styles.detailLabel}>Delivery</Text>
-            <Text style={styles.detailValue}>${calculatedDeliveryFee.toFixed(2)}</Text>
-          </View>
+          {orderType && orderType.toLowerCase() === 'deliver' && (
+            <View style={styles.row}>
+              <Text style={styles.detailLabel}>Delivery</Text>
+              <Text style={styles.detailValue}>S/.{calculatedDeliveryFee.toFixed(2)}</Text>
+            </View>
+          )}
         </View>
         <View style={styles.separator} />
         <View style={styles.totalRow}>
-          <Text style={styles.totalLabel}>Total Payment</Text>
-          <Text style={styles.totalValue}>${totalPayment}</Text>
+          <Text style={styles.totalLabel}>Total a Pagar</Text>
+          <Text style={styles.totalValue}>S/.{totalPayment}</Text>
         </View>
       </View>
 
-      {/* Botón "Place Order" */}
       <TouchableOpacity 
         style={[
           styles.placeOrderBtn,
@@ -102,7 +105,7 @@ export default function ShoppingCart() {
         ]}
         disabled={!isOrderEnabled}
       >
-        <Text style={styles.placeOrderText}>Place Order</Text>
+        <Text style={styles.placeOrderText}>Realizar pedido</Text>
       </TouchableOpacity>
     </View>
   );
@@ -181,6 +184,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#ccc',
     marginVertical: 12,
   },
+  priceDetails: {},
   row: {
     flexDirection: 'row',
     justifyContent: 'space-between',

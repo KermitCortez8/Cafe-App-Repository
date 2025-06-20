@@ -8,9 +8,9 @@ const CoffeeData = [
     image: { uri: 'https://isamantillablog.wordpress.com/wp-content/uploads/2021/03/cafe_americano.jpg?w=1400' },
     ingredients: 'Espresso, Water',
     prices: [
-      { size: 'S', price: '2.10', currency: '$' },
-      { size: 'M', price: '2.80', currency: '$' },
-      { size: 'L', price: '3.60', currency: '$' },
+      { size: 'S', price: '2.10', currency: 'S/.' },
+      { size: 'M', price: '2.80', currency: 'S/.' },
+      { size: 'L', price: '3.60', currency: 'S/.' },
     ],
     average_rating: 4.5,
   },
@@ -23,9 +23,9 @@ const CoffeeData = [
     image: { uri: 'https://www.tasteofhome.com/wp-content/uploads/2024/02/Copycat-McDonald-s-Iced-Coffee_EXPS_FT23_273351_ST_3_27_1.jpg' },
     ingredients: 'Espresso, Ice, Water',
     prices: [
-      { size: 'S', price: '2.50', currency: '$' },
-      { size: 'M', price: '3.10', currency: '$' },
-      { size: 'L', price: '3.90', currency: '$' },
+      { size: 'S', price: '2.50', currency: 'S/.' },
+      { size: 'M', price: '3.10', currency: 'S/.' },
+      { size: 'L', price: '3.90', currency: 'S/.' },
     ],
     average_rating: 4.6,
   },
@@ -38,9 +38,9 @@ const CoffeeData = [
     image: { uri: 'https://thumbs.dreamstime.com/b/relax-cafe-coffee-shop-drinking-best-here-barista-perfect-morning-americano-espresso-fresh-milk-cream-froth-five-129743460.jpg' },
     ingredients: 'Espresso, Water, Milk',
     prices: [
-      { size: 'S', price: '2.75', currency: '$' },
-      { size: 'M', price: '3.45', currency: '$' },
-      { size: 'L', price: '4.20', currency: '$' },
+      { size: 'S', price: '2.75', currency: 'S/.' },
+      { size: 'M', price: '3.45', currency: 'S/.' },
+      { size: 'L', price: '4.20', currency: 'S/.' },
     ],
     average_rating: 4.7,
   },
@@ -53,9 +53,9 @@ const CoffeeData = [
     image: { uri: 'https://tb-static.uber.com/prod/image-proc/processed_images/00ea0dd7bc207e02c344fe08d90259fd/a19bb09692310dfd41e49a96c424b3a6.jpeg' },
     ingredients: 'Ground Coffee, Water',
     prices: [
-      { size: 'S', price: '1.95', currency: '$' },
-      { size: 'M', price: '2.40', currency: '$' },
-      { size: 'L', price: '3.20', currency: '$' },
+      { size: 'S', price: '1.95', currency: 'S/.' },
+      { size: 'M', price: '2.40', currency: 'S/.' },
+      { size: 'L', price: '3.20', currency: 'S/.' },
     ],
     average_rating: 4.3,
   },
@@ -68,9 +68,9 @@ const CoffeeData = [
     image: { uri: 'https://thegoldenbrewing.com.au/cdn/shop/products/VDC-02W-00.jpg?v=1634796445' },
     ingredients: 'Ground Coffee, Water',
     prices: [
-      { size: 'S', price: '2.20', currency: '$' },
-      { size: 'M', price: '2.90', currency: '$' },
-      { size: 'L', price: '3.50', currency: '$' },
+      { size: 'S', price: '2.20', currency: 'S/.' },
+      { size: 'M', price: '2.90', currency: 'S/.' },
+      { size: 'L', price: '3.50', currency: 'S/.' },
     ],
     average_rating: 4.6,
   },
@@ -83,9 +83,9 @@ const CoffeeData = [
     image: { uri: 'https://images.squarespace-cdn.com/content/v1/5f809a7f96d54f4cc676d880/1606942208846-7DMWCZWFHEQOTN4X8CBX/image-asset.jpeg' },
     ingredients: 'Ground Coffee, Water',
     prices: [
-      { size: 'S', price: '2.35', currency: '$' },
-      { size: 'M', price: '3.00', currency: '$' },
-      { size: 'L', price: '3.75', currency: '$' },
+      { size: 'S', price: '2.35', currency: 'S/.' },
+      { size: 'M', price: '3.00', currency: 'S/.' },
+      { size: 'L', price: '3.75', currency: 'S/.' },
     ],
     average_rating: 4.8,
   },
@@ -98,9 +98,9 @@ const CoffeeData = [
     image: { uri: 'https://upload.wikimedia.org/wikipedia/commons/0/00/Cappuccino_PeB.jpg' },
     ingredients: 'Espresso, Steamed Milk, Foam',
     prices: [
-      { size: 'S', price: '2.90', currency: '$' },
-      { size: 'M', price: '3.50', currency: '$' },
-      { size: 'L', price: '4.10', currency: '$' },
+      { size: 'S', price: '2.90', currency: 'S/.' },
+      { size: 'M', price: '3.50', currency: 'S/.' },
+      { size: 'L', price: '4.10', currency: 'S/.' },
     ],
     average_rating: 4.6,
   },
@@ -115,9 +115,9 @@ const CoffeeData = [
     image: { uri: 'https://www.nescafe.com/ph/sites/default/files/2024-05/nescafe-gold-Caramel-Macchiato-recipe-banner-1066x1066.jpg' },
     ingredients: 'Espresso, Steamed Milk, Vanilla, Caramel',
     prices: [
-      { size: 'S', price: '3.10', currency: '$' },
-      { size: 'M', price: '3.80', currency: '$' },
-      { size: 'L', price: '4.50', currency: '$' },
+      { size: 'S', price: '3.10', currency: 'S/.' },
+      { size: 'M', price: '3.80', currency: 'S/.' },
+      { size: 'L', price: '4.50', currency: 'S/.' },
     ],
     average_rating: 4.7,
   },
@@ -130,9 +130,9 @@ const CoffeeData = [
     image: { uri: 'https://images.ctfassets.net/v601h1fyjgba/7wGcWZgV7yaSLXrodALIuw/2496353e1ec8c39dd44adfb45e8335d3/Vanilla_Latte.jpg' },
     ingredients: 'Espresso, Steamed Milk, Vanilla Syrup',
     prices: [
-      { size: 'S', price: '3.00', currency: '$' },
-      { size: 'M', price: '3.70', currency: '$' },
-      { size: 'L', price: '4.40', currency: '$' },
+      { size: 'S', price: '3.00', currency: 'S/.' },
+      { size: 'M', price: '3.70', currency: 'S/.' },
+      { size: 'L', price: '4.40', currency: 'S/.' },
     ],
     average_rating: 4.6,
   },
@@ -145,9 +145,9 @@ const CoffeeData = [
     image: { uri: 'https://target.scene7.com/is/image/Target/GUEST_3db36a43-a712-4137-a5e2-1655730cb773' },
     ingredients: 'Decaf Ground Coffee, Water',
     prices: [
-      { size: 'S', price: '2.20', currency: '$' },
-      { size: 'M', price: '2.80', currency: '$' },
-      { size: 'L', price: '3.40', currency: '$' },
+      { size: 'S', price: '2.20', currency: 'S/.' },
+      { size: 'M', price: '2.80', currency: 'S/.' },
+      { size: 'L', price: '3.40', currency: 'S/.' },
     ],
     average_rating: 4.4,
   },
@@ -160,9 +160,9 @@ const CoffeeData = [
     image: { uri: 'https://media.istockphoto.com/id/157509191/photo/double-espresso-shot.jpg?s=612x612&w=0&k=20&c=HOOwVH_kMb8iRAGDFAc6b7tG3ENQZh6bbXt0Doo78zc=' }, // Placeholder image
     ingredients: 'Finely Ground Coffee, Hot Water',
     prices: [
-      { size: 'S', price: '2.00', currency: '$' }, // Single shot
-      { size: 'M', price: '2.50', currency: '$' }, // Double shot
-      { size: 'L', price: '3.00', currency: '$' }, // Triple shot
+      { size: 'S', price: '2.00', currency: 'S/.' }, 
+      { size: 'M', price: '2.50', currency: 'S/.' }, // Double shot
+      { size: 'L', price: '3.00', currency: 'S/.' }, // Triple shot
     ],
     average_rating: 4.9,
   },
@@ -175,9 +175,9 @@ const CoffeeData = [
     image: { uri: 'https://www.foodandwine.com/thmb/xQZv2CX6FO5331PYK7uGPF1we9Q=/1500x0/filters:no_upscale():max_bytes(150000):strip_icc()/Partners-Flat-White-FT-BLOG0523-b11f6273c2d84462954c2163d6a1076d.jpg' }, // Placeholder image
     ingredients: 'Espresso, Steamed Milk',
     prices: [
-      { size: 'S', price: '3.20', currency: '$' },
-      { size: 'M', price: '3.90', currency: '$' },
-      { size: 'L', price: '4.60', currency: '$' },
+      { size: 'S', price: '3.20', currency: 'S/.' },
+      { size: 'M', price: '3.90', currency: 'S/.' },
+      { size: 'L', price: '4.60', currency: 'S/.' },
     ],
     average_rating: 4.8,
   },
@@ -190,9 +190,9 @@ const CoffeeData = [
     image: { uri: 'https://wellnessforthewin.com/wp-content/uploads/2020/03/IMG_4320-400x400.jpg' }, // Placeholder image
     ingredients: 'Coarsely Ground Coffee, Cold Water',
     prices: [
-      { size: 'S', price: '3.50', currency: '$' },
-      { size: 'M', price: '4.20', currency: '$' },
-      { size: 'L', price: '4.90', currency: '$' },
+      { size: 'S', price: '3.50', currency: 'S/.' },
+      { size: 'M', price: '4.20', currency: 'S/.' },
+      { size: 'L', price: '4.90', currency: 'S/.' },
     ],
     average_rating: 4.7,
   },

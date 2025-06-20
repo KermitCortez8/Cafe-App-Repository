@@ -9,18 +9,21 @@ import CoffeeData from '../../data/ProductosData';
 
 export default function PrincipalViewScreen() {
   const [selectedCategory, setSelectedCategory] = useState('All');
+  const [searchResults, setSearchResults] = useState(CoffeeData);
 
   return (
     <DecorativeBackground>
       <ScrollView contentContainerStyle={styles.container} showsVerticalScrollIndicator={false}>
-        <SearchBar />
+        {/* Se pasa la función setSearchResults a SearchBar para recibir el filtrado */}
+        <SearchBar onSearchResults={setSearchResults} />
         <PromoBanner />
         <CategoryList
           selectedCategory={selectedCategory}
           onSelectCategory={setSelectedCategory}
         />
+        {/* En ProductList se usará la data filtrada por búsqueda */}
         <ProductList
-          coffeeData={CoffeeData}
+          coffeeData={searchResults}
           selectedCategory={selectedCategory}
         />
       </ScrollView>

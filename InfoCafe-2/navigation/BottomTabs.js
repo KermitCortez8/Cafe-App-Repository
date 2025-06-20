@@ -1,7 +1,8 @@
 import React from 'react';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import { Ionicons } from '@expo/vector-icons';
 
-import InicioStack from '../navigation/InicioStack';
+import StackHome from '../navigation/InicioStack';
 import PedidoStack from '../navigation/PedidoStack';
 import FavouritesScreen from '../screens/FavouritesScreens';
 import NotificationScreen from '../screens/NotificationsScreen';
@@ -11,17 +12,36 @@ const Tab = createBottomTabNavigator();
 export default function BottomTabs() {
   return (
     <Tab.Navigator
-      screenOptions={{
-        headerShown: false, 
+      screenOptions={({ route }) => ({
+        headerShown: false,
         tabBarActiveTintColor: '#74512D',
         tabBarInactiveTintColor: 'gray',
         tabBarStyle: { backgroundColor: '#F8F4E1' },
-      }}
+        tabBarIcon: ({ color, size }) => {
+          let iconName;
+
+          if (route.name === 'Inicio') {
+            iconName = 'home';
+          } else if (route.name === 'Pedido') {
+            iconName = 'cart';
+          } else if (route.name === 'Favoritos') {
+            iconName = 'heart';
+          } else if (route.name === 'Notificaciones') {
+            iconName = 'notifications';
+          }
+
+          return <Ionicons name={iconName} size={size} color={color} />;
+        },
+      })}
     >
-      <Tab.Screen name="InicioBT" component={InicioStack} />
-      <Tab.Screen name="PedidoBT" component={PedidoStack} />
-      <Tab.Screen name="FavoritosBT" component={FavouritesScreen} />
-      <Tab.Screen name="NotificacionesBT" component={NotificationScreen} />
+      <Tab.Screen
+        name="Inicio"
+        component={StackHome}
+        options={{ unmountOnBlur: true }}
+      />
+      <Tab.Screen name="Pedido" component={PedidoStack} />
+      <Tab.Screen name="Favoritos" component={FavouritesScreen} />
+      <Tab.Screen name="Notificaciones" component={NotificationScreen} />
     </Tab.Navigator>
   );
 }

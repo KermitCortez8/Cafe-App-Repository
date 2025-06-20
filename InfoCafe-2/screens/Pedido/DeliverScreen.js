@@ -16,11 +16,11 @@ export default function DeliveryScreen() {
     <DecorativeBackground>
       <DeliveryToggle />
       <DireccionInput />
-      <ShoppingCart />
+      <ShoppingCart orderType="Deliver" />
     </DecorativeBackground>
   );
 }
 
 const styles = StyleSheet.create({
-  // Puedes agregar estilos generales aquí si lo consideras necesario
+  
 });

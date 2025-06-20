@@ -80,7 +80,7 @@ export default function DetailsScreen({ route, navigation }) {
           text: "OK",
           onPress: () => {
             // Redirige directamente sin pasar por la navegación de bottom tab
-            navigation.navigate('PedidoBT', { screen: 'Deliver' });
+            navigation.navigate('Pedido', { screen: 'Deliver' });
 
           }
         }
@@ -119,7 +119,7 @@ export default function DetailsScreen({ route, navigation }) {
           sizes={product?.prices || []}
         />
 
-        <Text style={styles.sectionTitle}>Quantity</Text>
+        <Text style={styles.sectionTitle}>Cantidad</Text>
         <View style={styles.quantityControl}>
           <TouchableOpacity
             onPress={() => setQuantity(prev => Math.max(1, prev - 1))}
@@ -138,14 +138,14 @@ export default function DetailsScreen({ route, navigation }) {
 
         <View style={styles.priceCartContainer}>
           <View>
-            <Text style={styles.priceLabel}>Price</Text>
+            <Text style={styles.priceLabel}>Precio</Text>
             <Text style={styles.priceValue}>{currentPrice}</Text>
           </View>
           <TouchableOpacity
             style={styles.addToCartButton}
             onPress={handleAddToCartAndNavigate}
           >
-            <Text style={styles.addToCartButtonText}>Add to Cart</Text>
+            <Text style={styles.addToCartButtonText}>Agregar al carrito</Text>
           </TouchableOpacity>
         </View>
       </View>

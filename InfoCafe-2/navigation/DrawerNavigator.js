@@ -54,7 +54,7 @@ export default function DrawerNavigator() {
       }}
     >
       <Drawer.Screen
-        name="Inicio"
+        name="Inicios"
         component={BottomTabs}
         options={({ navigation }) => ({
           headerTitle: () => (

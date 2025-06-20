@@ -1,20 +1,31 @@
 // DeliveryToggle.js
 import React, { useState } from 'react';
 import { View, TouchableOpacity, Text, StyleSheet } from 'react-native';
-import { useNavigation } from '@react-navigation/native';
+import { useNavigation, useRoute } from '@react-navigation/native';
 
 export default function DeliveryToggle() {
-  const [selected, setSelected] = useState('Deliver'); // Valor por defecto
   const navigation = useNavigation();
+  const route = useRoute();
 
+  // Establece el valor inicial del toggle según la ruta actual
+  const [selected, setSelected] = useState(() => {
+    return route.name === 'PickUp' ? 'Pick Up' : 'Deliver';
+  });
+
+  // Si el usuario toca "Deliver" y no está ya en esa pantalla, navega a ella
   const handleDeliverPress = () => {
-    setSelected('Deliver');
-    // Nos quedamos en la vista "Deliver"
+    if (selected !== 'Deliver') {
+      setSelected('Deliver');
+      navigation.navigate('Deliver'); // Asegúrate de que la ruta se llame "Delivery" en tu configuración
+    }
   };
 
+  // Si el usuario toca "Pick Up" y no está ya en esa pantalla, navega a ella
   const handlePickUpPress = () => {
-    setSelected('Pick Up');
-    navigation.navigate('PickUp'); // Asegúrate que la ruta esté configurada correctamente
+    if (selected !== 'Pick Up') {
+      setSelected('Pick Up');
+      navigation.navigate('PickUp'); // Asegúrate de que esta ruta esté definida en tu navigator
+    }
   };
 
   return (

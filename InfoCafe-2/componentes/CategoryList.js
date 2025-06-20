@@ -1,7 +1,7 @@
 import React from 'react';
 import { View, Text, TouchableOpacity, StyleSheet, ScrollView } from 'react-native'; // Importa ScrollView
 
-const categories = ['All', 'Cappuccino', 'Macchiato', 'Latte', 'Decaf', 'Espresso', 'Cold Brew', 'Flat White']; // Agregué más categorías para que el efecto de carrusel sea visible
+const categories = ['All', 'Americano','Black','Cappuccino', 'Macchiato', 'Latte', 'Decaf', 'Espresso', 'Cold Brew', 'Flat White']; // Agregué más categorías para que el efecto de carrusel sea visible
 
 export default function CategoryList({ selectedCategory, onSelectCategory }) {
   return (
