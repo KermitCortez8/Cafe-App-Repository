@@ -27,7 +27,7 @@ export default function SearchBar({ onSearchResults }) {
     <View style={styles.searchContainer}>
       <Ionicons name="search" size={20} color="#888" style={styles.icon} />
       <TextInput
-        placeholder="Search Coffee"
+        placeholder="Buscar Café"
         placeholderTextColor="#888"
         style={styles.input}
         value={query}

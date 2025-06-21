@@ -14,9 +14,9 @@ export default function ShoppingCart({ orderType = 'Deliver' }) {
   const cartItems = state.CartList || [];
   const defaultDeliveryFee = 5; // Tarifa de delivery cuando hay productos
   
-  // Se calcula el fee: si el pedido es "Deliver" se asigna 5; para "Pickup" se asigna 0.
+  // Se calcula el fee: si existen productos en el carrito y el pedido es "Deliver", se asigna 5; para "Pickup" o sin productos se asigna 0.
   const calculatedDeliveryFee =
-    orderType && orderType.toLowerCase() === 'deliver'
+    cartItems.length > 0 && orderType && orderType.toLowerCase() === 'deliver'
       ? defaultDeliveryFee 
       : 0;
   
@@ -230,3 +230,4 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
   },
 });
+

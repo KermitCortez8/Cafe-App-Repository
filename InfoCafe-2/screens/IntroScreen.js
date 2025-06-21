@@ -20,13 +20,13 @@ export default function IntroScreen({ navigation }) {
     >
       <View style={styles.overlay}>
         <View style={styles.bottomBox}>
-          <Text style={styles.title}>Elevate your coffee experience at Kopi Kap</Text>
-          <Text style={styles.subtitle}>Where coffee meets comfort.</Text>
+          <Text style={styles.title}>Mejora tu experiencia de café en Kopi Kap</Text>
+          <Text style={styles.subtitle}>Donde el café se encuentra con la comodidad</Text>
           <TouchableOpacity
             style={styles.button}
-            onPress={() => navigation.replace('PrincipalView')}
+            onPress={() => navigation.replace('Inicios')}
           >
-            <Text style={styles.buttonText}>Get Started</Text>
+            <Text style={styles.buttonText}>Empezar</Text>
           </TouchableOpacity>
         </View>
       </View>

@@ -5,7 +5,7 @@ import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
 export default function SizeSelector({ selectedSize, onSelect }) {
   return (
     <>
-      <Text style={styles.sectionTitle}>Size</Text>
+      <Text style={styles.sectionTitle}>Tamaño</Text>
       <View style={styles.sizeContainer}>
         {['S', 'M', 'L'].map((size) => (
           <TouchableOpacity

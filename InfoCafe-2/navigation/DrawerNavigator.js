@@ -80,7 +80,7 @@ export default function DrawerNavigator() {
         name="Perfil"
         component={AccountScreen}
         options={{ title: 'Perfil' }}
-      />
-    </Drawer.Navigator>
-  );
-}
+      /> 
+    </Drawer.Navigator> 
+  ); 
+}  

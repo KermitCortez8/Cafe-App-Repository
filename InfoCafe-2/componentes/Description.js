@@ -4,11 +4,11 @@ import { Text, StyleSheet } from 'react-native';
 export default function Description({ showFull, toggleShow, fullText, shortText }) {
   return (
     <>
-      <Text style={styles.sectionTitle}>Description</Text>
+      <Text style={styles.sectionTitle}>Descripcion</Text>
       <Text style={styles.description}>
         {showFull ? fullText : shortText}
         {!showFull && (
-          <Text style={styles.readMore} onPress={toggleShow}> Read More</Text>
+          <Text style={styles.readMore} onPress={toggleShow}> Leer Mas</Text>
         )}
       </Text>
     </>
