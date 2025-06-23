@@ -6,6 +6,7 @@ import { useNavigation } from '@react-navigation/native';
 import DecorativeBackground from '../../componentes/PantallaLayout';
 import DeliveryToggle from '../../componentes/Toggle';
 import ShoppingCart from '../../componentes/ShoppingCart';
+import CustomHeader from '../../../InfoCafe-2/componentes/HeaderPerso'
 
 export default function DeliveryScreen() {
   const { state } = useStoreContext();
@@ -13,6 +14,7 @@ export default function DeliveryScreen() {
 
   return (
     <DecorativeBackground>
+      <CustomHeader/>
       <DeliveryToggle />
       <ShoppingCart orderType="Pickup" />
     </DecorativeBackground>

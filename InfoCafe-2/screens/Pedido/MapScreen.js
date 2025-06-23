@@ -4,6 +4,9 @@ import { useNavigation } from '@react-navigation/native';
 import MapView,{Marker,Polyline} from 'react-native-maps';
 import MapViewDirections from 'react-native-maps-directions';
 import {GOOGLE_MAPS_KEY} from '@env';
+import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
+
+
 
 
 
@@ -35,9 +38,14 @@ export default function MapScreen() {
         }}
       >
         <Marker 
+          draggable
           coordinate={origin}
+          onDragEnd={(direction) => setOrigin(direction.nativeEvent.coordinate)}
+        >
+          <Icon name="motorbike" size={32} color="#4E1F00" />
+        </Marker>
 
-        />
+
         <Marker
           draggable
           coordinate={destination}
@@ -48,7 +56,7 @@ export default function MapScreen() {
           origin={origin}
           destination={destination}
           apikey={GOOGLE_MAPS_KEY}
-          strokeColor="brown"
+          strokeColor="#4E1F00"
           strokeWidth={6}
         />
       </MapView>      

@@ -7,6 +7,7 @@ import DireccionInput from '../../componentes/DireccionInput';
 import DecorativeBackground from '../../componentes/PantallaLayout';
 import DeliveryToggle from '../../componentes/Toggle';
 import ShoppingCart from '../../componentes/ShoppingCart';
+import CustomHeader from '../../../InfoCafe-2/componentes/HeaderPerso'
 
 export default function DeliveryScreen() {
   const { state } = useStoreContext();
@@ -14,6 +15,7 @@ export default function DeliveryScreen() {
 
   return (
     <DecorativeBackground>
+      <CustomHeader/>
       <DeliveryToggle />
       <DireccionInput />
       <ShoppingCart orderType="Deliver" />

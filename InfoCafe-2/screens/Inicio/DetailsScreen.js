@@ -91,7 +91,7 @@ export default function DetailsScreen({ route, navigation }) {
   return (
     <ScrollView style={styles.container}>
       <Header
-        title="Detail"
+        title="Detalle"
         onBack={() => navigation.navigate('PrincipalView')}
       />
       <ProductImage source={product?.image} />
@@ -178,7 +178,7 @@ const styles = StyleSheet.create({
     padding: 5,
     marginBottom: 20,
   },
-  quantityButton: { padding: 10 },
+  quantityButton: { padding: 14 },
   quantityButtonText: {
     fontSize: 20,
     fontWeight: 'bold',

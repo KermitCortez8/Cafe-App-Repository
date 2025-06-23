@@ -7,9 +7,11 @@ import {
   ScrollView, 
   TouchableOpacity 
 } from 'react-native';
+import { useNavigation } from '@react-navigation/native';
 import { useStoreContext } from '../../InfoCafe-2/store/store';
 
 export default function ShoppingCart({ orderType = 'Deliver' }) {  
+  const navigation = useNavigation();
   const { state, removeFromCart } = useStoreContext();
   const cartItems = state.CartList || [];
   const defaultDeliveryFee = 5; // Tarifa de delivery cuando hay productos
@@ -98,12 +100,16 @@ export default function ShoppingCart({ orderType = 'Deliver' }) {
         </View>
       </View>
 
+      {/* Botón para realizar pedido */}
       <TouchableOpacity 
-        style={[
-          styles.placeOrderBtn,
-          !isOrderEnabled && styles.disabledPlaceOrderBtn
-        ]}
-        disabled={!isOrderEnabled}
+        style={styles.placeOrderBtn}
+        onPress={() => {
+          // Si el pedido es de delivery, navega a la pantalla MapScreen.
+          if (orderType && orderType.toLowerCase() === 'deliver') {
+            navigation.navigate('MapaEntrega');
+          }
+          // Para PickUp no se realiza ninguna acción al presionar.
+        }}
       >
         <Text style={styles.placeOrderText}>Realizar pedido</Text>
       </TouchableOpacity>
@@ -221,13 +227,9 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     marginTop: 16,
   },
-  disabledPlaceOrderBtn: {
-    backgroundColor: '#ccc',
-  },
   placeOrderText: {
     color: '#fff',
     fontSize: 16,
     fontWeight: 'bold',
   },
 });
-

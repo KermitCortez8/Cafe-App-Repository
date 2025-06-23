@@ -6,6 +6,7 @@ import PromoBanner from '../../componentes/PromoBanner';
 import CategoryList from '../../componentes/CategoryList';
 import ProductList from '../../componentes/ProductList';
 import CoffeeData from '../../data/ProductosData';
+import HeaderPerso from '../../componentes/HeaderPerso'
 
 export default function PrincipalViewScreen() {
   const [selectedCategory, setSelectedCategory] = useState('All');
@@ -13,6 +14,7 @@ export default function PrincipalViewScreen() {
 
   return (
     <DecorativeBackground>
+      <HeaderPerso/>
       <ScrollView contentContainerStyle={styles.container} showsVerticalScrollIndicator={false}>
         {/* Se pasa la función setSearchResults a SearchBar para recibir el filtrado */}
         <SearchBar onSearchResults={setSearchResults} />

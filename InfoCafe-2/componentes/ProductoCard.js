@@ -3,12 +3,35 @@ import { View, Text, Image, StyleSheet, TouchableOpacity } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native';
 
-
 export default function ProductCard({ product }) {
   const navigation = useNavigation();
 
   const goToDetails = () => {
     navigation.navigate('Details', { product });
+  };
+  // Función para renderizar el precio mínimo a partir de objetos en product.prices
+  const renderMinimumPrice = () => {
+    if (product.prices && Array.isArray(product.prices) && product.prices.length > 0) {
+      // Extraemos y convertimos la propiedad "price" de cada objeto a número.
+      const numericPrices = product.prices
+        .map(item => parseFloat(item.price))
+        .filter(price => !isNaN(price));
+      
+      if (numericPrices.length === 0) {
+        return <Text style={styles.fromPrice}>Precio no disponible</Text>;
+      }
+      
+      const minPrice = Math.min(...numericPrices);
+      // Usamos la moneda del primer elemento como referencia; se asume que todas tienen la misma moneda.
+      const currency = product.prices[0].currency || 'S/.';
+      
+      return (
+        <Text style={styles.fromPrice}>
+          Desde: {currency} {minPrice.toFixed(2)}
+        </Text>
+      );
+    }
+    return <Text style={styles.fromPrice}>Precio no disponible</Text>;
   };
 
   return (
@@ -22,9 +45,7 @@ export default function ProductCard({ product }) {
       <Text style={styles.roasted}>{product.roasted}</Text>
       <View style={styles.bottom}>
         <Text style={styles.price}>{product.price}</Text>
-        <TouchableOpacity style={styles.addBtn}>
-          <Ionicons name="add" size={20} color="#fff" />
-        </TouchableOpacity>
+        {renderMinimumPrice()}
       </View>
     </TouchableOpacity>
   );
@@ -41,6 +62,7 @@ const styles = StyleSheet.create({
     shadowOffset: { width: 0, height: 1 },
     shadowOpacity: 0.1,
     shadowRadius: 4,
+    marginVertical: 8,
   },
   image: {
     width: '100%',
@@ -55,7 +77,7 @@ const styles = StyleSheet.create({
   },
   ratingText: {
     marginLeft: 4,
-    fontSize: 12,
+    fontSize: 14,
     color: '#333',
   },
   name: {
@@ -63,9 +85,10 @@ const styles = StyleSheet.create({
     fontSize: 16,
     color: '#4E1F00',
   },
-  variant: {
-    fontSize: 12,
+  roasted: {
+    fontSize: 14,
     color: '#777',
+    marginVertical: 4,
   },
   bottom: {
     flexDirection: 'row',
@@ -78,9 +101,8 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     color: '#4E1F00',
   },
-  addBtn: {
-    backgroundColor: '#4E1F00',
-    borderRadius: 20,
-    padding: 6,
+  fromPrice: {
+    fontSize: 15,
+    color: '#333',
   },
 });

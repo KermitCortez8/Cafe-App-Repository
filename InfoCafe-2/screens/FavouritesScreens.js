@@ -1,13 +1,20 @@
 import React from 'react';
 import { View, Text, StyleSheet } from 'react-native';
+import CustomHeader from '../../InfoCafe-2/componentes/HeaderPerso'
+
 
 export default function FavouritesScreen() {
   return (
-    <View style={styles.container}>
-      <Text style={styles.text}>¡Hola Mundo! Favoritos</Text>
-    </View>
+    <>
+      <CustomHeader />
+      <View style={styles.container}>
+        <Text style={styles.text}>¡Hola Mundo! Favoritos</Text>
+      </View>
+    </>
   );
 }
+
+
 
 const styles = StyleSheet.create({
   container: {
