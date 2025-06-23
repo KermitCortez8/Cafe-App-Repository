@@ -3,6 +3,7 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import PickupScreen from '../screens/Pedido/PickupScreen';
 import DeliverScreen from '../screens/Pedido/DeliverScreen';
 import MapScreen from '../screens/Pedido/MapScreen';
+import AccountScreen from '../screens/AccountScreen';
 
 const Stack = createNativeStackNavigator();
 
@@ -30,6 +31,7 @@ export default function PedidoStack() {
         component={MapScreen} 
         options={{ title: 'Mapa de Entrega' }}
       />
+      <Stack.Screen name="Perfil" component={AccountScreen}/>
     </Stack.Navigator>
   );
 }
