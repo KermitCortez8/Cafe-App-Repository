@@ -8,7 +8,7 @@ export default function FavouritesScreen() {
     <>
       <CustomHeader />
       <View style={styles.container}>
-        <Text style={styles.text}>¡Hola Mundo! Favoritos</Text>
+        <Text style={styles.text}>¡Hola Mundo! Notificaciones</Text>
       </View>
     </>
   );

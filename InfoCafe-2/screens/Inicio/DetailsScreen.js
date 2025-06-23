@@ -71,21 +71,9 @@ export default function DetailsScreen({ route, navigation }) {
     // Agrega el producto al carrito a través del contexto
     addToCart(cartItem);
 
-    // Muestra un alerta y redirige a la pantalla "PickupScreen"
-    Alert.alert(
-      "Producto Agregado",
-      `¡${product.name} (${selectedSize}, ${quantity} unidad${quantity > 1 ? 'es' : ''}) agregado al carrito!`,
-      [
-        {
-          text: "OK",
-          onPress: () => {
-            // Redirige directamente sin pasar por la navegación de bottom tab
-            navigation.navigate('Pedido', { screen: 'Deliver' });
+    // Muestra un alerta y redirige a la pantalla "DeliverScreen"
+    navigation.navigate('Pedido', { screen: 'Deliver' });
 
-          }
-        }
-      ]
-    );
   };
 
   return (

@@ -151,7 +151,7 @@ export default function AccountScreen() {
                   color="#4E1F00"
                   style={styles.itemIcon}
                 />
-                <Text style={styles.itemText}>RappiPro</Text>
+                <Text style={styles.itemText}>Kopi Kap Pro</Text>
               </View>
               <Ionicons
                 name="chevron-forward-outline"

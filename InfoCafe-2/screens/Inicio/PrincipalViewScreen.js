@@ -1,12 +1,12 @@
 import React, { useState } from 'react';
-import { ScrollView, StyleSheet } from 'react-native';
+import { View, ScrollView, StyleSheet } from 'react-native';
 import DecorativeBackground from '../../componentes/PantallaLayout';
 import SearchBar from '../../componentes/SearchBar';
 import PromoBanner from '../../componentes/PromoBanner';
 import CategoryList from '../../componentes/CategoryList';
 import ProductList from '../../componentes/ProductList';
 import CoffeeData from '../../data/ProductosData';
-import HeaderPerso from '../../componentes/HeaderPerso'
+import HeaderPerso from '../../componentes/HeaderPerso';
 
 export default function PrincipalViewScreen() {
   const [selectedCategory, setSelectedCategory] = useState('All');
@@ -14,16 +14,25 @@ export default function PrincipalViewScreen() {
 
   return (
     <DecorativeBackground>
-      <HeaderPerso/>
-      <ScrollView contentContainerStyle={styles.container} showsVerticalScrollIndicator={false}>
-        {/* Se pasa la función setSearchResults a SearchBar para recibir el filtrado */}
+      {/* Encabezado siempre visible */}
+      <HeaderPerso />
+
+      {/* Contenido estático */}
+      <View style={styles.staticContainer}>
         <SearchBar onSearchResults={setSearchResults} />
         <PromoBanner />
         <CategoryList
           selectedCategory={selectedCategory}
           onSelectCategory={setSelectedCategory}
         />
-        {/* En ProductList se usará la data filtrada por búsqueda */}
+      </View>
+
+      {/* Solo la lista de productos es desplazable */}
+      <ScrollView
+        style={styles.scrollContainer}
+        contentContainerStyle={styles.productListContainer}
+        showsVerticalScrollIndicator={false}
+      >
         <ProductList
           coffeeData={searchResults}
           selectedCategory={selectedCategory}
@@ -34,7 +43,15 @@ export default function PrincipalViewScreen() {
 }
 
 const styles = StyleSheet.create({
-  container: {
+  staticContainer: {
     padding: 16,
+    // Aquí puedes agregar estilos adicionales para el área estática.
+  },
+  scrollContainer: {
+    flex: 1, // Asegura que el ScrollView ocupe el espacio restante
+  },
+  productListContainer: {
+    padding: 16,
+    // Puedes ajustar este padding según necesites para ProductList.
   },
 });
