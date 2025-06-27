@@ -10,7 +10,7 @@ const initialState = {
   CoffeeList: CoffeeData,
   CartPrice: "0",
   FavoritesList: [],
-  CartList: [], // Siempre inicia vacío
+  CartList: [],             // Siempre inicia vacío
   OrderHistoryList: [],
 };
 
@@ -43,30 +43,34 @@ function reducer(state, action) {
         break;
       }
 
-      case 'LOAD_PERSISTED_STATE':
-        // Carga el estado persistido pero forzamos que CartList quede vacío
-        return { ...action.payload, CartList: [] };
-
-      default:
-        break;
-
       case 'REMOVE_FROM_CART': {
         const { id, size } = action.payload;
         const productIndex = draft.CartList.findIndex(item => item.id === id);
         if (productIndex !== -1) {
-          // Encuentra la variante según el tamaño
-          const priceIndex = draft.CartList[productIndex].prices.findIndex(priceObj => priceObj.size === size);
+          const priceIndex = draft.CartList[productIndex].prices.findIndex(
+            priceObj => priceObj.size === size
+          );
           if (priceIndex !== -1) {
-            // Remueve esa variante
             draft.CartList[productIndex].prices.splice(priceIndex, 1);
-            // Si ya no quedan variantes, remueve el producto completo
             if (draft.CartList[productIndex].prices.length === 0) {
               draft.CartList.splice(productIndex, 1);
             }
           }
         }
         break;
-      } 
+      }
+
+      case 'CLEAR_CART': {
+        draft.CartList = [];
+        break;
+      }
+
+      case 'LOAD_PERSISTED_STATE':
+        // Carga el estado guardado pero fuerza CartList vacío
+        return { ...action.payload, CartList: [] };
+
+      default:
+        break;
     }
   });
 }
@@ -74,51 +78,57 @@ function reducer(state, action) {
 export function StoreProvider({ children }) {
   const [state, dispatch] = useReducer(reducer, initialState);
 
-  // Carga el estado guardado
+  // Carga el estado guardado al iniciar
   useEffect(() => {
     (async () => {
       try {
         const saved = await AsyncStorage.getItem("coffee-app");
         if (saved) {
-          dispatch({ type: 'LOAD_PERSISTED_STATE', payload: JSON.parse(saved) });
+          dispatch({
+            type: 'LOAD_PERSISTED_STATE',
+            payload: JSON.parse(saved),
+          });
         }
       } catch (e) {
-        console.log("Error loading state", e);
+        console.error("Error loading state", e);
       }
     })();
   }, []);
 
-  // Guarda el estado cada vez que cambia (omitimos CartList para que no se persista)
+  // Persiste estado en AsyncStorage (sin CartList)
   useEffect(() => {
-    const persist = async () => {
+    (async () => {
       try {
         const toSave = {
           CoffeeList: state.CoffeeList,
           CartPrice: state.CartPrice,
           FavoritesList: state.FavoritesList,
-          // CartList no se guarda para iniciar siempre con un carrito vacío
+          // CartList no se guarda para iniciar siempre vacío
           OrderHistoryList: state.OrderHistoryList,
         };
         await AsyncStorage.setItem("coffee-app", JSON.stringify(toSave));
       } catch (e) {
-        console.log("Error saving state", e);
+        console.error("Error saving state", e);
       }
-    };
-    persist();
+    })();
   }, [state]);
 
-  const addToCart = (cartItem) => dispatch({ type: 'ADD_TO_CART', payload: cartItem });
-
-  const removeFromCart = (payload) => dispatch({ type: 'REMOVE_FROM_CART', payload });
+  const addToCart     = cartItem => dispatch({ type: 'ADD_TO_CART',     payload: cartItem });
+  const removeFromCart= payload  => dispatch({ type: 'REMOVE_FROM_CART', payload });
+  const clearCart     = ()       => dispatch({ type: 'CLEAR_CART' });
 
   return (
-    <StoreContext.Provider value={{ state, addToCart ,removeFromCart}}>
+    <StoreContext.Provider value={{
+      state,
+      addToCart,
+      removeFromCart,
+      clearCart,    // ← exponemos clearCart para vaciar el carrito
+    }}>
       {children}
     </StoreContext.Provider>
   );
 }
 
-// Custom hook
 export function useStoreContext() {
   const context = useContext(StoreContext);
   if (!context) {

@@ -6,7 +6,8 @@ import StackHome from '../navigation/InicioStack';
 import PedidoStack from '../navigation/PedidoStack';
 import FavouritesScreen from '../screens/FavouritesScreens';
 import NotificationScreen from '../screens/NotificationsScreen';
-import AccountScreen from '../screens/AccountScreen';
+import PrincipalViewScreen from '../screens/Inicio/PrincipalViewScreen'
+
 
 const Tab = createBottomTabNavigator();
 

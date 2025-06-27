@@ -17,6 +17,7 @@ export default function ShoppingCart({ orderType }) {
     totalPayment,
     removeFromCart,
     handlePlaceOrder,
+    isOrderEnabled,    // ← asegúrate de extraerlo
   } = useShoppingCart(orderType);
 
   const renderProducts = () => {
@@ -84,11 +85,23 @@ export default function ShoppingCart({ orderType }) {
         </View>
       </View>
 
+      {/* Botón realiza pedido */}
       <TouchableOpacity
-        style={styles.placeOrderBtn}
         onPress={handlePlaceOrder}
+        disabled={!isOrderEnabled}
+        style={[
+          styles.placeOrderBtn,
+          !isOrderEnabled && styles.placeOrderBtnDisabled,
+        ]}
       >
-        <Text style={styles.placeOrderText}>Realizar pedido</Text>
+        <Text
+          style={[
+            styles.placeOrderText,
+            !isOrderEnabled && styles.placeOrderTextDisabled,
+          ]}
+        >
+          Realizar pedido
+        </Text>
       </TouchableOpacity>
     </View>
   );
@@ -167,7 +180,6 @@ const styles = StyleSheet.create({
     backgroundColor: '#ccc',
     marginVertical: 12,
   },
-  priceDetails: {},
   row: {
     flexDirection: 'row',
     justifyContent: 'space-between',
@@ -204,9 +216,17 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     marginTop: 16,
   },
+  placeOrderBtnDisabled: {
+    backgroundColor: '#fff',
+    borderWidth: 1,
+    borderColor: '#ccc',
+  },
   placeOrderText: {
     color: '#fff',
     fontSize: 16,
     fontWeight: 'bold',
+  },
+  placeOrderTextDisabled: {
+    color: '#ccc',
   },
 });

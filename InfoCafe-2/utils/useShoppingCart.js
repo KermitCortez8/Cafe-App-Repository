@@ -1,11 +1,11 @@
 // util/useShoppingCart.js
 import { useNavigation } from '@react-navigation/native';
 import { useStoreContext } from '../store/store';
-import { useMemo } from 'react';
+import { useMemo, useCallback } from 'react';
 
 export function useShoppingCart(orderType = 'Deliver') {
   const navigation = useNavigation();
-  const { state, removeFromCart } = useStoreContext();
+  const { state, removeFromCart, clearCart } = useStoreContext();
   const cartItems = state.CartList || [];
 
   const defaultDeliveryFee = 5;
@@ -36,26 +36,29 @@ export function useShoppingCart(orderType = 'Deliver') {
     [subtotal, calculatedDeliveryFee]
   );
 
-  const isAddressValid =
-    !!state.deliveryAddress && state.deliveryAddress.trim().length > 0;
+  // Sólo habilita el pedido si hay algo en el carrito
+  const isOrderEnabled = cartItems.length > 0;
 
-  const isOrderEnabled = cartItems.length > 0 && isAddressValid;
+  const handlePlaceOrder = useCallback(() => {
+    if (!isOrderEnabled) return;      // no hace nada si está bloqueado
 
-  const handlePlaceOrder = () => {
-    if (orderType.toLowerCase() === 'deliver') {
+    const type = orderType.toLowerCase();
+    if (type === 'deliver') {
       navigation.navigate('MapaEntrega');
+    } else if (type === 'pickup') {
+                         // vacía el carrito
+      navigation.navigate('PedidoAceptado');
     }
-    // si fuera Pickup podrías añadir otra lógica aquí…
-  };
+  }, [navigation, orderType, isOrderEnabled]);
 
   return {
     cartItems,
     calculatedDeliveryFee,
     subtotal,
     totalPayment,
-    isAddressValid,
     isOrderEnabled,
     removeFromCart,
+         // opcional si quieres vaciar manualmente en otro punto
     handlePlaceOrder,
   };
 }
