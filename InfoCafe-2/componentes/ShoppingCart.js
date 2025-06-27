@@ -1,51 +1,33 @@
 import React from 'react';
-import { 
-  View, 
-  Text, 
-  StyleSheet, 
-  Image, 
-  ScrollView, 
-  TouchableOpacity 
+import {
+  View,
+  Text,
+  StyleSheet,
+  Image,
+  ScrollView,
+  TouchableOpacity,
 } from 'react-native';
-import { useNavigation } from '@react-navigation/native';
-import { useStoreContext } from '../../InfoCafe-2/store/store';
+import { useShoppingCart } from '../../InfoCafe-2/utils/useShoppingCart';
 
-export default function ShoppingCart({ orderType = 'Deliver' }) {  
-  const navigation = useNavigation();
-  const { state, removeFromCart } = useStoreContext();
-  const cartItems = state.CartList || [];
-  const defaultDeliveryFee = 5; // Tarifa de delivery cuando hay productos
-  
-  // Se calcula el fee: si existen productos en el carrito y el pedido es "Deliver", se asigna 5; para "Pickup" o sin productos se asigna 0.
-  const calculatedDeliveryFee =
-    cartItems.length > 0 && orderType && orderType.toLowerCase() === 'deliver'
-      ? defaultDeliveryFee 
-      : 0;
-  
-  // Calcula el subtotal sumando el precio (por unidad * cantidad) para cada variante del producto.
-  const subtotal = cartItems.reduce((sum, item) => {
-    const itemTotal = item.prices.reduce(
-      (s, priceObj) => s + (parseFloat(priceObj.price) * priceObj.quantity),
-      0
-    );
-    return sum + itemTotal;
-  }, 0);
-
-  // Total a pagar: suma del subtotal + tarifa (según el tipo de pedido)
-  const totalPayment = (subtotal + calculatedDeliveryFee).toFixed(2);
-
-  // Validación de dirección: se considera válida si existe y no es cadena vacía.
-  const isAddressValid = state.deliveryAddress && state.deliveryAddress.trim().length > 0;
-  // El pedido se habilita solo si hay al menos un producto y se tiene una dirección válida.
-  const isOrderEnabled = cartItems.length > 0 && isAddressValid;
+export default function ShoppingCart({ orderType }) {
+  const {
+    cartItems,
+    calculatedDeliveryFee,
+    subtotal,
+    totalPayment,
+    removeFromCart,
+    handlePlaceOrder,
+  } = useShoppingCart(orderType);
 
   const renderProducts = () => {
     if (cartItems.length === 0) {
       return (
-        <Text style={styles.emptyCartMessage}>No hay ningún producto agregado.</Text>
+        <Text style={styles.emptyCartMessage}>
+          No hay ningún producto agregado.
+        </Text>
       );
     }
-    return cartItems.map(item =>
+    return cartItems.map((item) =>
       item.prices.map((priceObj) => (
         <View key={`${item.id}-${priceObj.size}`} style={styles.card}>
           <Image source={item.image} style={styles.cardImage} />
@@ -58,9 +40,11 @@ export default function ShoppingCart({ orderType = 'Deliver' }) {
               S/.{(parseFloat(priceObj.price) * priceObj.quantity).toFixed(2)}
             </Text>
           </View>
-          <TouchableOpacity 
+          <TouchableOpacity
             style={styles.removeBtn}
-            onPress={() => removeFromCart({ id: item.id, size: priceObj.size })}
+            onPress={() =>
+              removeFromCart({ id: item.id, size: priceObj.size })
+            }
           >
             <Text style={styles.removeText}>Eliminar</Text>
           </TouchableOpacity>
@@ -71,14 +55,12 @@ export default function ShoppingCart({ orderType = 'Deliver' }) {
 
   return (
     <View style={styles.outerContainer}>
-      {/* Área de productos (scrollable) */}
       <View style={styles.productsContainer}>
         <ScrollView contentContainerStyle={styles.scrollContent}>
           {renderProducts()}
         </ScrollView>
       </View>
 
-      {/* Área de resumen (no scrollable) */}
       <View style={styles.summaryContainer}>
         <View style={styles.separator} />
         <View style={styles.priceDetails}>
@@ -86,10 +68,12 @@ export default function ShoppingCart({ orderType = 'Deliver' }) {
             <Text style={styles.detailLabel}>Subtotal</Text>
             <Text style={styles.detailValue}>S/.{subtotal.toFixed(2)}</Text>
           </View>
-          {orderType && orderType.toLowerCase() === 'deliver' && (
+          {orderType?.toLowerCase() === 'deliver' && (
             <View style={styles.row}>
               <Text style={styles.detailLabel}>Delivery</Text>
-              <Text style={styles.detailValue}>S/.{calculatedDeliveryFee.toFixed(2)}</Text>
+              <Text style={styles.detailValue}>
+                S/.{calculatedDeliveryFee.toFixed(2)}
+              </Text>
             </View>
           )}
         </View>
@@ -100,16 +84,9 @@ export default function ShoppingCart({ orderType = 'Deliver' }) {
         </View>
       </View>
 
-      {/* Botón para realizar pedido */}
-      <TouchableOpacity 
+      <TouchableOpacity
         style={styles.placeOrderBtn}
-        onPress={() => {
-          // Si el pedido es de delivery, navega a la pantalla MapScreen.
-          if (orderType && orderType.toLowerCase() === 'deliver') {
-            navigation.navigate('MapaEntrega');
-          }
-          // Para PickUp no se realiza ninguna acción al presionar.
-        }}
+        onPress={handlePlaceOrder}
       >
         <Text style={styles.placeOrderText}>Realizar pedido</Text>
       </TouchableOpacity>

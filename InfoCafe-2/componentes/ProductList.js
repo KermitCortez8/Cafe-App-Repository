@@ -13,12 +13,8 @@ export default function ProductList({ coffeeData, selectedCategory }) {
       {filteredData.map((product) => (
         <ProductCard
           key={product.id}
-          // === ¡CAMBIO CLAVE AQUÍ! Pasamos el objeto 'product' completo ===
-          product={product} // <-- ¡Así de simple!
-          // Ya no es necesario reconstruir el objeto product con propiedades específicas.
-          // Esto asegura que todas las propiedades de CoffeeData (id, name, prices, description, etc.)
-          // se pasen intactas a ProductCard y, posteriormente, a DetailsScreen.
-          // ===============================================
+          product={product} 
+
         />
       ))}
     </View>

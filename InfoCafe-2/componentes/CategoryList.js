@@ -40,8 +40,8 @@ const styles = StyleSheet.create({
   },
   container: {
     flexDirection: 'row',
-    gap: 8, // `gap` funciona bien en React Native 0.71+, para versiones anteriores podrías usar `marginRight` en `chip`
-    // marginBottom: 16, // Si usas paddingVertical en scrollViewContent, esto puede ser redundante o necesitar ajuste
+    gap: 8, 
+
   },
   chip: {
     backgroundColor: '#E0E0E0',
