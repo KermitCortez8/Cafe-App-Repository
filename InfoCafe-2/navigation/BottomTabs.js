@@ -5,8 +5,8 @@ import { Ionicons } from '@expo/vector-icons';
 import StackHome from '../navigation/InicioStack';
 import PedidoStack from '../navigation/PedidoStack';
 import FavouritesScreen from '../screens/FavouritesScreens';
-import NotificationScreen from '../screens/NotificationsScreen';
 import PrincipalViewScreen from '../screens/Inicio/PrincipalViewScreen'
+import NotificationStack from '../navigation/NotificationStack';
 
 
 const Tab = createBottomTabNavigator();
@@ -64,7 +64,7 @@ export default function BottomTabs() {
         })}
       />
       <Tab.Screen name="Favoritos" component={FavouritesScreen} />
-      <Tab.Screen name="Notificaciones" component={NotificationScreen} />
+      <Tab.Screen name="Notificaciones" component={NotificationStack} />
     </Tab.Navigator>
   );
 }

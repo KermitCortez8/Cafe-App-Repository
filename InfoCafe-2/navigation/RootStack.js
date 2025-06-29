@@ -15,6 +15,7 @@ export default function RootNavigator() {
       <Stack.Screen name="Splash" component={SplashScreen} />
       <Stack.Screen name="Intro" component={IntroScreen} />
       <Stack.Screen name="PrincipalView" component={BottomTabs} />
+      <Stack.Screen name="Details" component={DetailsScreen} />
     </Stack.Navigator>
   );
 }
