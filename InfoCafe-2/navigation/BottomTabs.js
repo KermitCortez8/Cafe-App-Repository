@@ -41,8 +41,28 @@ export default function BottomTabs() {
         name="Inicio"
         component={StackHome}
         options={{ unmountOnBlur: true }}
+        listeners={({ navigation }) => ({
+          tabPress: e => {
+            e.preventDefault(); 
+            navigation.navigate('Inicio', {
+              screen: 'PrincipalView' // nombre de la pantalla dentro de InicioStack
+            });
+          }
+        })}
       />
-      <Tab.Screen name="Pedido" component={PedidoStack} />
+
+      <Tab.Screen
+        name="Pedido"
+        component={PedidoStack}
+        listeners={({ navigation }) => ({
+          tabPress: e => {
+            e.preventDefault();
+            navigation.navigate('Pedido', {
+              screen: 'Deliver'     // nombre de la pantalla dentro de PedidoStack
+            });
+          }
+        })}
+      />
       <Tab.Screen name="Favoritos" component={FavouritesScreen} />
       <Tab.Screen name="Notificaciones" component={NotificationScreen} />
     </Tab.Navigator>
