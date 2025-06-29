@@ -26,8 +26,9 @@ const CustomHeader = () => {
     PickUp: 'Mi Copa',
     Deliver: 'Mi Copa',
     Favoritos: 'Favoritos',
-    Perfil: 'Mi cuenta',
+    Perfil: 'Mi Cuenta',
     Notificaciones: 'Notificaciones',
+    MapaEntrega:'Mi Copa',
   };
 
   const subtitle = subtitleMapping[activeRouteName] || 'Inicio';

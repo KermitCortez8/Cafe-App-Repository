@@ -5,6 +5,7 @@ import DeliverScreen from '../screens/Pedido/DeliverScreen';
 import MapScreen from '../screens/Pedido/MapScreen';
 import AccountScreen from '../screens/AccountScreen';
 import OrderConfirmationScreen from '../screens/Pedido/PedidoAceptado';
+import DeliveryConfirmationScreen from '../screens/Pedido/DeliveryRecibido'
 
 const Stack = createNativeStackNavigator();
 
@@ -36,6 +37,11 @@ export default function PedidoStack() {
       <Stack.Screen 
         name="PedidoAceptado" 
         component={OrderConfirmationScreen} 
+      />
+
+      <Stack.Screen 
+        name="DeliveryRecibido" 
+        component={DeliveryConfirmationScreen} 
       />
       
       <Stack.Screen name="Perfil" component={AccountScreen}/>
