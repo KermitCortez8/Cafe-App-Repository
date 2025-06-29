@@ -18,9 +18,9 @@ export default function OrderConfirmationScreen({ navigation }) {
       />
 
       {/* Texto de éxito */}
-      <Text style={styles.title}>¡Pedido recibido!</Text>
+      <Text style={styles.title}>¡Pedido Aprobado!</Text>
       <Text style={styles.subtitle}>
-        Gracias por tu compra. En breve comenzamos con la preparación.
+        Gracias por su compra. En breve comenzamos con la preparación.
       </Text>
 
       {/* Botón “Volver al inicio” */}

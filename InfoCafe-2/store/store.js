@@ -1,19 +1,26 @@
-// StoreContext.js
+// InfoCafe-2/store/StoreContext.js
+
 import React, { createContext, useContext, useReducer, useEffect } from 'react';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { produce } from 'immer';
-import CoffeeData from '../../InfoCafe-2/data/ProductosData';
+import CoffeeData from '../data/ProductosData';  // Ajusta la ruta si hace falta
 
+// 1) Creamos el contexto
 const StoreContext = createContext();
 
+// 2) Estado inicial, ahora con deliveryAddress
 const initialState = {
   CoffeeList: CoffeeData,
   CartPrice: "0",
   FavoritesList: [],
-  CartList: [],             // Siempre inicia vacío
+  CartList: [],
   OrderHistoryList: [],
+
+  // Nuevo campo para la dirección de entrega
+  deliveryAddress: null,
 };
 
+// 3) Reducer con los casos existentes y el nuevo SET_DELIVERY_ADDRESS
 function reducer(state, action) {
   return produce(state, draft => {
     switch (action.type) {
@@ -65,9 +72,19 @@ function reducer(state, action) {
         break;
       }
 
-      case 'LOAD_PERSISTED_STATE':
-        // Carga el estado guardado pero fuerza CartList vacío
-        return { ...action.payload, CartList: [] };
+      case 'LOAD_PERSISTED_STATE': {
+        // Carga el estado guardado pero fuerza CartList y deliveryAddress vacío
+        return {
+          ...action.payload,
+          CartList: [],
+          deliveryAddress: null
+        };
+      }
+
+      case 'SET_DELIVERY_ADDRESS': {
+        draft.deliveryAddress = action.payload;
+        break;
+      }
 
       default:
         break;
@@ -75,14 +92,15 @@ function reducer(state, action) {
   });
 }
 
+// 4) Provider que envuelve la app y expone state + acciones
 export function StoreProvider({ children }) {
   const [state, dispatch] = useReducer(reducer, initialState);
 
-  // Carga el estado guardado al iniciar
+  // a) Cargar estado guardado al iniciar (sin CartList)
   useEffect(() => {
     (async () => {
       try {
-        const saved = await AsyncStorage.getItem("coffee-app");
+        const saved = await AsyncStorage.getItem('coffee-app');
         if (saved) {
           dispatch({
             type: 'LOAD_PERSISTED_STATE',
@@ -90,12 +108,12 @@ export function StoreProvider({ children }) {
           });
         }
       } catch (e) {
-        console.error("Error loading state", e);
+        console.error('Error loading state', e);
       }
     })();
   }, []);
 
-  // Persiste estado en AsyncStorage (sin CartList)
+  // b) Persistir cambios (sin CartList)
   useEffect(() => {
     (async () => {
       try {
@@ -103,36 +121,40 @@ export function StoreProvider({ children }) {
           CoffeeList: state.CoffeeList,
           CartPrice: state.CartPrice,
           FavoritesList: state.FavoritesList,
-          // CartList no se guarda para iniciar siempre vacío
           OrderHistoryList: state.OrderHistoryList,
+          // deliveryAddress no se persiste para reiniciar vacío cada lanzamiento
         };
-        await AsyncStorage.setItem("coffee-app", JSON.stringify(toSave));
+        await AsyncStorage.setItem('coffee-app', JSON.stringify(toSave));
       } catch (e) {
-        console.error("Error saving state", e);
+        console.error('Error saving state', e);
       }
     })();
   }, [state]);
 
-  const addToCart     = cartItem => dispatch({ type: 'ADD_TO_CART',     payload: cartItem });
-  const removeFromCart= payload  => dispatch({ type: 'REMOVE_FROM_CART', payload });
-  const clearCart     = ()       => dispatch({ type: 'CLEAR_CART' });
+  // c) Acciones que expondremos
+  const addToCart          = item    => dispatch({ type: 'ADD_TO_CART',            payload: item });
+  const removeFromCart     = payload => dispatch({ type: 'REMOVE_FROM_CART',       payload });
+  const clearCart          = ()      => dispatch({ type: 'CLEAR_CART' });
+  const setDeliveryAddress = addr    => dispatch({ type: 'SET_DELIVERY_ADDRESS',  payload: addr });
 
   return (
     <StoreContext.Provider value={{
       state,
       addToCart,
       removeFromCart,
-      clearCart,    // ← exponemos clearCart para vaciar el carrito
+      clearCart,
+      setDeliveryAddress,     // ← Exponemos la nueva función
     }}>
       {children}
     </StoreContext.Provider>
   );
 }
 
+// 5) Hook para consumir el contexto
 export function useStoreContext() {
   const context = useContext(StoreContext);
   if (!context) {
-    throw new Error("useStoreContext must be used within a StoreProvider");
+    throw new Error('useStoreContext must be used within a StoreProvider');
   }
   return context;
 }
