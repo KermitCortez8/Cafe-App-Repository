@@ -1,31 +1,56 @@
-import React from 'react';
-import { View, Text, StyleSheet } from 'react-native';
-import CustomHeader from '../../InfoCafe-2/componentes/HeaderPerso'
 
+import React from 'react';
+import { View, FlatList, StyleSheet, Text } from 'react-native';
+import { useStoreContext } from 'C:/Users/albco/Documents/GitHub/Cafe-App-Repository/InfoCafe-2/store/store.js';// Importar contexto de la tienda
+import ProductCard from 'C:/Users/albco/Documents/GitHub/Cafe-App-Repository/InfoCafe-2/componentes/ProductoCard'; // Importar ProductCard
+import CustomHeader from 'C:/Users/albco/Documents/GitHub/Cafe-App-Repository/InfoCafe-2/componentes/HeaderPerso'; // Importar CustomHeader
 
 export default function FavouritesScreen() {
+  const { state } = useStoreContext(); // Obtener el estado global
+  const { FavoritesList } = state; // Lista de productos favoritos
+
+  // Función para renderizar cada producto usando ProductCard
+  const renderItem = ({ item }) => (
+    <ProductCard product={item} />
+  );
+
   return (
-    <>
-      <CustomHeader />
-      <View style={styles.container}>
-        <Text style={styles.text}>¡Hola Mundo! Favoritos</Text>
-      </View>
-    </>
+    <View style={styles.container}>
+      <CustomHeader />  {/* Aquí agregamos el CustomHeader */}
+      <Text style={styles.title}>Favoritos</Text>
+      {FavoritesList.length === 0 ? (
+        <Text style={styles.noFavoritesText}>No tienes productos favoritos</Text>
+      ) : (
+        <FlatList
+          data={FavoritesList}
+          keyExtractor={item => item.id.toString()}
+          renderItem={renderItem}
+          contentContainerStyle={styles.list}
+          numColumns={2} // Muestra los productos en dos columnas
+        />
+      )}
+    </View>
   );
 }
-
-
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: 'center',  
-    alignItems: 'center',    
+    padding: 10,
     backgroundColor: '#fff',
   },
-  text: {
+  title: {
     fontSize: 24,
     fontWeight: 'bold',
-    color: '#4E1F00',
+    marginBottom: 15,
+    marginTop: 2, // Para separar el título del header
+  },
+  noFavoritesText: {
+    fontSize: 18,
+    color: '#777',
+    textAlign: 'center',
+  },
+  list: {
+    marginTop: 10,
   },
 });

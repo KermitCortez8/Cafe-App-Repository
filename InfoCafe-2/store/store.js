@@ -12,7 +12,7 @@ const StoreContext = createContext();
 const initialState = {
   CoffeeList: CoffeeData,
   CartPrice: "0",
-  FavoritesList: [],
+  FavoritesList: [], // Lista de favoritos vacía inicialmente
   CartList: [],
   OrderHistoryList: [],
 
@@ -20,7 +20,7 @@ const initialState = {
   deliveryAddress: null,
 };
 
-// 3) Reducer con los casos existentes y el nuevo SET_DELIVERY_ADDRESS
+// 3) Reducer con los casos existentes y el nuevo SET_DELIVERY_ADDRESS y FAVORITES
 function reducer(state, action) {
   return produce(state, draft => {
     switch (action.type) {
@@ -86,6 +86,21 @@ function reducer(state, action) {
         break;
       }
 
+      // NUEVO: Agregar un producto a la lista de favoritos
+      case 'ADD_TO_FAVORITES': {
+        // Verificamos si el producto ya existe en la lista de favoritos
+        if (!draft.FavoritesList.some(item => item.id === action.payload.id)) {
+          draft.FavoritesList.push(action.payload); // Agregar el producto a favoritos
+        }
+        break;
+      }
+
+      // NUEVO: Eliminar un producto de la lista de favoritos
+      case 'REMOVE_FROM_FAVORITES': {
+        draft.FavoritesList = draft.FavoritesList.filter(coffee => coffee.id !== action.payload);
+        break;
+      }
+
       default:
         break;
     }
@@ -136,6 +151,8 @@ export function StoreProvider({ children }) {
   const removeFromCart     = payload => dispatch({ type: 'REMOVE_FROM_CART',       payload });
   const clearCart          = ()      => dispatch({ type: 'CLEAR_CART' });
   const setDeliveryAddress = addr    => dispatch({ type: 'SET_DELIVERY_ADDRESS',  payload: addr });
+  const addToFavorites     = product => dispatch({ type: 'ADD_TO_FAVORITES',      payload: product });  // Agregar a favoritos
+  const removeFromFavorites = id     => dispatch({ type: 'REMOVE_FROM_FAVORITES', payload: id }); // Eliminar de favoritos
 
   return (
     <StoreContext.Provider value={{
@@ -144,6 +161,8 @@ export function StoreProvider({ children }) {
       removeFromCart,
       clearCart,
       setDeliveryAddress,     // ← Exponemos la nueva función
+      addToFavorites,         // ← Exponemos la nueva función para agregar a favoritos
+      removeFromFavorites,    // ← Exponemos la nueva función para eliminar de favoritos
     }}>
       {children}
     </StoreContext.Provider>
