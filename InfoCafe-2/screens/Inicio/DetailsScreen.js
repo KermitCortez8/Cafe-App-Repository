@@ -1,18 +1,14 @@
 // screens/DetailsScreen.js
+
 import React from 'react';
-import {
-  ScrollView,
-  StyleSheet,
-  View,
-  Text,
-  TouchableOpacity,
-} from 'react-native';
+import { ScrollView, StyleSheet, View, Text, TouchableOpacity } from 'react-native';
 import Header from '../../../InfoCafe-2/componentes/Header';
 import ProductImage from '../../../InfoCafe-2/componentes/ProductImage';
 import ProductInfo from '../../../InfoCafe-2/componentes/ProductInfo';
 import Description from '../../../InfoCafe-2/componentes/Description';
 import SizeSelector from '../../../InfoCafe-2/componentes/SizeSelector';
 import useProductDetails from '../../../InfoCafe-2/utils/useProductDetails';
+import { useStoreContext } from '../../../InfoCafe-2/store/store'; // Importar contexto de tienda
 
 export default function DetailsScreen({ route, navigation }) {
   const { product } = route.params;
@@ -29,11 +25,16 @@ export default function DetailsScreen({ route, navigation }) {
     handleAddToCart,
   } = useProductDetails(product, navigation);
 
+  const { addToFavorites, removeFromFavorites } = useStoreContext(); // Obtener la función para agregar/eliminar favoritos
+
   return (
     <ScrollView style={styles.container}>
       <Header
         title="Detalle"
         onBack={() => navigation.navigate('PrincipalView')}
+        product={product} // Pasamos el producto al Header
+        addToFavorites={addToFavorites}
+        removeFromFavorites={removeFromFavorites}
       />
 
       <ProductImage source={product?.image} />
