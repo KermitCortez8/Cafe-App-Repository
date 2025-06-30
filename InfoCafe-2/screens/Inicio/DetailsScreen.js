@@ -8,10 +8,19 @@ import ProductInfo from '../../../InfoCafe-2/componentes/ProductInfo';
 import Description from '../../../InfoCafe-2/componentes/Description';
 import SizeSelector from '../../../InfoCafe-2/componentes/SizeSelector';
 import useProductDetails from '../../../InfoCafe-2/utils/useProductDetails';
-import { useStoreContext } from '../../../InfoCafe-2/store/store'; 
+import { useStoreContext } from '../../../InfoCafe-2/store/store';
 
 export default function DetailsScreen({ route, navigation }) {
   const { product } = route.params;
+
+  if (!product) {
+    return (
+      <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+        <Text>Producto no encontrado.</Text>
+      </View>
+    );
+  }
+
   const {
     fullDescriptionText,
     shortDescriptionText,
@@ -25,14 +34,14 @@ export default function DetailsScreen({ route, navigation }) {
     handleAddToCart,
   } = useProductDetails(product, navigation);
 
-  const { addToFavorites, removeFromFavorites } = useStoreContext(); // Obtener la función para agregar/eliminar favoritos
+  const { addToFavorites, removeFromFavorites } = useStoreContext();
 
   return (
     <ScrollView style={styles.container}>
       <Header
         title="Detalle"
         onBack={() => navigation.navigate('PrincipalView')}
-        product={product} // Pasamos el producto al Header
+        product={product}
         addToFavorites={addToFavorites}
         removeFromFavorites={removeFromFavorites}
       />
@@ -169,3 +178,4 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
   },
 });
+

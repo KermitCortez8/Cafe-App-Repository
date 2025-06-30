@@ -43,7 +43,6 @@ export default function PedidoStack() {
         name="DeliveryRecibido" 
         component={DeliveryConfirmationScreen} 
       />
-      
       <Stack.Screen name="Perfil" component={AccountScreen}/>
     </Stack.Navigator>
   );

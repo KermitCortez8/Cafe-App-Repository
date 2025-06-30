@@ -10,7 +10,7 @@ const StoreContext = createContext();
 const initialState = {
   CoffeeList: CoffeeData,
   CartPrice: "0",
-  FavoritesList: [], // Lista de favoritos vacía inicialmente
+  FavoritesList: [],
   CartList: [],
   OrderHistoryList: [],
   deliveryAddress: null,
@@ -19,17 +19,88 @@ const initialState = {
 function reducer(state, action) {
   return produce(state, draft => {
     switch (action.type) {
-      case 'ADD_TO_FAVORITES': {
+      // --- FAVORITOS ---
+      case 'ADD_TO_FAVORITES':
         if (!draft.FavoritesList.some(item => item.id === action.payload.id)) {
           draft.FavoritesList.push(action.payload);
         }
         break;
-      }
 
-      case 'REMOVE_FROM_FAVORITES': {
-        draft.FavoritesList = draft.FavoritesList.filter(coffee => coffee.id !== action.payload);
+      case 'REMOVE_FROM_FAVORITES':
+        draft.FavoritesList = draft.FavoritesList.filter(
+          item => item.id !== action.payload
+        );
+        break;
+
+      // --- CARRITO ---
+      case 'ADD_TO_CART': {
+        const item = action.payload;
+        let found = false;
+
+        for (let i = 0; i < draft.CartList.length; i++) {
+          if (draft.CartList[i].id === item.id) {
+            found = true;
+            let sizeFound = false;
+
+            for (let j = 0; j < draft.CartList[i].prices.length; j++) {
+              if (draft.CartList[i].prices[j].size === item.prices[0].size) {
+                sizeFound = true;
+                draft.CartList[i].prices[j].quantity += item.prices[0].quantity;
+                break;
+              }
+            }
+
+            if (!sizeFound) {
+              draft.CartList[i].prices.push(item.prices[0]);
+            }
+
+            break;
+          }
+        }
+
+        if (!found) {
+          draft.CartList.push(item);
+        }
+
         break;
       }
+
+      case 'REMOVE_FROM_CART': {
+        const { id, size } = action.payload;
+        const productIndex = draft.CartList.findIndex(item => item.id === id);
+
+        if (productIndex !== -1) {
+          const priceIndex = draft.CartList[productIndex].prices.findIndex(
+            p => p.size === size
+          );
+
+          if (priceIndex !== -1) {
+            draft.CartList[productIndex].prices.splice(priceIndex, 1);
+
+            if (draft.CartList[productIndex].prices.length === 0) {
+              draft.CartList.splice(productIndex, 1);
+            }
+          }
+        }
+
+        break;
+      }
+
+      case 'CLEAR_CART':
+        draft.CartList = [];
+        break;
+
+      // --- OTROS ---
+      case 'SET_DELIVERY_ADDRESS':
+        draft.deliveryAddress = action.payload;
+        break;
+
+      case 'LOAD_PERSISTED_STATE':
+        return {
+          ...action.payload,
+          CartList: [],
+          deliveryAddress: null
+        };
 
       default:
         break;
@@ -64,6 +135,7 @@ export function StoreProvider({ children }) {
           CartPrice: state.CartPrice,
           FavoritesList: state.FavoritesList,
           OrderHistoryList: state.OrderHistoryList,
+          // CartList and deliveryAddress not persisted
         };
         await AsyncStorage.setItem('coffee-app', JSON.stringify(toSave));
       } catch (e) {
@@ -72,14 +144,22 @@ export function StoreProvider({ children }) {
     })();
   }, [state]);
 
-  const addToFavorites = product => dispatch({ type: 'ADD_TO_FAVORITES', payload: product });
-  const removeFromFavorites = id => dispatch({ type: 'REMOVE_FROM_FAVORITES', payload: id });
+  const addToFavorites      = product => dispatch({ type: 'ADD_TO_FAVORITES', payload: product });
+  const removeFromFavorites = id      => dispatch({ type: 'REMOVE_FROM_FAVORITES', payload: id });
+  const addToCart           = item    => dispatch({ type: 'ADD_TO_CART', payload: item });
+  const removeFromCart      = data    => dispatch({ type: 'REMOVE_FROM_CART', payload: data });
+  const clearCart           = ()      => dispatch({ type: 'CLEAR_CART' });
+  const setDeliveryAddress  = addr    => dispatch({ type: 'SET_DELIVERY_ADDRESS', payload: addr });
 
   return (
     <StoreContext.Provider value={{
       state,
       addToFavorites,
       removeFromFavorites,
+      addToCart,
+      removeFromCart,
+      clearCart,
+      setDeliveryAddress,
     }}>
       {children}
     </StoreContext.Provider>

@@ -1,9 +1,11 @@
+// screens/NotificationScreen.js
+
 import React, { useState, useEffect } from 'react';
 import { View, FlatList, StyleSheet } from 'react-native';
 import NOTIDATA from '../../data/notifications';
 import NotificationCard from '../../componentes/NotificationCard';
 import CoffeeData from '../../data/ProductosData';
-import HeaderPerso from '../../componentes/HeaderPerso'; 
+import CustomHeader from '../../componentes/HeaderPerso';
 
 export default function NotificationScreen({ navigation }) {
   const [notifications, setNotifications] = useState([]);
@@ -35,7 +37,7 @@ export default function NotificationScreen({ navigation }) {
 
   return (
     <View style={styles.container}>
-      <HeaderPerso /> 
+      <CustomHeader />
       <FlatList
         data={notifications}
         keyExtractor={(item) => item.id}
@@ -46,6 +48,10 @@ export default function NotificationScreen({ navigation }) {
             onDelete={handleDelete}
           />
         )}
+        // ---------------------------------------------------
+        // Agrega 12px de separación vertical entre cada tarjeta
+        ItemSeparatorComponent={() => <View style={{ height: 12 }} />}
+        // ---------------------------------------------------
         contentContainerStyle={styles.list}
       />
     </View>
@@ -59,5 +65,6 @@ const styles = StyleSheet.create({
   },
   list: {
     paddingVertical: 12,
+    paddingHorizontal: 16, // opcional: agrega espacio lateral
   },
 });

@@ -44,7 +44,11 @@ export default function ProductCard({ product }) {
       <Text style={styles.name}>{product.name}</Text>
       <Text style={styles.roasted}>{product.roasted}</Text>
       <View style={styles.bottom}>
-        <Text style={styles.price}>{product.price}</Text>
+        {product.price && (
+          <Text style={styles.price}>
+            S/. {parseFloat(product.price).toFixed(2)}
+          </Text>
+        )}
         {renderMinimumPrice()}
       </View>
     </TouchableOpacity>
