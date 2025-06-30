@@ -1,7 +1,8 @@
+// screens/FavouritesScreen.js
 
 import React from 'react';
-import { View, FlatList, StyleSheet, Text } from 'react-native';
-import { useStoreContext } from 'C:/Users/albco/Documents/GitHub/Cafe-App-Repository/InfoCafe-2/store/store.js';// Importar contexto de la tienda
+import { View, FlatList, StyleSheet } from 'react-native';
+import { useStoreContext } from 'C:/Users/albco/Documents/GitHub/Cafe-App-Repository/InfoCafe-2/store/store.js'; // Importar contexto de la tienda
 import ProductCard from 'C:/Users/albco/Documents/GitHub/Cafe-App-Repository/InfoCafe-2/componentes/ProductoCard'; // Importar ProductCard
 import CustomHeader from 'C:/Users/albco/Documents/GitHub/Cafe-App-Repository/InfoCafe-2/componentes/HeaderPerso'; // Importar CustomHeader
 
@@ -17,10 +18,7 @@ export default function FavouritesScreen() {
   return (
     <View style={styles.container}>
       <CustomHeader />  {/* Aquí agregamos el CustomHeader */}
-      <Text style={styles.title}>Favoritos</Text>
-      {FavoritesList.length === 0 ? (
-        <Text style={styles.noFavoritesText}>No tienes productos favoritos</Text>
-      ) : (
+      {FavoritesList.length > 0 && (
         <FlatList
           data={FavoritesList}
           keyExtractor={item => item.id.toString()}
@@ -38,17 +36,6 @@ const styles = StyleSheet.create({
     flex: 1,
     padding: 10,
     backgroundColor: '#fff',
-  },
-  title: {
-    fontSize: 24,
-    fontWeight: 'bold',
-    marginBottom: 15,
-    marginTop: 2, // Para separar el título del header
-  },
-  noFavoritesText: {
-    fontSize: 18,
-    color: '#777',
-    textAlign: 'center',
   },
   list: {
     marginTop: 10,
