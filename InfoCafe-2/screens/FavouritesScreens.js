@@ -1,11 +1,12 @@
 // screens/FavouritesScreen.js
 
 import React from 'react';
-import { View, FlatList, StyleSheet } from 'react-native';
-import { useStoreContext } from 'C:/Users/albco/Documents/GitHub/Cafe-App-Repository/InfoCafe-2/store/store.js'; // Importar contexto de la tienda
-import ProductCard from 'C:/Users/albco/Documents/GitHub/Cafe-App-Repository/InfoCafe-2/componentes/ProductoCard'; // Importar ProductCard
-import CustomHeader from 'C:/Users/albco/Documents/GitHub/Cafe-App-Repository/InfoCafe-2/componentes/HeaderPerso'; // Importar CustomHeader
 
+import { View, FlatList, StyleSheet } from 'react-native';
+ 
+import ProductCard from '../../InfoCafe-2/componentes/ProductoCard'; // Importar ProductCard
+import CustomHeader from '../../InfoCafe-2/componentes/HeaderPerso';
+import { useStoreContext } from '../../InfoCafe-2/store/store';
 export default function FavouritesScreen() {
   const { state } = useStoreContext(); // Obtener el estado global
   const { FavoritesList } = state; // Lista de productos favoritos

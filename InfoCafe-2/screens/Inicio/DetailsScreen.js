@@ -8,7 +8,7 @@ import ProductInfo from '../../../InfoCafe-2/componentes/ProductInfo';
 import Description from '../../../InfoCafe-2/componentes/Description';
 import SizeSelector from '../../../InfoCafe-2/componentes/SizeSelector';
 import useProductDetails from '../../../InfoCafe-2/utils/useProductDetails';
-import { useStoreContext } from '../../../InfoCafe-2/store/store'; // Importar contexto de tienda
+import { useStoreContext } from '../../../InfoCafe-2/store/store'; 
 
 export default function DetailsScreen({ route, navigation }) {
   const { product } = route.params;
