@@ -27,7 +27,7 @@ export default function LoginScreen({ navigation }) {
   const logueo = async () => {
     try {
       await signInWithEmailAndPassword(auth, email, password);
-      Alert.alert('Iniciando sesión', 'Accediendo...');
+
       navigation.navigate('PrincipalView');
     } catch (error) {
       console.log(error);
