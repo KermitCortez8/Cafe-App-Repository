@@ -1,5 +1,3 @@
-// screens/PromotionScreen.js
-
 import React from 'react';
 import {
   SafeAreaView,
@@ -10,13 +8,12 @@ import CustomHeader from '../../componentes/HeaderPerso';
 import PromotionBanner from '../../componentes/PromotionBanner';
 import ContentCard from '../../componentes/ContentCard';
 
-export default function PromotionScreen({ route, navigation }) {
-  const { title, content, image } = route.params || {};
+export default function PromotionScreen({ route }) {
+  const { title, content, image, details } = route.params || {};
 
   return (
     <SafeAreaView style={styles.safe}>
-      <CustomHeader/>
-
+      <CustomHeader />
       <ScrollView contentContainerStyle={styles.container}>
         <PromotionBanner
           title={title || 'Promoción'}
@@ -24,6 +21,7 @@ export default function PromotionScreen({ route, navigation }) {
         />
         <ContentCard
           content={content || '¡Aquí aparecerá el contenido de la promoción!'}
+          details={details || ''}
         />
       </ScrollView>
     </SafeAreaView>

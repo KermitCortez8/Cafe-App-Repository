@@ -45,7 +45,11 @@ const CustomHeader = () => {
         </View>
         <TouchableOpacity
           style={styles.iconContainer}
-          onPress={() => navigation.navigate('Perfil')}
+         onPress={() =>
+  navigation.navigate('Inicio', {
+    screen: 'Perfil',
+  })
+}
         >
           <Ionicons
             name="person-circle-outline"
