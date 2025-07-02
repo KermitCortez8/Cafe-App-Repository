@@ -7,7 +7,10 @@ export default function ProductCard({ product }) {
   const navigation = useNavigation();
 
   const goToDetails = () => {
-    navigation.navigate('Details', { product });
+    navigation.navigate('Inicio', {
+    screen: 'Details',
+    params: { product },
+  });
   };
   // Función para renderizar el precio mínimo a partir de objetos en product.prices
   const renderMinimumPrice = () => {

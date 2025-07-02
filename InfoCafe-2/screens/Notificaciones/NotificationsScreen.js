@@ -1,4 +1,3 @@
-// screens/NotificationScreen.js
 
 import React, { useState, useEffect } from 'react';
 import { View, FlatList, StyleSheet } from 'react-native';
@@ -18,7 +17,10 @@ export default function NotificationScreen({ navigation }) {
     if (item.type === 'cafe') {
       const product = CoffeeData.find((p) => p.id === item.targetId);
       if (product) {
-        navigation.navigate('Details', { product });
+        navigation.navigate('Inicio', {
+          screen: 'Details',
+          params: { product }
+        });
       } else {
         console.warn('Producto no encontrado con ID:', item.targetId);
       }
@@ -27,6 +29,7 @@ export default function NotificationScreen({ navigation }) {
         title: item.title,
         content: item.content,
         image: item.image || null,
+        details: item.details || null, // ✅ Agregado
       });
     }
   };
@@ -48,10 +51,7 @@ export default function NotificationScreen({ navigation }) {
             onDelete={handleDelete}
           />
         )}
-        // ---------------------------------------------------
-        // Agrega 12px de separación vertical entre cada tarjeta
         ItemSeparatorComponent={() => <View style={{ height: 12 }} />}
-        // ---------------------------------------------------
         contentContainerStyle={styles.list}
       />
     </View>
@@ -65,6 +65,6 @@ const styles = StyleSheet.create({
   },
   list: {
     paddingVertical: 12,
-    paddingHorizontal: 16, // opcional: agrega espacio lateral
+    paddingHorizontal: 16,
   },
 });
