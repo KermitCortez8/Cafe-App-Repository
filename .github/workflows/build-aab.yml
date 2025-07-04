@@ -3,9 +3,8 @@ name: Build Expo Android AAB
 on:
   push:
     branches:
-      - feature/deploy-monitoring # Se activará cuando haya un push a la rama "main"
-on:
-  workflow_dispatch:
+      - feature/deploy-monitoring  
+ 
 jobs:
   build:
     runs-on: ubuntu-latest  # Usamos un entorno Linux para ejecutar el flujo de trabajo
@@ -13,10 +12,10 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v3
 
-      - name: Setup Node.js (version 14)
+      - name: Setup Node.js
         uses: actions/setup-node@v3
         with:
-          node-version: '14'  # Usa la versión de Node.js que prefieras
+          node-version: '20'  # Usa la versión de Node.js que prefieras
 
       - name: Install Yarn
         run: npm install -g yarn  # Instalar Yarn si no está disponible
@@ -36,21 +35,17 @@ jobs:
         env:
           EXPO_TOKEN: ${{ secrets.EXPO_TOKEN }}  # Usar el token de Expo desde los secretos de GitHub
         run: |
+          echo "Logging in to Expo with token..."
           eas whoami || eas login --token $EXPO_TOKEN  # Login a Expo con el token
-
-      - name: Set up environment variables for build
-        run: |
-          echo "GOOGLE_MAPS_KEY=${{ secrets.GOOGLE_MAPS_KEY }}" >> $GITHUB_ENV  # Cargar la clave API desde los secretos
 
       - name: Build the AAB using the "preview" profile
         env:
-          EAS_BUILD_PROFILE: preview  
+          EAS_BUILD_PROFILE: preview  # Perfil de "preview" en eas.json
+    
+          EXPO_TOKEN: ${{ secrets.EXPO_TOKEN }}  # Aseguramos que EXPO_TOKEN esté disponible
         run: |
-          cd InfoCafe-2  # Asegurarse de estar en el directorio correcto
+          cd InfoCafe-2
+          eas whoami || eas login --token $EXPO_TOKEN
+          echo "GOOGLE_MAPS_KEY=${{ secrets.GOOGLE_MAPS_KEY }}" >> $GITHUB_ENV  # Cargar la clave API desde los secretos
+          echo "EXPO_TOKEN=${{ secrets.EXPO_TOKEN }}" >> $GITHUB_ENV  # Asegurar que EXPO_TOKEN esté configurado
           eas build --platform android --profile $EAS_BUILD_PROFILE --non-interactive  # Ejecutar la build
-
-      - name: Upload AAB artifact
-        uses: actions/upload-artifact@v2
-        with:
-          name: android-aab
-          path: https://play.google.com/console/developers/?pli=1  # Ruta del archivo .aab generado (ajusta si es necesario)
