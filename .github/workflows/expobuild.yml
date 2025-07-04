@@ -48,6 +48,5 @@ jobs:
           EAS_BUILD_PROFILE: preview  # Perfil de "preview" en eas.json
           EXPO_TOKEN: ${{ secrets.EXPO_TOKEN }}  # Aseguramos que EXPO_TOKEN esté disponible
         run: |
-          
-          eas login --token $EXPO_TOKEN
+          eas whoami || eas login --token $EXPO_TOKEN
           eas build --platform android --profile $EAS_BUILD_PROFILE --non-interactive  # Ejecutar la build
