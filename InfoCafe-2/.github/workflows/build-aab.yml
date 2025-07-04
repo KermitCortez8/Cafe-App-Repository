@@ -4,7 +4,8 @@ on:
   push:
     branches:
       - feature/deploy-monitoring # Se activará cuando haya un push a la rama "main"
-
+on:
+  workflow_dispatch:
 jobs:
   build:
     runs-on: ubuntu-latest  # Usamos un entorno Linux para ejecutar el flujo de trabajo
