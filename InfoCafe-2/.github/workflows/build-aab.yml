@@ -3,7 +3,7 @@ name: Build Expo Android AAB
 on:
   push:
     branches:
-      - main  # Se activará cuando haya un push a la rama "main"
+      - feature/deploy-monitoring # Se activará cuando haya un push a la rama "main"
 
 jobs:
   build:
