@@ -160,6 +160,7 @@ export function StoreProvider({ children }) {
       removeFromCart,
       clearCart,
       setDeliveryAddress,
+      ...(process.env.NODE_ENV === 'test' && { dispatch }) // solo para pruebas
     }}>
       {children}
     </StoreContext.Provider>

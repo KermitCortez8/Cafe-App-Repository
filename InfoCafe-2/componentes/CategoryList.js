@@ -1,16 +1,17 @@
 import React from 'react';
-import { View, Text, TouchableOpacity, StyleSheet, ScrollView } from 'react-native'; // Importa ScrollView
+import { View, Text, TouchableOpacity, StyleSheet, ScrollView } from 'react-native';
 
-const categories = ['All', 'Americano','Black','Cappuccino', 'Macchiato', 'Latte', 'Decaf', 'Espresso', 'Cold Brew', 'Flat White']; // Agregué más categorías para que el efecto de carrusel sea visible
+const categories = ['All', 'Americano', 'Black', 'Cappuccino', 'Macchiato', 'Latte', 'Decaf', 'Espresso', 'Cold Brew', 'Flat White'];
 
 export default function CategoryList({ selectedCategory, onSelectCategory }) {
   return (
     <ScrollView
-      horizontal={true} // Habilita el desplazamiento horizontal
-      showsHorizontalScrollIndicator={false} // Oculta la barra de desplazamiento horizontal
-      contentContainerStyle={styles.scrollViewContent} // Estilo para el contenedor del contenido
+      horizontal={true}
+      showsHorizontalScrollIndicator={false}
+      contentContainerStyle={styles.scrollViewContent}
+      testID="category-scroll" // ← ScrollView principal
     >
-      <View style={styles.container}>
+      <View style={styles.container} testID="category-container">
         {categories.map((cat) => (
           <TouchableOpacity
             key={cat}
@@ -19,11 +20,15 @@ export default function CategoryList({ selectedCategory, onSelectCategory }) {
               styles.chip,
               selectedCategory === cat && styles.selectedChip,
             ]}
+            testID={`category-${cat}`} // ← testID individual para cada categoría
           >
-            <Text style={[
-              styles.chipText,
-              selectedCategory === cat && styles.selectedText,
-            ]}>
+            <Text
+              style={[
+                styles.chipText,
+                selectedCategory === cat && styles.selectedText,
+              ]}
+              testID={`category-text-${cat}`} // ← opcional: para probar solo el texto
+            >
               {cat}
             </Text>
           </TouchableOpacity>
@@ -32,6 +37,7 @@ export default function CategoryList({ selectedCategory, onSelectCategory }) {
     </ScrollView>
   );
 }
+
 
 const styles = StyleSheet.create({
   scrollViewContent: {

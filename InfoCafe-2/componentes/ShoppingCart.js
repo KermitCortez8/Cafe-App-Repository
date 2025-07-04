@@ -17,20 +17,24 @@ export default function ShoppingCart({ orderType }) {
     totalPayment,
     removeFromCart,
     handlePlaceOrder,
-    isOrderEnabled,    // ← asegúrate de extraerlo
+    isOrderEnabled,
   } = useShoppingCart(orderType);
 
   const renderProducts = () => {
     if (cartItems.length === 0) {
       return (
-        <Text style={styles.emptyCartMessage}>
+        <Text style={styles.emptyCartMessage} testID="empty-cart-message">
           No hay ningún producto agregado.
         </Text>
       );
     }
     return cartItems.map((item) =>
       item.prices.map((priceObj) => (
-        <View key={`${item.id}-${priceObj.size}`} style={styles.card}>
+        <View
+          key={`${item.id}-${priceObj.size}`}
+          style={styles.card}
+          testID={`cart-item-${item.id}-${priceObj.size}`}
+        >
           <Image source={item.image} style={styles.cardImage} />
           <View style={styles.cardContent}>
             <Text style={styles.itemName}>{item.name}</Text>
@@ -46,6 +50,7 @@ export default function ShoppingCart({ orderType }) {
             onPress={() =>
               removeFromCart({ id: item.id, size: priceObj.size })
             }
+            testID={`remove-btn-${item.id}-${priceObj.size}`}
           >
             <Text style={styles.removeText}>Eliminar</Text>
           </TouchableOpacity>
@@ -55,7 +60,7 @@ export default function ShoppingCart({ orderType }) {
   };
 
   return (
-    <View style={styles.outerContainer}>
+    <View style={styles.outerContainer} testID="shopping-cart">
       <View style={styles.productsContainer}>
         <ScrollView contentContainerStyle={styles.scrollContent}>
           {renderProducts()}
@@ -67,12 +72,14 @@ export default function ShoppingCart({ orderType }) {
         <View style={styles.priceDetails}>
           <View style={styles.row}>
             <Text style={styles.detailLabel}>Subtotal</Text>
-            <Text style={styles.detailValue}>S/.{subtotal.toFixed(2)}</Text>
+            <Text style={styles.detailValue} testID="subtotal">
+              S/.{subtotal.toFixed(2)}
+            </Text>
           </View>
           {orderType?.toLowerCase() === 'deliver' && (
             <View style={styles.row}>
               <Text style={styles.detailLabel}>Delivery</Text>
-              <Text style={styles.detailValue}>
+              <Text style={styles.detailValue} testID="delivery-fee">
                 S/.{calculatedDeliveryFee.toFixed(2)}
               </Text>
             </View>
@@ -81,11 +88,12 @@ export default function ShoppingCart({ orderType }) {
         <View style={styles.separator} />
         <View style={styles.totalRow}>
           <Text style={styles.totalLabel}>Total a Pagar</Text>
-          <Text style={styles.totalValue}>S/.{totalPayment}</Text>
+          <Text style={styles.totalValue} testID="total-payment">
+            S/.{totalPayment}
+          </Text>
         </View>
       </View>
 
-      {/* Botón realiza pedido */}
       <TouchableOpacity
         onPress={handlePlaceOrder}
         disabled={!isOrderEnabled}
@@ -93,6 +101,7 @@ export default function ShoppingCart({ orderType }) {
           styles.placeOrderBtn,
           !isOrderEnabled && styles.placeOrderBtnDisabled,
         ]}
+        testID="btn-realizar-pedido"
       >
         <Text
           style={[

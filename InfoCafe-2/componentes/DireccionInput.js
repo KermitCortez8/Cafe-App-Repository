@@ -20,8 +20,8 @@ export default function DireccionInput() {
   } = useDireccionInput();
 
   return (
-    <View style={styles.container}>
-      <Text style={styles.title}>Dirección de entrega</Text>
+    <View style={styles.container} testID="direccion-container">
+      <Text style={styles.title} testID="direccion-title">Dirección de entrega</Text>
 
       <TextInput
         style={styles.input}
@@ -30,6 +30,7 @@ export default function DireccionInput() {
         value={input}
         onChangeText={onChangeText}
         editable={!isSaved}
+        testID="direccion-input"
       />
 
       <FlatList
@@ -37,30 +38,37 @@ export default function DireccionInput() {
         keyExtractor={i => i.place_id}
         style={styles.list}
         keyboardShouldPersistTaps="handled"
+        testID="direccion-sugerencias-list"
         renderItem={({ item }) => (
-          <TouchableOpacity style={styles.item} onPress={() => handleSelect(item)}>
-            <Text>{item.description}</Text>
+          <TouchableOpacity
+            style={styles.item}
+            onPress={() => handleSelect(item)}
+            testID={`direccion-sugerencia-${item.place_id}`}
+          >
+            <Text testID={`direccion-sugerencia-text-${item.place_id}`}>{item.description}</Text>
           </TouchableOpacity>
         )}
       />
 
-      <View style={styles.buttonsRow}>
+      <View style={styles.buttonsRow} testID="direccion-buttons-row">
         <TouchableOpacity
           style={[styles.button, { opacity: readyToSave && !isSaved ? 1 : 0.5 }]}
           onPress={handleSave}
           disabled={!readyToSave || isSaved}
+          testID="btn-agregar-direccion"
         >
           <Ionicons name="location-outline" size={18} color="#fff" style={styles.icon} />
-          <Text style={styles.buttonText}>Agregar Dirección</Text>
+          <Text style={styles.buttonText} testID="text-btn-agregar-direccion">Agregar Dirección</Text>
         </TouchableOpacity>
 
         {isSaved && (
           <TouchableOpacity
             style={[styles.button, styles.editButton]}
             onPress={handleEdit}
+            testID="btn-editar-direccion"
           >
             <Ionicons name="create-outline" size={18} color="#fff" style={styles.icon} />
-            <Text style={styles.buttonText}>Editar Texto</Text>
+            <Text style={styles.buttonText} testID="text-btn-editar-direccion">Editar Texto</Text>
           </TouchableOpacity>
         )}
       </View>

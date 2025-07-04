@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<coverage generated="1751633516087" clover="3.2.0">
+  <project timestamp="1751633516092" name="All files">
+    <metrics statements="90" coveredstatements="90" conditionals="50" coveredconditionals="50" methods="30" coveredmethods="30" elements="170" coveredelements="170" complexity="0" loc="90" ncloc="90" packages="3" files="5" classes="5"/>
+    <package name="componentes">
+      <metrics statements="21" coveredstatements="21" conditionals="20" coveredconditionals="20" methods="12" coveredmethods="12"/>
+      <file name="CategoryList.js" path="C:\Users\David\Desktop\ProyectoKermit\Cafe-App-Repository\InfoCafe-2\componentes\CategoryList.js">
+        <metrics statements="5" coveredstatements="5" conditionals="4" coveredconditionals="4" methods="3" coveredmethods="3"/>
+        <line num="4" count="1" type="stmt"/>
+        <line num="7" count="4" type="stmt"/>
+        <line num="16" count="40" type="stmt"/>
+        <line num="18" count="1" type="stmt"/>
+        <line num="42" count="1" type="stmt"/>
+      </file>
+      <file name="DireccionInput.js" path="C:\Users\David\Desktop\ProyectoKermit\Cafe-App-Repository\InfoCafe-2\componentes\DireccionInput.js">
+        <metrics statements="6" coveredstatements="6" conditionals="8" coveredconditionals="8" methods="4" coveredmethods="4"/>
+        <line num="20" count="14" type="stmt"/>
+        <line num="22" count="14" type="stmt"/>
+        <line num="38" count="18" type="stmt"/>
+        <line num="43" count="14" type="stmt"/>
+        <line num="45" count="1" type="stmt"/>
+        <line num="79" count="1" type="stmt"/>
+      </file>
+      <file name="ShoppingCart.js" path="C:\Users\David\Desktop\ProyectoKermit\Cafe-App-Repository\InfoCafe-2\componentes\ShoppingCart.js">
+        <metrics statements="10" coveredstatements="10" conditionals="8" coveredconditionals="8" methods="5" coveredmethods="5"/>
+        <line num="21" count="4" type="stmt"/>
+        <line num="23" count="4" type="stmt"/>
+        <line num="24" count="4" type="cond" truecount="2" falsecount="0"/>
+        <line num="25" count="1" type="stmt"/>
+        <line num="31" count="3" type="stmt"/>
+        <line num="32" count="3" type="stmt"/>
+        <line num="33" count="5" type="stmt"/>
+        <line num="51" count="1" type="stmt"/>
+        <line num="62" count="4" type="stmt"/>
+        <line num="119" count="3" type="stmt"/>
+      </file>
+    </package>
+    <package name="data">
+      <metrics statements="1" coveredstatements="1" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
+      <file name="ProductosData.js" path="C:\Users\David\Desktop\ProyectoKermit\Cafe-App-Repository\InfoCafe-2\data\ProductosData.js">
+        <metrics statements="1" coveredstatements="1" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
+        <line num="1" count="5" type="stmt"/>
+      </file>
+    </package>
+    <package name="store">
+      <metrics statements="68" coveredstatements="68" conditionals="30" coveredconditionals="30" methods="18" coveredmethods="18"/>
+      <file name="store.js" path="C:\Users\David\Desktop\ProyectoKermit\Cafe-App-Repository\InfoCafe-2\store\store.js">
+        <metrics statements="68" coveredstatements="68" conditionals="30" coveredconditionals="30" methods="18" coveredmethods="18"/>
+        <line num="8" count="5" type="stmt"/>
+        <line num="10" count="5" type="stmt"/>
+        <line num="20" count="23" type="stmt"/>
+        <line num="21" count="23" type="cond" truecount="8" falsecount="0"/>
+        <line num="24" count="4" type="cond" truecount="2" falsecount="0"/>
+        <line num="25" count="3" type="stmt"/>
+        <line num="27" count="4" type="stmt"/>
+        <line num="30" count="1" type="stmt"/>
+        <line num="31" count="1" type="stmt"/>
+        <line num="33" count="1" type="stmt"/>
+        <line num="37" count="10" type="stmt"/>
+        <line num="38" count="10" type="stmt"/>
+        <line num="40" count="10" type="stmt"/>
+        <line num="41" count="3" type="cond" truecount="2" falsecount="0"/>
+        <line num="42" count="2" type="stmt"/>
+        <line num="43" count="2" type="stmt"/>
+        <line num="45" count="2" type="stmt"/>
+        <line num="46" count="2" type="cond" truecount="2" falsecount="0"/>
+        <line num="47" count="1" type="stmt"/>
+        <line num="48" count="1" type="stmt"/>
+        <line num="49" count="1" type="stmt"/>
+        <line num="53" count="2" type="cond" truecount="2" falsecount="0"/>
+        <line num="54" count="1" type="stmt"/>
+        <line num="57" count="2" type="stmt"/>
+        <line num="61" count="10" type="cond" truecount="2" falsecount="0"/>
+        <line num="62" count="8" type="stmt"/>
+        <line num="65" count="10" type="stmt"/>
+        <line num="69" count="4" type="stmt"/>
+        <line num="70" count="4" type="stmt"/>
+        <line num="72" count="4" type="cond" truecount="2" falsecount="0"/>
+        <line num="73" count="3" type="stmt"/>
+        <line num="74" count="3" type="stmt"/>
+        <line num="77" count="3" type="cond" truecount="2" falsecount="0"/>
+        <line num="78" count="2" type="stmt"/>
+        <line num="80" count="2" type="cond" truecount="2" falsecount="0"/>
+        <line num="81" count="1" type="stmt"/>
+        <line num="86" count="4" type="stmt"/>
+        <line num="90" count="1" type="stmt"/>
+        <line num="91" count="1" type="stmt"/>
+        <line num="95" count="1" type="stmt"/>
+        <line num="96" count="1" type="stmt"/>
+        <line num="99" count="1" type="stmt"/>
+        <line num="106" count="1" type="stmt"/>
+        <line num="112" count="46" type="stmt"/>
+        <line num="114" count="46" type="stmt"/>
+        <line num="115" count="27" type="stmt"/>
+        <line num="116" count="27" type="stmt"/>
+        <line num="117" count="27" type="stmt"/>
+        <line num="118" count="26" type="cond" truecount="2" falsecount="0"/>
+        <line num="119" count="1" type="stmt"/>
+        <line num="125" count="1" type="stmt"/>
+        <line num="130" count="46" type="stmt"/>
+        <line num="131" count="42" type="stmt"/>
+        <line num="132" count="42" type="stmt"/>
+        <line num="133" count="42" type="stmt"/>
+        <line num="140" count="42" type="stmt"/>
+        <line num="142" count="1" type="stmt"/>
+        <line num="147" count="46" type="stmt"/>
+        <line num="148" count="46" type="stmt"/>
+        <line num="149" count="46" type="stmt"/>
+        <line num="150" count="46" type="stmt"/>
+        <line num="151" count="46" type="stmt"/>
+        <line num="152" count="46" type="stmt"/>
+        <line num="154" count="46" type="stmt"/>
+        <line num="171" count="35" type="stmt"/>
+        <line num="172" count="34" type="cond" truecount="2" falsecount="0"/>
+        <line num="173" count="2" type="stmt"/>
+        <line num="175" count="32" type="stmt"/>
+      </file>
+    </package>
+  </project>
+</coverage>
