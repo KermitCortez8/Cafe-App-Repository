@@ -49,7 +49,7 @@ jobs:
           eas build --platform android --profile $EAS_BUILD_PROFILE --non-interactive  # Ejecutar la build
 
       - name: Upload AAB artifact
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: android-aab
           path: https://play.google.com/console/developers/?pli=1  # Ruta del archivo .aab generado (ajusta si es necesario)
