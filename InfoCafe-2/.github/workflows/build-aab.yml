@@ -52,4 +52,4 @@ jobs:
         uses: actions/upload-artifact@v2
         with:
           name: android-aab
-          path: ./dist/  # Ruta del archivo .aab generado (ajusta si es necesario)
+          path: https://play.google.com/console/developers/?pli=1  # Ruta del archivo .aab generado (ajusta si es necesario)
