@@ -21,6 +21,8 @@ export default function SplashScreen({ navigation }) {
         style={styles.animation}
       />
       <Text style={styles.text}>Kopi Kap</Text>
+      
+
     </View>
   );
 }

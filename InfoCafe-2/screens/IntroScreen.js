@@ -6,6 +6,7 @@ import {
   StyleSheet,
   TouchableOpacity,
   Dimensions,
+  Button,
 } from 'react-native';
 
 const { height } = Dimensions.get('window');
@@ -20,6 +21,8 @@ export default function IntroScreen({ navigation }) {
     >
       <View style={styles.overlay}>
         <View style={styles.bottomBox}>
+          <Button title='Try!' onPress={ () => { Sentry.captureException(new Error('First error')) }}/>
+           
           <Text style={styles.title}>Mejora tu experiencia de café en Kopi Kap</Text>
           <Text style={styles.subtitle}>Donde el café se encuentra con la comodidad</Text>
           <TouchableOpacity
