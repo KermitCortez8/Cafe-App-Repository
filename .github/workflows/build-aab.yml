@@ -7,7 +7,7 @@ on:
  
 jobs:
   build:
-    runs-on: ubuntu-latest  # Usamos un entorno Linux para ejecutar el flujo de trabajo
+    runs-on: ubuntu-latest  
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3
@@ -15,10 +15,10 @@ jobs:
       - name: Setup Node.js
         uses: actions/setup-node@v3
         with:
-          node-version: '20'  # Usa la versión de Node.js que prefieras
+          node-version: '20'   
 
       - name: Install Yarn
-        run: npm install -g yarn  # Instalar Yarn si no está disponible
+        run: npm install -g yarn   
 
       - name: Install dependencies
         run: |
@@ -33,19 +33,19 @@ jobs:
 
       - name: Log in to Expo (EAS Token)
         env:
-          EXPO_TOKEN: ${{ secrets.EXPO_TOKEN }}  # Usar el token de Expo desde los secretos de GitHub
+          EXPO_TOKEN: ${{ secrets.EXPO_TOKEN }}   
         run: |
           echo "Logging in to Expo with token..."
           eas whoami || eas login --token $EXPO_TOKEN  # Login a Expo con el token
 
       - name: Build the AAB using the "preview" profile
         env:
-          EAS_BUILD_PROFILE: preview  # Perfil de "preview" en eas.json
+          EAS_BUILD_PROFILE: preview   
     
-          EXPO_TOKEN: ${{ secrets.EXPO_TOKEN }}  # Aseguramos que EXPO_TOKEN esté disponible
+          EXPO_TOKEN: ${{ secrets.EXPO_TOKEN }}   
         run: |
           cd InfoCafe-2
           eas whoami || eas login --token $EXPO_TOKEN
-          echo "GOOGLE_MAPS_KEY=${{ secrets.GOOGLE_MAPS_KEY }}" >> $GITHUB_ENV  # Cargar la clave API desde los secretos
-          echo "EXPO_TOKEN=${{ secrets.EXPO_TOKEN }}" >> $GITHUB_ENV  # Asegurar que EXPO_TOKEN esté configurado
-          eas build --platform android --profile $EAS_BUILD_PROFILE --non-interactive  # Ejecutar la build
+          echo "GOOGLE_MAPS_KEY=${{ secrets.GOOGLE_MAPS_KEY }}" >> $GITHUB_ENV   
+          echo "EXPO_TOKEN=${{ secrets.EXPO_TOKEN }}" >> $GITHUB_ENV   
+          eas build --platform android --profile $EAS_BUILD_PROFILE --non-interactive   
