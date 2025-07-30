@@ -14,7 +14,7 @@
     "preview": {
       "distribution": "internal",
       "android": {
-        "buildType": "app-bundle"   
+        "buildType": "apk"   
       },
       "env": {
         "GOOGLE_MAPS_KEY": "AIzaSyCz5pqFM4kCituJMMqULGjP_NrIYXFGJVA"
