@@ -1,4 +1,4 @@
-name: Build Expo Android AAB
+name: Build Exp Android AAB
 
 on:
   push:
